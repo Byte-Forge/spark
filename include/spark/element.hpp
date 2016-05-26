@@ -11,12 +11,17 @@ namespace spark
 		float ratio;
 	};
 
+	struct Dimension
+	{
+		vec4<unsigned int> box;
+	};
+
     class IElement
     {
     public:
         IElement();
        
-        virtual void OnPaint(const PaintEvent& ev) = 0;
+        virtual void OnPaint(const PaintEvent& ev,const Dimension& box) = 0;
         virtual void OnInitialize() = 0;
 	protected:
         vec4<unsigned int> m_margin;

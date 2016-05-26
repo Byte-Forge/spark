@@ -18,6 +18,7 @@ int main(int argc,char** argv)
 	auto view = core.CreateView(800,600);
 	auto element = std::make_shared<spark::Grid>();
 	view->SetRoot(element);
+
     while(!glfwWindowShouldClose(window))
     {
 		int winWidth, winHeight;
@@ -35,6 +36,7 @@ int main(int argc,char** argv)
 		view->Render(ev);
 
 		glfwSwapBuffers(window);
+		glfwPollEvents();
     }
     return 0;
 }

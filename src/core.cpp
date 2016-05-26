@@ -1,7 +1,7 @@
 #include <spark/core.hpp>
 #include "flextGL.h"
 #include "nanovg.h"
-#define NANOVG_GL3_IMPLEMENTATION
+#define NANOVG_GL2_IMPLEMENTATION
 #include "nanovg_gl.h"
 using namespace spark;
 
@@ -19,7 +19,7 @@ Core::Core(const bool initGL)
 	}
 		
 	m_private = std::make_unique<Core::priv>();
-	m_private->nvg_context = nvgCreateGL3(NVG_ANTIALIAS | NVG_STENCIL_STROKES | NVG_DEBUG);
+	m_private->nvg_context = nvgCreateGL2(NVG_ANTIALIAS | NVG_STENCIL_STROKES | NVG_DEBUG);
 }
 
 Core::~Core()
