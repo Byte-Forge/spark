@@ -1,7 +1,7 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include "View.hpp"
+#include "view.hpp"
 
 namespace spark
 {

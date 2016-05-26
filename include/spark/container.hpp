@@ -1,5 +1,6 @@
 #pragma once
 #include "element.hpp"
+#include "vector.hpp"
 
 namespace spark
 {
