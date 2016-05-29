@@ -9,6 +9,7 @@ namespace spark
 	public:
 		void AddChildren(std::shared_ptr<IElement> child)
 		{
+			child->OnInitialize();
 			m_children.insert(child);
 		}
 
