@@ -5,3 +5,4 @@
 #include "element.hpp"
 #include "container.hpp"
 #include "grid.hpp"
+#include "label.hpp"

@@ -7,6 +7,7 @@ add_library(${LIB_NAME} core.cpp
 						container.cpp
                         view.cpp
                         grid.cpp
+                        label.cpp
                         flextGL.c
                         ../deps/nanovg/src/nanovg.c)
 
