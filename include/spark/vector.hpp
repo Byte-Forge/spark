@@ -33,4 +33,33 @@ namespace spark
 			};
 		};
 	};
+	
+	template<typename T> class vec2
+	{
+	public:
+		vec2()
+		{
+			x = y = 0;
+		}
+
+		vec2(unsigned int xy)
+		{
+			x = y = xy;
+		}
+
+		vec2(unsigned int c1, unsigned int c2)
+		{
+			x = c1;
+			y = c2;
+		}
+
+		union
+		{
+			T xy[2];
+			struct
+			{
+				T x, y;
+			};
+		};
+	};
 }
