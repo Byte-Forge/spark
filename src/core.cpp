@@ -24,7 +24,25 @@ Core::Core(const bool initGL)
 
 Core::~Core()
 {
+	
+}
 
+bool Core::AddFont(const std::string& name, const std::string& path)
+{
+	int result = nvgCreateFont(m_private->nvg_context, name.c_str(), path.c_str());
+	if (result == -1)
+		return false;
+	else
+		return true;
+}
+
+bool Core::AddFont(const std::string& name, const uint8_t* memory, const int size)
+{
+	int result = nvgCreateFontMem(m_private->nvg_context, name.c_str(),(unsigned char*)memory,size,0);
+	if (result == -1)
+		return false;
+	else
+		return true;
 }
 
 std::shared_ptr<View> Core::CreateView(const unsigned int width, const unsigned int height)

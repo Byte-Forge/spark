@@ -1,6 +1,6 @@
 #include <GLFW/glfw3.h>
 #include <spark/spark.hpp>
-
+#include <iostream>
 
 int main(int argc,char** argv)
 {
@@ -15,6 +15,10 @@ int main(int argc,char** argv)
     glfwShowWindow(window);
 
 	spark::Core core(true);
+	if (!core.AddFont("arial-sans", "./arial.ttf"))
+	{
+		std::cout << "Failed to load test font arial.ttf" << std::endl;
+	}
 	auto view = core.CreateView(800,600);
 	auto element = std::make_shared<spark::Grid>();
 	view->SetRoot(element);
