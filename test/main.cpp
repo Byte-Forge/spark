@@ -21,7 +21,13 @@ int main(int argc,char** argv)
 	}
 	auto view = core.CreateView(800,600);
 	auto element = std::make_shared<spark::Grid>();
+	
+	auto label = std::make_shared<spark::ILabel>();
+	label->SetText("Spark - GUI lib");
+	element->AddChildren(label);
+	
 	view->SetRoot(element);
+
 
     while(!glfwWindowShouldClose(window))
     {
