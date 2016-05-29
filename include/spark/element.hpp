@@ -24,9 +24,6 @@ namespace spark
         virtual void OnPaint(const PaintEvent& ev,const Dimension& box) = 0;
         virtual void OnInitialize() = 0;
         
-		vec2<unsigned int> GetPosition() { return m_position; }
-		void SetPosition(vec2<unsigned int> position) { m_position = position; }
-		
 		vec4<unsigned int> GetMargin() { return m_margin; }
 		void SetMargin(vec4<unsigned int> margin) { m_margin = margin; }
 		
@@ -49,7 +46,6 @@ namespace spark
 		void SetZIndex(int index) { m_index = index; }
 		
 	protected:
-		vec2<unsigned int> m_position; // x, y
 		vec4<unsigned int> m_margin; // top, right, bottom, left
 		vec4<unsigned int> m_padding; // top, right, bottom, left
 		
