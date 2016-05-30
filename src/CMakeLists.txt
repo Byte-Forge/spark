@@ -2,6 +2,8 @@ set(LIB_NAME "spark")
 
 find_package(OpenGL REQUIRED)
 
+find_package(Freetype REQUIRED)
+
 add_library(${LIB_NAME} core.cpp
                         element.cpp
 						container.cpp
@@ -11,8 +13,9 @@ add_library(${LIB_NAME} core.cpp
                         flextGL.c
                         ../deps/nanovg/src/nanovg.c)
 
-target_link_libraries(${LIB_NAME} ${OPENGL_LIBRARIES})
-target_include_directories(${LIB_NAME} PRIVATE ../deps/nanovg/src)
+target_link_libraries(${LIB_NAME} ${OPENGL_LIBRARIES} ${FREETYPE_LIBRARIES})
+target_include_directories(${LIB_NAME} PRIVATE ../deps/nanovg/src ${FREETYPE_INCLUDE_DIRS})
 target_include_directories(${LIB_NAME} PUBLIC ../include)
 
 set_property(TARGET ${LIB_NAME} PROPERTY CXX_STANDARD 14)
+add_definitions(-DFONS_USE_FREETYPE)

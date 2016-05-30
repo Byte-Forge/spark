@@ -24,6 +24,7 @@ int main(int argc,char** argv)
 	
 	auto label = std::make_shared<spark::ILabel>();
 	label->SetText("Spark - GUI lib");
+	label->SetFontSize(36.0f);
 	element->AddChildren(label);
 	
 	view->SetRoot(element);
