@@ -4,7 +4,7 @@
 
 
 namespace spark
-{
+{	
 	class ILabel : public IElement
 	{
 	public:
@@ -24,10 +24,15 @@ namespace spark
 		void SetFont(const std::string& font_name) { m_font = font_name; }
 		const std::string& GetFont() { return m_font;}
 		
+		void SetFontColor(vec4<unsigned int> color) { m_font_color = color; }
+		vec4<unsigned int> GetFontColor() { return m_font_color; }
+		
 	private:
 		std::string m_text;
 		std::string m_font;
 		
 		float m_size;
+		
+		vec4<unsigned int> m_font_color;
 	};
 }

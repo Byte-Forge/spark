@@ -25,7 +25,15 @@ int main(int argc,char** argv)
 	auto label = std::make_shared<spark::ILabel>();
 	label->SetText("Spark - GUI lib");
 	label->SetFontSize(36.0f);
+	
+	auto label_margin_test = std::make_shared<spark::ILabel>();
+	label_margin_test->SetText("Margin and padding test.");
+	label_margin_test->SetMargin(spark::vec4<unsigned int>(50,10,100,20));
+	label_margin_test->SetPadding(spark::vec4<unsigned int>(10,10,10,10));
+	label_margin_test->SetBorderRadius(10);
+	
 	element->AddChildren(label);
+	element->AddChildren(label_margin_test);
 	
 	view->SetRoot(element);
 

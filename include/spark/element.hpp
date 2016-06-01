@@ -45,6 +45,15 @@ namespace spark
 		int GetZIndex() { return m_index; }
 		void SetZIndex(int index) { m_index = index; }
 		
+		float GetBorderSize() { return m_border_size; }
+		void SetBorderSize(float border_size) { m_border_size = border_size; }
+
+		vec4<unsigned int> GetBorderColor() { return m_border_color; }
+		void SetBorderColor(vec4<unsigned int> border_color) { m_border_color = border_color; }
+		
+		float GetBorderRadius() { return m_border_radius; }
+		void SetBorderRadius(float border_radius) { m_border_radius = border_radius; }
+
 	protected:
 		vec4<unsigned int> m_margin; // top, right, bottom, left
 		vec4<unsigned int> m_padding; // top, right, bottom, left
@@ -53,6 +62,10 @@ namespace spark
 		
 		float m_width;
 		float m_height;
+		
+		float m_border_size;
+		vec4<unsigned int> m_border_color;
+		float m_border_radius;
 		
 		bool m_visible;
     };
