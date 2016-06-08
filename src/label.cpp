@@ -44,6 +44,7 @@ void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
 		nvgBeginPath(vg);
 		nvgRoundedRect(vg, border_box.x , border_box.y, border_box.z, border_box.w, m_border_radius);
 		nvgStrokeColor(vg, nvgRGBA(m_border_color.x, m_border_color.y, m_border_color.z, m_border_color.w));
+		nvgStrokeWidth(vg, m_border_size);
 		nvgStroke(vg);
 		
 	}

@@ -3,9 +3,9 @@ project(spark)
 
 add_subdirectory(src)
 
-option(BUILD_TEST "Build test project" ON)
+option(SPARK_BUILD_TEST "Build test project" ON)
 
-if(BUILD_TEST)
+if(SPARK_BUILD_TEST)
     set(GLFW_BUILD_EXAMPLES CACHE BOOL OFF)
     set(GLFW_BUILD_TESTS CACHE BOOL OFF)
     set(GLFW_BUILD_DOCS CACHE BOOL OFF)

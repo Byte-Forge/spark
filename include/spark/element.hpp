@@ -24,20 +24,23 @@ namespace spark
         virtual void OnPaint(const PaintEvent& ev,const Dimension& box) = 0;
         virtual void OnInitialize() = 0;
         
+        vec4<unsigned int> GetBackgroundColor() { return m_bg_color; }
+        void SetBackgroundColor(const vec4<unsigned int>& color) { m_bg_color = m_bg_color; }
+
 		vec4<unsigned int> GetMargin() { return m_margin; }
-		void SetMargin(vec4<unsigned int> margin) { m_margin = margin; }
+		void SetMargin(const vec4<unsigned int>& margin) { m_margin = margin; }
 		
 		vec4<unsigned int> GetPadding() { return m_padding; }
-		void SetPadding(vec4<unsigned int> padding) { m_padding = padding; }
+		void SetPadding(const vec4<unsigned int>& padding) { m_padding = padding; }
 		
 		float GetWidth() { return m_width; }
-		void SetWidth(float width) { m_width = width; }
+		void SetWidth(const float width) { m_width = width; }
 		
 		float GetHeight() { return m_height; }
-		void SetHeight(float height) { m_height = height; }
+		void SetHeight(const float height) { m_height = height; }
 		
 		bool IsVisible() { return m_visible; }
-		void SetVisible(bool visible) { m_visible = visible; }
+		void SetVisible(const bool visible) { m_visible = visible; }
 		
 		void Hide() { m_visible = false; }
 		void Show() { m_visible = true; }
@@ -65,6 +68,7 @@ namespace spark
 		
 		float m_border_size;
 		vec4<unsigned int> m_border_color;
+		vec4<unsigned int> m_bg_color;
 		float m_border_radius;
 		
 		bool m_visible;
