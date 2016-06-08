@@ -13,6 +13,10 @@ namespace spark
 			m_children.insert(child);
 		}
 
+		inline std::set<std::shared_ptr<IElement>> GetChildren()
+		{
+			return m_children;
+		}
 	protected:
 		virtual void PaintChildren(const PaintEvent& ev,const Dimension& dim) = 0;
 		std::set<std::shared_ptr<IElement>> m_children;
