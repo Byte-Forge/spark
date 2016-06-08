@@ -1,5 +1,11 @@
 set(LIB_NAME "spark")
 
+if(SPARK_USE_GL3)
+	add_definitions(-DNANOVG_GL3_IMPLEMENTATION)
+else()
+	add_definitions(-DNANOVG_GL2_IMPLEMENTATION)
+endif()
+
 find_package(OpenGL REQUIRED)
 
 find_package(Freetype REQUIRED)
