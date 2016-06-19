@@ -32,10 +32,10 @@ int main(int argc,char** argv)
 	label_margin_test->SetPadding(spark::vec4<unsigned int>(10,10,10,10));
 	label_margin_test->SetBorderRadius(10);
 	
+	view->SetRoot(element);
 	element->AddChildren(label);
 	element->AddChildren(label_margin_test);
 	
-	view->SetRoot(element);
 
 
     while(!glfwWindowShouldClose(window))

@@ -14,6 +14,7 @@ void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
 	NVGcontext* vg = static_cast<NVGcontext*>(ev.context);
 	nvgRect(vg, dim.box.x, dim.box.y, dim.box.z, dim.box.w);
 	nvgFillColor(vg,nvgRGBA(m_bg_color.x,m_bg_color.y,m_bg_color.z,m_bg_color.w));
+	nvgFill(vg);
 	PaintChildren(ev,dim);
 }
 

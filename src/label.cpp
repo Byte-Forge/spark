@@ -4,7 +4,7 @@
 
 using namespace spark;
 
-ILabel::ILabel() : m_text(""), m_size(18.f), m_font("arial-sans"), m_font_color(0,0,0,255)
+ILabel::ILabel() : m_text(""), m_size(18.f), m_font("arial-sans"), m_font_color(255,0,0,255)
 {
 	
 }
@@ -20,10 +20,6 @@ void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
 	{
 		NVGcontext* vg = static_cast<NVGcontext*>(ev.context);
 		
-		nvgFontSize(vg, m_size);
-		nvgFontFace(vg, m_font.c_str());
-		nvgFillColor(vg, nvgRGBA(m_font_color.x, m_font_color.y, m_font_color.z, m_font_color.w));
-
 		// m_margin, m_padding:
 		// x - up
 		// y - right
@@ -38,14 +34,20 @@ void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
 		
 		vec4<unsigned int> border_box(position.x, position.y - m_size*0.5f, m_width, m_height);
 
-		nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
-		nvgText(vg, text_position.x, text_position.y, m_text.c_str(), NULL);
-		
 		nvgBeginPath(vg);
 		nvgRoundedRect(vg, border_box.x , border_box.y, border_box.z, border_box.w, m_border_radius);
+		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
+		nvgFill(vg);
 		nvgStrokeColor(vg, nvgRGBA(m_border_color.x, m_border_color.y, m_border_color.z, m_border_color.w));
 		nvgStrokeWidth(vg, m_border_size);
 		nvgStroke(vg);
+		
+		nvgFontSize(vg, m_size);
+		nvgFontFace(vg, m_font.c_str());
+		nvgFillColor(vg, nvgRGBA(m_font_color.x, m_font_color.y, m_font_color.z, m_font_color.w));
+		
+		nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
+		nvgText(vg, text_position.x, text_position.y, m_text.c_str(), NULL);
 		
 	}
 }
