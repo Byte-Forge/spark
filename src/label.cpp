@@ -4,7 +4,7 @@
 
 using namespace spark;
 
-ILabel::ILabel() : m_text(""), m_size(18.f), m_font("arial-sans"), m_font_color(255,0,0,255)
+ILabel::ILabel() : m_text(""), m_size(18.f), m_font("arial-sans"), m_font_color(0,0,0,255), IElement()
 {
 	
 }
@@ -38,6 +38,7 @@ void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
 		nvgRoundedRect(vg, border_box.x , border_box.y, border_box.z, border_box.w, m_border_radius);
 		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
 		nvgFill(vg);
+
 		nvgStrokeColor(vg, nvgRGBA(m_border_color.x, m_border_color.y, m_border_color.z, m_border_color.w));
 		nvgStrokeWidth(vg, m_border_size);
 		nvgStroke(vg);

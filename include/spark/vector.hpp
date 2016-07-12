@@ -10,13 +10,13 @@ namespace spark
 			x = y = z = w = 0;
 		}
 
-		vec4(unsigned int xyzw)
+		vec4(T xyzw)
 		{
 			x = y = z = w = xyzw;
 		}
 
-		vec4(unsigned int c1, unsigned int c2,
-			unsigned int c3, unsigned int c4)
+		vec4(T c1, T c2,
+			T c3, T c4)
 		{
 			x = c1;
 			y = c2;
@@ -120,12 +120,12 @@ namespace spark
 			x = y = 0;
 		}
 
-		vec2(unsigned int xy)
+		vec2(T xy)
 		{
 			x = y = xy;
 		}
 
-		vec2(unsigned int c1, unsigned int c2)
+		vec2(T c1, T c2)
 		{
 			x = c1;
 			y = c2;

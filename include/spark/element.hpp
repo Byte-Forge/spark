@@ -25,7 +25,10 @@ namespace spark
         virtual void OnInitialize() = 0;
         
         vec4<unsigned int> GetBackgroundColor() { return m_bg_color; }
-        void SetBackgroundColor(const vec4<unsigned int>& color) { m_bg_color = color; }
+        void SetBackgroundColor(const vec4<unsigned int> color) 
+		{ 
+			m_bg_color = color;
+		}
 
 		vec4<unsigned int> GetMargin() { return m_margin; }
 		void SetMargin(const vec4<unsigned int>& margin) { m_margin = margin; }
