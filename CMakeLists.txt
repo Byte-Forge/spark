@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.1)
 project(spark)
 
-option(SPARK_USE_GL3 "Use opengl 3" OFF)
+option(SPARK_USE_GL3 "Use opengl 3" ON)
 add_subdirectory(src)
 
 option(SPARK_BUILD_TEST "Build test project" ON)
