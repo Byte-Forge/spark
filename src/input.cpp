@@ -1,5 +1,7 @@
 #include <spark/input.hpp>
 
+using namespace spark;
+
 vec2<int> spark::Mouse::m_position;
 MouseCode spark::Mouse::m_code;
 

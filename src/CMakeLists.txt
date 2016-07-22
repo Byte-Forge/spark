@@ -10,11 +10,13 @@ find_package(OpenGL REQUIRED)
 
 find_package(Freetype REQUIRED)
 
-add_library(${LIB_NAME} core.cpp
+add_library(${LIB_NAME} button.cpp
+                        core.cpp
                         element.cpp
-						container.cpp
+                        container.cpp
                         view.cpp
                         grid.cpp
+                        input.cpp
                         label.cpp
                         flextGL.c
                         ../deps/nanovg/src/nanovg.c)

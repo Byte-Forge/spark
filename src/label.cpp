@@ -49,6 +49,5 @@ void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
 		
 		nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
 		nvgText(vg, text_position.x, text_position.y, m_text.c_str(), NULL);
-		
 	}
 }
