@@ -51,3 +51,8 @@ void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
 		nvgText(vg, text_position.x, text_position.y, m_text.c_str(), NULL);
 	}
 }
+
+void ILabel::Update(Mouse mouse)
+{
+
+}

@@ -7,3 +7,5 @@
 #include "grid.hpp"
 #include "label.hpp"
 #include "input.hpp"
+#include "button.hpp"
+#include "image.hpp"

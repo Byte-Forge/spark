@@ -1,16 +1,21 @@
 #pragma once
 
 #include "vector.hpp"
+#include <map>
+
+#define JUST_RELEASED -1
+#define RELEASED 0
+#define PRESSED 1
 
 namespace spark
 {
 	enum MouseCode
 	{
-		MOUSE_LEFT		= 1,
+		MOUSE_LEFT		= 0,
+		MOUSE_RIGHT		= 1,
 		MOUSE_MIDDLE	= 2,
-		MOUSE_RIGHT		= 3,
-		MOUSE_X1		= 4,
-		MOUSE_X2		= 5,
+		MOUSE_X1		= 3,
+		MOUSE_X2		= 4,
 	};
 
 	enum KeyboardCode{
@@ -142,12 +147,18 @@ namespace spark
 	public:
 		static void SetMousePosition(int x, int y) { m_position.x = x; m_position.y = y; }
 		static vec2<int> GetMousePosition() { return m_position; }
+
+		static void ToReleased();
 	
-		static void SetMouseButton(MouseCode code) { m_code = code; }
-		static MouseCode GetMouseButton() { return m_code; }
+		static inline void SetMouseState(const int key, int action, const int mods) { action = TranslateState(action); m_mouseInputs[(MouseCode)key] = action; }
+		static inline int ButtonPressed(MouseCode button) { if (m_mouseInputs[button] == PRESSED) { return 1; } return 0; }
+		static inline int ButtonJustReleased(MouseCode button) { if (m_mouseInputs[button] == JUST_RELEASED) { m_mouseInputs[button] = RELEASED; return 1; } return 0; }
+
+		static inline int TranslateState(int action) { return (action > 0) ? PRESSED : JUST_RELEASED; }
+
 	private:
 		static vec2<int> m_position;
-		static MouseCode m_code;
+		static std::map<MouseCode, int> m_mouseInputs;
 	};
 	
 	class Keyboard 
@@ -155,6 +166,7 @@ namespace spark
 	public:
 		static KeyboardCode GetKeyPressed() { return  m_key_pressed; }
 		static void SetKeyPressed(KeyboardCode code) { m_key_pressed = code; }
+
 	private:
 		static KeyboardCode m_key_pressed;
 	};

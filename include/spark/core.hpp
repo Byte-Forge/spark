@@ -10,6 +10,7 @@ namespace spark
     {
 	private:
 		struct priv;
+
     public:
         Core(const bool initGL);
         ~Core();
@@ -20,6 +21,7 @@ namespace spark
 		bool AddFont(const std::string& name,const std::string& path);
 		//Add a font from memory. Name is the name that will be used later to use that font
 		bool AddFont(const std::string& name,const uint8_t* memory,const int size);
+
     private:
         std::vector<std::shared_ptr<View>> m_views;
 		std::unique_ptr<priv> m_private;

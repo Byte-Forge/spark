@@ -16,6 +16,7 @@ add_library(${LIB_NAME} button.cpp
                         container.cpp
                         view.cpp
                         grid.cpp
+                        image.cpp
                         input.cpp
                         label.cpp
                         flextGL.c

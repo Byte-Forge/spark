@@ -2,7 +2,16 @@
 
 using namespace spark;
 
-vec2<int> spark::Mouse::m_position;
-MouseCode spark::Mouse::m_code;
+vec2<int> Mouse::m_position;
+std::map<MouseCode, int> Mouse::m_mouseInputs;
 
-KeyboardCode spark::Keyboard::m_key_pressed;
+KeyboardCode Keyboard::m_key_pressed;
+
+void Mouse::ToReleased()
+{
+	for (std::map<MouseCode, int>::iterator it = m_mouseInputs.begin(); it != m_mouseInputs.end(); it++)
+	{
+		if (it->second == JUST_RELEASED)
+			it->second = RELEASED;
+	}
+}
