@@ -8,7 +8,8 @@ namespace spark
 	class IImage : public IElement
 	{
 	public:
-		IImage(const std::string file);
+		IImage(const std::string& file);
+		~IImage();
 	
         void OnPaint(const PaintEvent& ev, const Dimension& box);
         void OnInitialize();
@@ -16,5 +17,6 @@ namespace spark
 
 	private:
 		const std::string m_file;
+		int m_image = -1;
 	};
 }

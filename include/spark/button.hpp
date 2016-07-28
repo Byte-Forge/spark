@@ -11,7 +11,7 @@ namespace spark
 	{
 	public:
 		IButton();
-		IButton(const std::string imgFile);
+		IButton(const std::string& imgFile);
 	
         void OnPaint(const PaintEvent& ev,const Dimension& box);
         void OnInitialize();

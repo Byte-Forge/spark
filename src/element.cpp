@@ -7,11 +7,3 @@ m_bg_color(255,255,255,255)
 {
 
 }
-
-void IElement::OnInitialize()
-{
-	//make sure the border radius is not too big
-	int min = (m_width > m_height) ? m_height : m_width;
-	if (m_border_radius > min)
-		m_border_radius = min;
-}

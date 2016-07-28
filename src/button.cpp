@@ -9,14 +9,20 @@ IButton::IButton() : IElement()
 	
 }
 
-IButton::IButton(const std::string imgFile) : IElement()
+IButton::IButton(const std::string& imgFile) : IElement()
 {
 	m_image = std::make_shared<IImage>(imgFile);
 }
 
 void IButton::OnInitialize()
 {
-	IElement::OnInitialize();
+	std::cout << "Initialized button" << std::endl;
+
+	//make sure the border radius is not too big
+	int min = (m_width > m_height) ? m_height : m_width;
+	if (m_border_radius > min)
+		m_border_radius = min;
+
 	if (m_image != nullptr)
 	{
 		m_image->SetWidth(m_width);
@@ -39,7 +45,9 @@ void IButton::OnPaint(const PaintEvent& ev, const Dimension& box)
 		nvgFill(vg);
 
 		if (m_image != nullptr)
+		{
 			m_image->OnPaint(ev, box);
+		}
 
 		nvgStrokeColor(vg, nvgRGBA(m_border_color.x, m_border_color.y, m_border_color.z, m_border_color.w));
 		nvgStrokeWidth(vg, m_border_size);
@@ -47,7 +55,6 @@ void IButton::OnPaint(const PaintEvent& ev, const Dimension& box)
 	}
 }
 
-//std::function als callback
 void IButton::Update(Mouse mouse)
 {
 	if (m_visible)
