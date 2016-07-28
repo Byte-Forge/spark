@@ -130,6 +130,13 @@ namespace spark
 			x = c1;
 			y = c2;
 		}
+
+		float distance(const vec2& v)
+		{
+			float diffy = y - v.y;
+			float diffx = x - v.x;
+			return sqrt(diffy * diffy + diffx * diffx);
+		}
 		
 		bool operator ==(const vec2& v)
 		{

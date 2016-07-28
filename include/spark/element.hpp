@@ -23,8 +23,9 @@ namespace spark
         IElement();
        
         virtual void OnPaint(const PaintEvent& ev,const Dimension& box) = 0;
-        virtual void OnInitialize() = 0;
 		virtual void Update(Mouse mouse) = 0;
+
+		void OnInitialize();
         
         vec4<unsigned int> GetBackgroundColor() { return m_bg_color; }
         void SetBackgroundColor(const vec4<unsigned int> color) { m_bg_color = color; }

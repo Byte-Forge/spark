@@ -16,6 +16,7 @@ IButton::IButton(const std::string imgFile) : IElement()
 
 void IButton::OnInitialize()
 {
+	IElement::OnInitialize();
 	if (m_image != nullptr)
 	{
 		m_image->SetWidth(m_width);
@@ -56,7 +57,45 @@ void IButton::Update(Mouse mouse)
 			&& mouse_pos.y >= m_border_box.y && mouse_pos.y <= (m_border_box.y + m_border_box.w)
 			&& mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
 		{
-			m_function();
+			if (m_border_radius == 0)
+				m_function();
+			//test for the 4 rounded corners
+			else
+			{
+				vec2<int> upperLeft = vec2<int>(m_border_box.x + m_border_radius, m_border_box.y + m_border_radius);
+				vec2<int> upperRight = vec2<int>(m_border_box.x + m_border_box.z - m_border_radius, m_border_box.y + m_border_radius);
+				vec2<int> lowerLeft = vec2<int>(m_border_box.x + m_border_radius, m_border_box.y + m_border_box.w - m_border_radius);
+				vec2<int> lowerRight = vec2<int>(m_border_box.x + m_border_box.z - m_border_radius, m_border_box.y + m_border_box.w - m_border_radius);
+
+				if (mouse_pos.x < upperLeft.x && mouse_pos.y < upperLeft.y)
+				{
+					if (mouse_pos.distance(upperLeft) <= m_border_radius)
+					{
+						m_function();
+					}
+				}
+				else if (mouse_pos.x > upperRight.x && mouse_pos.y < upperRight.y)
+				{
+					if (mouse_pos.distance(upperRight) <= m_border_radius)
+					{
+						m_function();
+					}
+				}
+				else if (mouse_pos.x < lowerLeft.x && mouse_pos.y > lowerLeft.y)
+				{
+					if (mouse_pos.distance(lowerLeft) <= m_border_radius)
+					{
+						m_function();
+					}
+				}
+				else if (mouse_pos.x > lowerRight.x && mouse_pos.y > lowerRight.y)
+				{
+					if (mouse_pos.distance(lowerRight) <= m_border_radius)
+					{
+						m_function();
+					}
+				}
+			}
 		}
 	}
 }
