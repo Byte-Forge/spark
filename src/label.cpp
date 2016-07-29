@@ -6,7 +6,7 @@ using namespace spark;
 
 ILabel::ILabel() : m_text(""), m_size(18.f), m_font("arial-sans"), m_font_color(0,0,0,255), IElement()
 {
-	
+	m_bg_color = vec4<unsigned int> (0,0,0,0);
 }
 
 void ILabel::OnInitialize()
@@ -46,7 +46,7 @@ void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
 		nvgFontSize(vg, m_size);
 		nvgFontFace(vg, m_font.c_str());
 		nvgFillColor(vg, nvgRGBA(m_font_color.x, m_font_color.y, m_font_color.z, m_font_color.w));
-		
+
 		nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
 		nvgText(vg, text_position.x, text_position.y, m_text.c_str(), NULL);
 	}
@@ -54,5 +54,5 @@ void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
 
 void ILabel::Update(Mouse mouse)
 {
-
+	m_function(shared_from_this());
 }

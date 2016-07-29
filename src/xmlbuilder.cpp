@@ -106,7 +106,7 @@ std::shared_ptr<View> XMLBuilder::LoadView(const unsigned int width, const unsig
 				{
 					auto element = std::make_shared<ILabel>();
 					ParseAttributes(m_core, element_node, element);
-					element->SetText(element_node->value());
+					element->SetText(element_node->child_value());
 					container->AddChildren(element);
 				}
 				else if (element_type == "button")
