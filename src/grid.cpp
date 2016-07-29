@@ -5,7 +5,7 @@ using namespace spark;
 
 void Grid::OnInitialize()
 {
-	std::cout << "Initialized grid" << std::endl;
+
 }
 
 void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)

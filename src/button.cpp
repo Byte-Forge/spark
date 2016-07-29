@@ -16,8 +16,6 @@ IButton::IButton(const std::string& imgFile) : IElement()
 
 void IButton::OnInitialize()
 {
-	std::cout << "Initialized button" << std::endl;
-
 	//make sure the border radius is not too big
 	int min = (m_width > m_height) ? m_height : m_width;
 	if (m_border_radius > min)

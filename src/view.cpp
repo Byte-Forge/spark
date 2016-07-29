@@ -1,13 +1,13 @@
 #include <spark/view.hpp>
 #include <spark/core.hpp>
+#include <iostream>
 #include <nanovg.h>
 
 using namespace spark;
 
-View::View(const unsigned int width, const unsigned int height) : m_width(width),m_height(height)
+View::View(const unsigned int width, const unsigned int height) : m_width(width), m_height(height), m_mouse(Mouse()), m_keyboard(Keyboard())
 {
-	m_mouse = Mouse();
-	m_keyboard = Keyboard();
+
 }
 
 void View::SetRoot(std::shared_ptr<IContainer> root)

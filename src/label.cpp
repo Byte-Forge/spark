@@ -11,7 +11,7 @@ ILabel::ILabel() : m_text(""), m_size(18.f), m_font("arial-sans"), m_font_color(
 
 void ILabel::OnInitialize()
 {
-	std::cout << "Initialized label" << std::endl;
+
 }
 
 void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)

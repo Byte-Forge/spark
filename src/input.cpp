@@ -9,7 +9,7 @@ KeyboardCode Keyboard::m_key_pressed;
 
 void Mouse::ToReleased()
 {
-	for (std::map<MouseCode, int>::iterator it = m_mouseInputs.begin(); it != m_mouseInputs.end(); it++)
+	for (auto &it = m_mouseInputs.begin(); it != m_mouseInputs.end(); it++)
 	{
 		if (it->second == JUST_RELEASED)
 			it->second = RELEASED;

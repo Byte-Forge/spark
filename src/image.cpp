@@ -16,7 +16,7 @@ IImage::~IImage()
 
 void IImage::OnInitialize()
 {
-	std::cout << "Initialized image" << std::endl;
+
 }
 
 void IImage::OnPaint(const PaintEvent& ev, const Dimension& box)

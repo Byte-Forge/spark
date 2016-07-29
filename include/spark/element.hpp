@@ -1,6 +1,8 @@
 #pragma once
 #include <memory>
 #include <set>
+#include <map>
+#include <functional>
 #include "vector.hpp"
 #include "input.hpp"
 
@@ -60,7 +62,11 @@ namespace spark
 		float GetBorderRadius() { return m_border_radius; }
 		void SetBorderRadius(float border_radius) { m_border_radius = border_radius; }
 
+		void SetFunction(std::function<void()> func) { m_function = func; }
+
 	protected:
+		std::function<void()> m_function;
+
 		vec4<unsigned int> m_margin; // top, right, bottom, left
 		vec4<unsigned int> m_padding; // top, right, bottom, left
 		
