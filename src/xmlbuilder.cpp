@@ -27,6 +27,7 @@ void ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 	{
 		std::string name = attrib->name();
 		std::string value = attrib->value();
+
 		if (name == "function")
 		{
 			element->SetFunction(core->GetFunction(value));
@@ -68,6 +69,10 @@ void ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		else if (name == "image" && type == "button")
 		{
 			std::dynamic_pointer_cast<IButton> (element)->SetImage(value);
+		}
+		else if (name == "borderRadius" && type == "button")
+		{
+			std::dynamic_pointer_cast<IButton> (element)->SetBorderRadius(std::stoi(value));
 		}
 
 		///////////////////////////////// IMAGE /////////////////////////////////////////////
