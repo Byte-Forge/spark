@@ -18,7 +18,7 @@ namespace spark
         ~Core();
 
         std::shared_ptr<View> CreateView(const unsigned int width, const unsigned int height);
-		std::shared_ptr<View> CreateView(const unsigned int width, const unsigned int height, const std::string &file, std::map<std::string, std::function<void()>> &functions);
+		std::shared_ptr<View> CreateView(const unsigned int width, const unsigned int height, const std::string &file, std::map<std::string, std::function<void(std::shared_ptr<IElement>)>> &functions);
 		
 		void* GetPaintContext();
 		//Add a font from file. Name is the name that will be used later to use that font

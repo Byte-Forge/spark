@@ -19,7 +19,7 @@ namespace spark
 		vec4<unsigned int> box;
 	};
 
-    class IElement
+    class IElement : protected std::enable_shared_from_this<IElement>
     {
     public:
         IElement();
@@ -62,10 +62,10 @@ namespace spark
 		float GetBorderRadius() { return m_border_radius; }
 		void SetBorderRadius(float border_radius) { m_border_radius = border_radius; }
 
-		void SetFunction(std::function<void()> func) { m_function = func; }
-
+		void SetFunction(std::function<void(std::shared_ptr<IElement>)> func) { m_function = func; }
+ 
 	protected:
-		std::function<void()> m_function;
+		std::function<void(std::shared_ptr<IElement>)> m_function;
 
 		vec4<unsigned int> m_margin; // top, right, bottom, left
 		vec4<unsigned int> m_padding; // top, right, bottom, left

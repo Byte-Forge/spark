@@ -63,7 +63,8 @@ void IButton::Update(Mouse mouse)
 			&& mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
 		{
 			if (m_border_radius == 0)
-				m_function();
+				m_function(shared_from_this());
+
 			//test for the 4 rounded corners
 			else
 			{
@@ -76,28 +77,28 @@ void IButton::Update(Mouse mouse)
 				{
 					if (mouse_pos.distance(upperLeft) <= m_border_radius)
 					{
-						m_function();
+						m_function(shared_from_this());
 					}
 				}
 				else if (mouse_pos.x > upperRight.x && mouse_pos.y < upperRight.y)
 				{
 					if (mouse_pos.distance(upperRight) <= m_border_radius)
 					{
-						m_function();
+						m_function(shared_from_this());
 					}
 				}
 				else if (mouse_pos.x < lowerLeft.x && mouse_pos.y > lowerLeft.y)
 				{
 					if (mouse_pos.distance(lowerLeft) <= m_border_radius)
 					{
-						m_function();
+						m_function(shared_from_this());
 					}
 				}
 				else if (mouse_pos.x > lowerRight.x && mouse_pos.y > lowerRight.y)
 				{
 					if (mouse_pos.distance(lowerRight) <= m_border_radius)
 					{
-						m_function();
+						m_function(shared_from_this());
 					}
 				}
 			}

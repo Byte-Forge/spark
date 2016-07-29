@@ -40,7 +40,7 @@ std::shared_ptr<View> Core::CreateView(const unsigned int width, const unsigned 
 	return m_views.back();
 }
 
-std::shared_ptr<View> Core::CreateView(const unsigned int width, const unsigned int height, const std::string &file, std::map<std::string, std::function<void()>> &functions)
+std::shared_ptr<View> Core::CreateView(const unsigned int width, const unsigned int height, const std::string &file, std::map<std::string, std::function<void(std::shared_ptr<IElement>)>> &functions)
 {
 	std::shared_ptr<View> view = std::make_shared<View>(width, height);
 	m_views.push_back(view);
@@ -54,7 +54,7 @@ std::shared_ptr<View> Core::CreateView(const unsigned int width, const unsigned 
 	m_fps->SetBorderSize(0.0);
 	m_fps->SetBackgroundColor(vec4<unsigned int>(255, 0, 0, 255));
 	m_fps->SetFontSize(26.0f);
-	m_fps->SetFont("ui/fonts\Delicious-Bold.otf"); //get the paths from the engine
+	m_fps->SetFont("ui/fonts/Delicious-Bold.otf"); //get the paths from the engine
 	m_fps->SetFunction(functions["get_fps"]);
 	element->AddChildren(m_fps);
 
