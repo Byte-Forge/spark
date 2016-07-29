@@ -10,7 +10,8 @@ find_package(OpenGL REQUIRED)
 
 find_package(Freetype REQUIRED)
 
-add_library(${LIB_NAME} button.cpp
+add_library(${LIB_NAME} util.hpp
+                        button.cpp
                         core.cpp
                         element.cpp
                         container.cpp

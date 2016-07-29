@@ -40,55 +40,6 @@ std::shared_ptr<View> Core::CreateView(const unsigned int width, const unsigned 
 	return m_views.back();
 }
 
-std::shared_ptr<View> Core::CreateView(const unsigned int width, const unsigned int height, const std::string &file, std::map<std::string, std::function<void(std::shared_ptr<IElement>)>> &functions)
-{
-	std::shared_ptr<View> view = std::make_shared<View>(width, height);
-	m_views.push_back(view);
-
-	// TODO: parse a view file here instead
-
-	auto element = std::make_shared<Grid>();
-
-	m_fps = std::make_shared<ILabel>();
-	m_fps->SetText("testest");
-	m_fps->SetBorderSize(0.0);
-	m_fps->SetBackgroundColor(vec4<unsigned int>(255, 0, 0, 255));
-	m_fps->SetFontSize(26.0f);
-	m_fps->SetFont("ui/fonts/Delicious-Bold.otf"); //get the paths from the engine
-	m_fps->SetFunction(functions["get_fps"]);
-	element->AddChildren(m_fps);
-
-	m_renderedTris = std::make_shared<ILabel>();
-	m_renderedTris->SetText("testetest");
-	m_renderedTris->SetFontSize(26.0f);
-	m_renderedTris->SetBorderSize(0.0);
-	m_renderedTris->SetBackgroundColor(vec4<unsigned int>(0, 0, 0, 0));
-	m_renderedTris->SetFont("ui/fonts/Delicious-Bold.otf");
-	m_fps->SetFunction(functions["get_rendered_polygons"]);
-	m_renderedTris->SetMargin(vec4<unsigned int>(30, 0, 0, 0));
-	element->AddChildren(m_renderedTris);
-
-
-	m_decrease_brush_button = std::make_shared<IButton>("ui/buttons/decrease_brush_width.png");
-	m_decrease_brush_button->SetFunction(functions["decrease_brush"]);
-	m_decrease_brush_button->SetWidth(50);
-	m_decrease_brush_button->SetHeight(50);
-	m_decrease_brush_button->SetBorderRadius(25);
-	m_decrease_brush_button->SetMargin(vec4<unsigned int>(0, 0, 0, 750));
-	m_decrease_brush_button->SetBackgroundColor(vec4<unsigned int>(255, 0, 0, 255));
-	element->AddChildren(m_decrease_brush_button);
-
-	m_image = std::make_shared<IImage>("ui/gondor.png");
-	m_image->SetWidth(400);
-	m_image->SetHeight(250);
-	m_image->SetMargin(vec4<unsigned int>(350, 0, 0, 0));
-	element->AddChildren(m_image);
-
-	view->SetRoot(element);
-
-	return m_views.back();
-}
-
 void* Core::GetPaintContext()
 {
 	return m_private->nvg_context;
@@ -110,4 +61,15 @@ bool Core::AddFont(const std::string& name, const uint8_t* memory, const int siz
 		return false;
 	else
 		return true;
+}
+
+std::function<void(std::shared_ptr<spark::IElement>)> Core::GetFunction(std::string &name)
+{
+	const auto& it = m_functions.find(name);
+	if (it == m_functions.end())
+	{
+		std::cout << "WARNING!: no function defined for: " + name << std::endl;
+		return [](std::shared_ptr<spark::IElement> e) { std::cout << "WARNING!: no function defined for this element" << std::endl; };
+	}
+	return m_functions[name];
 }

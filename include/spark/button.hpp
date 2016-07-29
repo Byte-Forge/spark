@@ -10,11 +10,12 @@ namespace spark
 	{
 	public:
 		IButton();
-		IButton(const std::string& imgFile);
 	
         void OnPaint(const PaintEvent& ev,const Dimension& box);
         void OnInitialize();
 		void Update(Mouse mouse);
+
+		void SetImage(const std::string& imgFile);
 
 	private:
 		vec4<unsigned int> m_border_box;

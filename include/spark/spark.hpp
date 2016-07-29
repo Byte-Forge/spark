@@ -9,3 +9,4 @@
 #include "input.hpp"
 #include "button.hpp"
 #include "image.hpp"
+#include "xmlbuilder.hpp"

@@ -9,11 +9,6 @@ IButton::IButton() : IElement()
 	
 }
 
-IButton::IButton(const std::string& imgFile) : IElement()
-{
-	m_image = std::make_shared<IImage>(imgFile);
-}
-
 void IButton::OnInitialize()
 {
 	//make sure the border radius is not too big
@@ -104,4 +99,10 @@ void IButton::Update(Mouse mouse)
 			}
 		}
 	}
+}
+
+void IButton::SetImage(const std::string& imgFile)
+{
+	m_image = std::make_shared<IImage>();
+	m_image->SetImage(imgFile);
 }

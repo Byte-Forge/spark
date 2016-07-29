@@ -4,7 +4,7 @@
 
 using namespace spark;
 
-IImage::IImage(const std::string& file) : m_file(file), IElement()
+IImage::IImage() : IElement()
 {
 	m_bg_color = vec4<unsigned int>(0, 0, 0, 0);
 }
@@ -35,6 +35,11 @@ void IImage::OnPaint(const PaintEvent& ev, const Dimension& box)
 		if (m_image == -1)
 		{
 			m_image = nvgCreateImage(vg, m_file.c_str(), 0); 
+			int x;
+			if (m_width == 0)
+				nvgImageSize(vg, m_image, &m_width, &x);
+			if (m_height == 0)
+				nvgImageSize(vg, m_image, &x, &m_height);
 		}
 
 		float alpha = 1.0f;
@@ -48,3 +53,9 @@ void IImage::Update(Mouse mouse)
 {
 
 }
+
+void IImage::SetImage(const std::string& imgFile)
+{
+	m_file = imgFile;
+}
+

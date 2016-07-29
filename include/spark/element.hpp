@@ -72,8 +72,8 @@ namespace spark
 		
 		int m_index; // how deep is element
 		
-		float m_width;
-		float m_height;
+		int m_width;
+		int m_height;
 		
 		float m_border_size;
 		vec4<unsigned int> m_border_color;
