@@ -19,11 +19,13 @@ add_library(${LIB_NAME} button.cpp
                         image.cpp
                         input.cpp
                         label.cpp
+                        xmlbuilder.cpp
                         flextGL.c
-                        ../deps/nanovg/src/nanovg.c)
+                        ../deps/nanovg/src/nanovg.c
+                        ../deps/pugixml/src/pugixml.cpp)
 
 target_link_libraries(${LIB_NAME} ${OPENGL_LIBRARIES} ${FREETYPE_LIBRARIES})
-target_include_directories(${LIB_NAME} PRIVATE ../deps/nanovg/src ${FREETYPE_INCLUDE_DIRS})
+target_include_directories(${LIB_NAME} PRIVATE ../deps/nanovg/src ../deps/pugixml/src ${FREETYPE_INCLUDE_DIRS})
 target_include_directories(${LIB_NAME} PUBLIC ../include)
 
 set_property(TARGET ${LIB_NAME} PROPERTY CXX_STANDARD 14)
