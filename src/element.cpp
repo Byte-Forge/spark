@@ -15,10 +15,10 @@ void IElement::CalcPosition(const Dimension& box)
 {
 	m_position = vec2<unsigned int>(box.box.x + m_margin.w, box.box.y + m_margin.x);
 
-	if (m_width > box.box.z)
-		m_width = box.box.z;
-	if (m_height > box.box.w)
-		m_height = box.box.w;
+	if ((m_width + m_margin.y + m_margin.w) > box.box.z)
+		m_width = box.box.z - m_margin.y - m_margin.w;
+	if ((m_height + m_margin.x + m_margin.z) > box.box.w)
+		m_height = box.box.w - m_margin.x - m_margin.z;
 
 	if (m_horizontalAlignment == LEFT)
 	{
@@ -34,7 +34,7 @@ void IElement::CalcPosition(const Dimension& box)
 	}
 	else if(m_horizontalAlignment == STRETCH)
 	{
-		m_width = box.box.z;
+		m_width = box.box.z - m_margin.y - m_margin.w;
 	}
 
 	if (m_verticalAlignment == TOP)
@@ -51,7 +51,7 @@ void IElement::CalcPosition(const Dimension& box)
 	}
 	else if (m_verticalAlignment == STRETCH)
 	{
-		m_height = box.box.w;
+		m_height = box.box.w - m_margin.x - m_margin.z;
 	}
 
 	m_box.box = vec4<unsigned int>(m_position.x, m_position.y, m_width, m_height);

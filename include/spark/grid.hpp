@@ -6,6 +6,8 @@ namespace spark
 	class Grid : public IContainer
 	{
 	public:
+		Grid();
+
 		virtual void OnPaint(const PaintEvent& ev,const Dimension& dim);
 		virtual void OnInitialize();
 		virtual void Update(Mouse mouse);

@@ -28,7 +28,15 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		std::string name = attrib->name();
 		std::string value = attrib->value();
 
-		if (name == "function")
+		if (name == "name")
+		{
+			//not implemented yet, used for setVisible function etc
+		}
+		else if (name == "visible")
+		{
+			element->SetVisible(attrib->as_bool());
+		}
+		else if (name == "function")
 		{
 			element->SetFunction(core->GetFunction(value));
 		}
@@ -39,7 +47,7 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		}
 		else if (name == "borderSize")
 		{
-			element->SetBorderSize(std::stof(value));
+			element->SetBorderSize(attrib->as_float());
 		}
 		else if (name == "backgroundColor")
 		{
@@ -48,11 +56,11 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		}
 		else if (name == "width")
 		{
-			element->SetWidth(std::stoi(value));
+			element->SetWidth(attrib->as_int());
 		}
 		else if (name == "height")
 		{
-			element->SetHeight(std::stoi(value));
+			element->SetHeight(attrib->as_int());
 		}
 		else if (name == "verticalAlignment")
 		{
@@ -96,6 +104,11 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		{
 			std::dynamic_pointer_cast<ILabel> (element)->SetFont(value);
 		}
+		else if (name == "fontColor" && type == "label")
+		{
+			std::vector<std::string> vals = split(value, ',');
+			std::dynamic_pointer_cast<ILabel> (element)->SetFontColor(vec4<unsigned int>(std::stoi(vals[0]), std::stoi(vals[1]), std::stoi(vals[2]), std::stoi(vals[3])));
+		}
 
 		///////////////////////////////// BUTTON /////////////////////////////////////////////
 		else if (name == "image" && type == "button")
@@ -114,6 +127,44 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		}
 	}
 	return true;
+}
+
+std::shared_ptr<IContainer> ParseContainer(std::shared_ptr<Core> core, pugi::xml_node_iterator container_node)
+{
+	auto container = std::make_shared<Grid>();
+	if (!ParseAttributes(core, container_node, container))
+		return nullptr;
+	for (pugi::xml_node_iterator element_node = container_node->begin(); element_node != container_node->end(); ++element_node)
+	{
+		std::string element_type = element_node->name();
+		if (element_type == "grid")
+		{
+			container->AddChildren(ParseContainer(core, element_node));
+		}
+		else if (element_type == "label")
+		{
+			auto element = std::make_shared<ILabel>();
+			if (!ParseAttributes(core, element_node, element))
+				return nullptr;
+			element->SetText(element_node->child_value());
+			container->AddChildren(element);
+		}
+		else if (element_type == "button")
+		{
+			auto element = std::make_shared<IButton>();
+			if (!ParseAttributes(core, element_node, element))
+				return nullptr;
+			container->AddChildren(element);
+		}
+		else if (element_type == "image")
+		{
+			auto element = std::make_shared<IImage>();
+			if (!ParseAttributes(core, element_node, element))
+				return nullptr;
+			container->AddChildren(element);
+		}
+	}
+	return container;
 }
 
 std::shared_ptr<View> XMLBuilder::LoadView(const unsigned int width, const unsigned int height, const std::string &file)
@@ -136,34 +187,10 @@ std::shared_ptr<View> XMLBuilder::LoadView(const unsigned int width, const unsig
 		view = m_core->CreateView(width, height);
 		for (pugi::xml_node_iterator container_node = view_node->begin(); container_node != view_node->end(); ++container_node)
 		{
-			auto container = std::make_shared<Grid>();
-			for (pugi::xml_node_iterator element_node = container_node->begin(); element_node != container_node->end(); ++element_node)
-			{
-				std::string element_type = element_node->name();
-				if (element_type == "label")
-				{
-					auto element = std::make_shared<ILabel>();
-					if (!ParseAttributes(m_core, element_node, element))
-						return nullptr;
-					element->SetText(element_node->child_value());
-					container->AddChildren(element);
-				}
-				else if (element_type == "button")
-				{
-					auto element = std::make_shared<IButton>();
-					if (!ParseAttributes(m_core, element_node, element))
-						return nullptr;
-					container->AddChildren(element);
-				}
-				else if (element_type == "image")
-				{
-					auto element = std::make_shared<IImage>();
-					if (!ParseAttributes(m_core, element_node, element))
-						return nullptr;
-					container->AddChildren(element);
-				}
-			}
-			view->SetRoot(container);
+			auto container = ParseContainer(m_core, container_node);
+			if (container == nullptr)
+				return nullptr;
+			view->SetRoot(ParseContainer(m_core, container_node));
 		}
 	}
 	return view;

@@ -7,6 +7,8 @@ namespace spark
 	class IContainer : public IElement
 	{
 	public:
+		IContainer();
+
 		void AddChildren(std::shared_ptr<IElement> child)
 		{
 			child->OnInitialize();

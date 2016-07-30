@@ -3,6 +3,11 @@
 #include <iostream>
 using namespace spark;
 
+Grid::Grid() : IContainer()
+{
+
+}
+
 void Grid::OnInitialize()
 {
 
@@ -10,15 +15,16 @@ void Grid::OnInitialize()
 
 void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
 {
-	//Draw the grid background etc.
 	NVGcontext* vg = static_cast<NVGcontext*>(ev.context);
 
-	nvgBeginPath(vg);
-	nvgRect(vg, dim.box.x, dim.box.y, dim.box.z, dim.box.w);
-	nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
-	//nvgFill(vg); //-> causes white background bug at children
+	CalcPosition(dim);
 
-	PaintChildren(ev, dim);
+	nvgBeginPath(vg);
+	nvgRect(vg, m_box.box.x, m_box.box.y, m_box.box.z, m_box.box.w);
+	nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
+	nvgFill(vg); 
+
+	PaintChildren(ev, m_box);
 }
 
 void Grid::Update(Mouse mouse)

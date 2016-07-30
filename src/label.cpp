@@ -20,12 +20,6 @@ void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
 	{
 		NVGcontext* vg = static_cast<NVGcontext*>(ev.context);
 		
-		// m_margin, m_padding:
-		// x - up
-		// y - right
-		// z - bottom
-		// w -left
-	
 		m_width = m_text.length() * m_size * 0.4 + m_padding.w + m_padding.y; 
 		m_height = m_size + m_padding.x + m_padding.z;
 
