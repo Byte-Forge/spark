@@ -20,7 +20,7 @@ XMLBuilder::~XMLBuilder()
 
 }
 
-void ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element_node, std::shared_ptr<IElement> element)
+bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element_node, std::shared_ptr<IElement> element)
 {
 	std::string type = element_node->name();
 	for (pugi::xml_attribute_iterator attrib = element_node->attributes_begin(); attrib != element_node->attributes_end(); ++attrib)
@@ -54,6 +54,38 @@ void ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		{
 			element->SetHeight(std::stoi(value));
 		}
+		else if (name == "verticalAlignment")
+		{
+			if (value == "top")
+				element->SetVerticalAlignment(TOP);
+			else if (value == "bottom")
+				element->SetVerticalAlignment(BOTTOM);
+			else if (value == "center")
+				element->SetVerticalAlignment(CENTER);
+			else if (value == "stretch")
+				element->SetVerticalAlignment(STRETCH);
+			else
+			{
+				std::cout << "WARNING! " << value << " is not valid for horizontal alignment: (top, bottom, center, stretch)" << std::endl;
+				return false;
+			}
+		}
+		else if (name == "horizontalAlignment")
+		{
+			if (value == "left")
+				element->SetHorizontalAlignment(LEFT);
+			else if (value == "right")
+				element->SetHorizontalAlignment(RIGHT);
+			else if (value == "center")
+				element->SetHorizontalAlignment(CENTER);
+			else if (value == "stretch")
+				element->SetHorizontalAlignment(STRETCH);
+			else
+			{
+				std::cout << "WARNING! " << value << " is not valid for horizontal alignment: (left, right, center, stretch)" << std::endl;
+				return false;
+			}
+		}
 
 		///////////////////////////////// LABEL /////////////////////////////////////////////
 		else if (name == "fontSize" && type == "label")
@@ -81,6 +113,7 @@ void ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 			std::dynamic_pointer_cast<IImage> (element)->SetImage(value);
 		}
 	}
+	return true;
 }
 
 std::shared_ptr<View> XMLBuilder::LoadView(const unsigned int width, const unsigned int height, const std::string &file)
@@ -110,20 +143,23 @@ std::shared_ptr<View> XMLBuilder::LoadView(const unsigned int width, const unsig
 				if (element_type == "label")
 				{
 					auto element = std::make_shared<ILabel>();
-					ParseAttributes(m_core, element_node, element);
+					if (!ParseAttributes(m_core, element_node, element))
+						return nullptr;
 					element->SetText(element_node->child_value());
 					container->AddChildren(element);
 				}
 				else if (element_type == "button")
 				{
 					auto element = std::make_shared<IButton>();
-					ParseAttributes(m_core, element_node, element);
+					if (!ParseAttributes(m_core, element_node, element))
+						return nullptr;
 					container->AddChildren(element);
 				}
 				else if (element_type == "image")
 				{
 					auto element = std::make_shared<IImage>();
-					ParseAttributes(m_core, element_node, element);
+					if (!ParseAttributes(m_core, element_node, element))
+						return nullptr;
 					container->AddChildren(element);
 				}
 			}

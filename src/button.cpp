@@ -15,13 +15,6 @@ void IButton::OnInitialize()
 	int min = (m_width > m_height) ? m_height : m_width;
 	if (m_border_radius > min)
 		m_border_radius = min;
-
-	if (m_image != nullptr)
-	{
-		m_image->SetWidth(m_width);
-		m_image->SetHeight(m_height);
-		m_image->SetMargin(m_margin);
-	}
 }
 
 void IButton::OnPaint(const PaintEvent& ev, const Dimension& box)
@@ -30,16 +23,16 @@ void IButton::OnPaint(const PaintEvent& ev, const Dimension& box)
 	{
 		NVGcontext* vg = static_cast<NVGcontext*>(ev.context);
 
-		vec2<unsigned int> position(box.box.x + m_margin.w, box.box.y + m_margin.x);
-		m_border_box = vec4<unsigned int>(position.x, position.y, m_width, m_height);
+		CalcPosition(box);
+
 		nvgBeginPath(vg);
-		nvgRoundedRect(vg, m_border_box.x, m_border_box.y, m_border_box.z, m_border_box.w, m_border_radius);
+		nvgRoundedRect(vg, m_box.box.x, m_box.box.y, m_box.box.z, m_box.box.w, m_border_radius);
 		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
 		nvgFill(vg);
 
 		if (m_image != nullptr)
 		{
-			m_image->OnPaint(ev, box);
+			m_image->OnPaint(ev, m_box);
 		}
 
 		nvgStrokeColor(vg, nvgRGBA(m_border_color.x, m_border_color.y, m_border_color.z, m_border_color.w));
@@ -53,8 +46,8 @@ void IButton::Update(Mouse mouse)
 	if (m_visible)
 	{
 		vec2<int> mouse_pos = mouse.GetMousePosition();
-		if (mouse_pos.x >= m_border_box.x && mouse_pos.x <= (m_border_box.x + m_border_box.z)
-			&& mouse_pos.y >= m_border_box.y && mouse_pos.y <= (m_border_box.y + m_border_box.w)
+		if (mouse_pos.x >= m_box.box.x && mouse_pos.x <= (m_box.box.x + m_box.box.z)
+			&& mouse_pos.y >= m_box.box.y && mouse_pos.y <= (m_box.box.y + m_box.box.w)
 			&& mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
 		{
 			if (m_border_radius == 0)
@@ -63,10 +56,10 @@ void IButton::Update(Mouse mouse)
 			//test for the 4 rounded corners
 			else
 			{
-				vec2<int> upperLeft = vec2<int>(m_border_box.x + m_border_radius, m_border_box.y + m_border_radius);
-				vec2<int> upperRight = vec2<int>(m_border_box.x + m_border_box.z - m_border_radius, m_border_box.y + m_border_radius);
-				vec2<int> lowerLeft = vec2<int>(m_border_box.x + m_border_radius, m_border_box.y + m_border_box.w - m_border_radius);
-				vec2<int> lowerRight = vec2<int>(m_border_box.x + m_border_box.z - m_border_radius, m_border_box.y + m_border_box.w - m_border_radius);
+				vec2<int> upperLeft = vec2<int>(m_box.box.x + m_border_radius, m_box.box.y + m_border_radius);
+				vec2<int> upperRight = vec2<int>(m_box.box.x + m_box.box.z - m_border_radius, m_box.box.y + m_border_radius);
+				vec2<int> lowerLeft = vec2<int>(m_box.box.x + m_border_radius, m_box.box.y + m_box.box.w - m_border_radius);
+				vec2<int> lowerRight = vec2<int>(m_box.box.x + m_box.box.z - m_border_radius, m_box.box.y + m_box.box.w - m_border_radius);
 
 				if (mouse_pos.x < upperLeft.x && mouse_pos.y < upperLeft.y)
 				{

@@ -18,7 +18,7 @@ void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
 	nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
 	//nvgFill(vg); //-> causes white background bug at children
 
-	PaintChildren(ev,dim);
+	PaintChildren(ev, dim);
 }
 
 void Grid::Update(Mouse mouse)

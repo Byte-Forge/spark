@@ -8,6 +8,16 @@
 
 namespace spark
 {
+	enum Alignment
+	{
+		LEFT,
+		RIGHT,
+		TOP,
+		BOTTOM,
+		CENTER,
+		STRETCH
+	};
+
 	struct PaintEvent
 	{
 		void* context;
@@ -24,7 +34,7 @@ namespace spark
     public:
         IElement();
        
-        virtual void OnPaint(const PaintEvent& ev,const Dimension& box) = 0;
+        virtual void OnPaint(const PaintEvent& ev, const Dimension& box) = 0;
 		virtual void Update(Mouse mouse) = 0;
 
 		virtual void OnInitialize() = 0;
@@ -43,6 +53,9 @@ namespace spark
 		
 		float GetHeight() { return m_height; }
 		void SetHeight(const float height) { m_height = height; }
+
+		void SetHorizontalAlignment(Alignment ha) { m_horizontalAlignment = ha; }
+		void SetVerticalAlignment(Alignment va) { m_verticalAlignment = va; }
 		
 		bool IsVisible() { return m_visible; }
 		void SetVisible(const bool visible) { m_visible = visible; }
@@ -63,12 +76,17 @@ namespace spark
 		void SetBorderRadius(float border_radius) { m_border_radius = border_radius; }
 
 		void SetFunction(std::function<void(std::shared_ptr<IElement>)> func) { m_function = func; }
+
+		void CalcPosition(const Dimension& box);
  
 	protected:
 		std::function<void(std::shared_ptr<IElement>)> m_function;
 
+		vec2<unsigned int> m_position;
 		vec4<unsigned int> m_margin; // top, right, bottom, left
 		vec4<unsigned int> m_padding; // top, right, bottom, left
+		Alignment m_horizontalAlignment;
+		Alignment m_verticalAlignment;
 		
 		int m_index; // how deep is element
 		
@@ -76,9 +94,10 @@ namespace spark
 		int m_height;
 		
 		float m_border_size;
+		float m_border_radius;
+		Dimension m_box;
 		vec4<unsigned int> m_border_color;
 		vec4<unsigned int> m_bg_color;
-		float m_border_radius;
 		
 		bool m_visible;
     };

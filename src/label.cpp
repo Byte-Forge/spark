@@ -25,17 +25,15 @@ void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
 		// y - right
 		// z - bottom
 		// w -left
-
-		vec2<unsigned int> position(box.box.x + m_margin.w, box.box.y + m_margin.x + m_size*0.5f);
-		vec2<unsigned int> text_position(position.x + m_padding.w, position.y + m_padding.x);
 	
-		m_width = m_text.length() * m_size *0.4 + m_margin.w + m_margin.y;
-		m_height = m_size + 1 + m_margin.x + m_margin.z;
-		
-		vec4<unsigned int> border_box(position.x, position.y - m_size*0.5f, m_width, m_height);
+		m_width = m_text.length() * m_size * 0.4 + m_padding.w + m_padding.y; 
+		m_height = m_size + m_padding.x + m_padding.z;
 
+		CalcPosition(box);
+		m_position.y += m_size * 0.5f;
+		
 		nvgBeginPath(vg);
-		nvgRoundedRect(vg, border_box.x , border_box.y, border_box.z, border_box.w, m_border_radius);
+		nvgRoundedRect(vg, m_box.box.x , m_box.box.y, m_box.box.z, m_box.box.w, m_border_radius);
 		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
 		nvgFill(vg);
 
@@ -48,7 +46,7 @@ void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
 		nvgFillColor(vg, nvgRGBA(m_font_color.x, m_font_color.y, m_font_color.z, m_font_color.w));
 
 		nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
-		nvgText(vg, text_position.x, text_position.y, m_text.c_str(), NULL);
+		nvgText(vg, m_position.x, m_position.y, m_text.c_str(), NULL);
 	}
 }
 

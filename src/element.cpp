@@ -1,9 +1,58 @@
 #include <spark/element.hpp>
+#include <iostream>
+
 using namespace spark;
 
-IElement::IElement() : m_margin(0),m_padding(0), m_index(0), m_width(0), m_height(0), 
+IElement::IElement() : m_margin(0), m_padding(0), m_index(0), m_width(0), m_height(0),
+m_horizontalAlignment(LEFT), m_verticalAlignment(TOP),
 m_border_size(0), m_border_color(0,0,0,255), m_border_radius(0), m_visible(true),
 m_bg_color(255, 255, 255, 255), m_function([](std::shared_ptr<IElement> e) { })
 {
 
+}
+
+void IElement::CalcPosition(const Dimension& box)
+{
+	m_position = vec2<unsigned int>(box.box.x + m_margin.w, box.box.y + m_margin.x);
+
+	if (m_width > box.box.z)
+		m_width = box.box.z;
+	if (m_height > box.box.w)
+		m_height = box.box.w;
+
+	if (m_horizontalAlignment == LEFT)
+	{
+		//LEFT is default, do nothing
+	}
+	else if (m_horizontalAlignment == RIGHT)
+	{
+		m_position.x = box.box.z - m_width - m_margin.y;
+	}
+	else if (m_horizontalAlignment == CENTER)
+	{
+		m_position.x = box.box.z/2 - m_width/2;
+	}
+	else if(m_horizontalAlignment == STRETCH)
+	{
+		m_width = box.box.z;
+	}
+
+	if (m_verticalAlignment == TOP)
+	{
+		//TOP is default, do nothin
+	}
+	else if (m_verticalAlignment == BOTTOM)
+	{
+		m_position.y = box.box.w - m_height - m_margin.z;
+	}
+	else if (m_verticalAlignment == CENTER)
+	{
+		m_position.y = box.box.w/2 - m_height/2;
+	}
+	else if (m_verticalAlignment == STRETCH)
+	{
+		m_height = box.box.w;
+	}
+
+	m_box.box = vec4<unsigned int>(m_position.x, m_position.y, m_width, m_height);
 }

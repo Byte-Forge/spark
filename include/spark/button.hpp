@@ -18,7 +18,6 @@ namespace spark
 		void SetImage(const std::string& imgFile);
 
 	private:
-		vec4<unsigned int> m_border_box;
 		std::shared_ptr<IImage> m_image;
 	};
 }
