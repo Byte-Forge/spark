@@ -182,16 +182,19 @@ std::shared_ptr<View> XMLBuilder::LoadView(const unsigned int width, const unsig
 	}
 
 	std::shared_ptr<View> view;
-	for (pugi::xml_node_iterator view_node = doc.begin(); view_node != doc.end(); ++view_node)
+	// TODO: throw error if too many root containers defined
+	for (pugi::xml_node_iterator container_node = doc.begin(); container_node != doc.end(); ++container_node)
 	{
 		view = m_core->CreateView(width, height);
-		for (pugi::xml_node_iterator container_node = view_node->begin(); container_node != view_node->end(); ++container_node)
+		auto container = std::make_shared<Grid>();
+		for (pugi::xml_node_iterator child_container_node = container_node->begin(); child_container_node != container_node->end(); ++child_container_node)
 		{
-			auto container = ParseContainer(m_core, container_node);
-			if (container == nullptr)
+			auto child_container = ParseContainer(m_core, child_container_node);
+			if (child_container == nullptr)
 				return nullptr;
-			view->SetRoot(ParseContainer(m_core, container_node));
+			container->AddChildren(child_container);
 		}
+		view->SetRoot(container);
 	}
 	return view;
 }

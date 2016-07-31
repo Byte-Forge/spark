@@ -26,11 +26,11 @@ void IElement::CalcPosition(const Dimension& box)
 	}
 	else if (m_horizontalAlignment == RIGHT)
 	{
-		m_position.x = box.box.z - m_width - m_margin.y;
+		m_position.x = box.box.x + box.box.z - m_width - m_margin.y;
 	}
 	else if (m_horizontalAlignment == CENTER)
 	{
-		m_position.x = box.box.z/2 - m_width/2;
+		m_position.x = box.box.x + box.box.z/2 - m_width/2;
 	}
 	else if(m_horizontalAlignment == STRETCH)
 	{
@@ -43,11 +43,11 @@ void IElement::CalcPosition(const Dimension& box)
 	}
 	else if (m_verticalAlignment == BOTTOM)
 	{
-		m_position.y = box.box.w - m_height - m_margin.z;
+		m_position.y = box.box.y + box.box.w - m_height - m_margin.z;
 	}
 	else if (m_verticalAlignment == CENTER)
 	{
-		m_position.y = box.box.w/2 - m_height/2;
+		m_position.y =box.box.y + box.box.w/2 - m_height/2;
 	}
 	else if (m_verticalAlignment == STRETCH)
 	{

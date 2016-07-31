@@ -19,12 +19,15 @@ void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
 
 	CalcPosition(dim);
 
-	nvgBeginPath(vg);
-	nvgRect(vg, m_box.box.x, m_box.box.y, m_box.box.z, m_box.box.w);
-	nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
-	nvgFill(vg); 
+	if (m_visible)
+	{
+		nvgBeginPath(vg);
+		nvgRect(vg, m_box.box.x, m_box.box.y, m_box.box.z, m_box.box.w);
+		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
+		nvgFill(vg);
 
-	PaintChildren(ev, m_box);
+		PaintChildren(ev, m_box);
+	}
 }
 
 void Grid::Update(Mouse mouse)
