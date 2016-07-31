@@ -26,7 +26,7 @@ void IButton::OnPaint(const PaintEvent& ev, const Dimension& box)
 		CalcPosition(box);
 
 		nvgBeginPath(vg);
-		nvgRoundedRect(vg, m_box.box.x, m_box.box.y, m_box.box.z, m_box.box.w, m_border_radius);
+		nvgRoundedRect(vg, m_box.x, m_box.y, m_box.width, m_box.height, m_border_radius);
 		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
 		nvgFill(vg);
 
@@ -46,8 +46,8 @@ void IButton::Update(Mouse mouse)
 	if (m_visible)
 	{
 		vec2<int> mouse_pos = mouse.GetMousePosition();
-		if (mouse_pos.x >= m_box.box.x && mouse_pos.x <= (m_box.box.x + m_box.box.z)
-			&& mouse_pos.y >= m_box.box.y && mouse_pos.y <= (m_box.box.y + m_box.box.w)
+		if (mouse_pos.x >= m_box.x && mouse_pos.x <= (m_box.x + m_box.width)
+			&& mouse_pos.y >= m_box.y && mouse_pos.y <= (m_box.y + m_box.height)
 			&& mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
 		{
 			if (m_border_radius == 0)
@@ -56,10 +56,10 @@ void IButton::Update(Mouse mouse)
 			//test for the 4 rounded corners
 			else
 			{
-				vec2<int> upperLeft = vec2<int>(m_box.box.x + m_border_radius, m_box.box.y + m_border_radius);
-				vec2<int> upperRight = vec2<int>(m_box.box.x + m_box.box.z - m_border_radius, m_box.box.y + m_border_radius);
-				vec2<int> lowerLeft = vec2<int>(m_box.box.x + m_border_radius, m_box.box.y + m_box.box.w - m_border_radius);
-				vec2<int> lowerRight = vec2<int>(m_box.box.x + m_box.box.z - m_border_radius, m_box.box.y + m_box.box.w - m_border_radius);
+				vec2<int> upperLeft = vec2<int>(m_box.x + m_border_radius, m_box.y + m_border_radius);
+				vec2<int> upperRight = vec2<int>(m_box.x + m_box.width - m_border_radius, m_box.y + m_border_radius);
+				vec2<int> lowerLeft = vec2<int>(m_box.x + m_border_radius, m_box.y + m_box.height - m_border_radius);
+				vec2<int> lowerRight = vec2<int>(m_box.x + m_box.width - m_border_radius, m_box.y + m_box.height - m_border_radius);
 
 				if (mouse_pos.x < upperLeft.x && mouse_pos.y < upperLeft.y)
 				{

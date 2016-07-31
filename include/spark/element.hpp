@@ -26,7 +26,11 @@ namespace spark
 
 	struct Dimension
 	{
-		vec4<unsigned int> box;
+		//vec 4 just makes things more complicated
+		int x;
+		int y;
+		unsigned int width;
+		unsigned int height;
 	};
 
     class IElement : protected std::enable_shared_from_this<IElement>
@@ -82,7 +86,7 @@ namespace spark
 	protected:
 		std::function<void(std::shared_ptr<IElement>)> m_function;
 
-		vec2<unsigned int> m_position;
+		vec2<int> m_position;
 		vec4<unsigned int> m_margin; // top, right, bottom, left
 		vec4<unsigned int> m_padding; // top, right, bottom, left
 		Alignment m_horizontalAlignment;
@@ -90,8 +94,8 @@ namespace spark
 		
 		int m_index; // how deep is element
 		
-		int m_width;
-		int m_height;
+		unsigned int m_width;
+		unsigned int m_height;
 		
 		float m_border_size;
 		float m_border_radius;

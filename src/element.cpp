@@ -13,12 +13,12 @@ m_bg_color(255, 255, 255, 255), m_function([](std::shared_ptr<IElement> e) { })
 
 void IElement::CalcPosition(const Dimension& box)
 {
-	m_position = vec2<unsigned int>(box.box.x + m_margin.w, box.box.y + m_margin.x);
+	m_position = vec2<int>(box.x + m_margin.w, box.y + m_margin.x);
 
-	if ((m_width + m_margin.y + m_margin.w) > box.box.z)
-		m_width = box.box.z - m_margin.y - m_margin.w;
-	if ((m_height + m_margin.x + m_margin.z) > box.box.w)
-		m_height = box.box.w - m_margin.x - m_margin.z;
+	if ((m_width + m_margin.y + m_margin.w) > box.width)
+		m_width = box.width - m_margin.y - m_margin.w;
+	if ((m_height + m_margin.x + m_margin.z) > box.height)
+		m_height = box.height - m_margin.x - m_margin.z;
 
 	if (m_horizontalAlignment == LEFT)
 	{
@@ -26,15 +26,15 @@ void IElement::CalcPosition(const Dimension& box)
 	}
 	else if (m_horizontalAlignment == RIGHT)
 	{
-		m_position.x = box.box.x + box.box.z - m_width - m_margin.y;
+		m_position.x = box.x + box.width - m_width - m_margin.y;
 	}
 	else if (m_horizontalAlignment == CENTER)
 	{
-		m_position.x = box.box.x + box.box.z/2 - m_width/2;
+		m_position.x = box.x + box.width/2 - m_width/2;
 	}
 	else if(m_horizontalAlignment == STRETCH)
 	{
-		m_width = box.box.z - m_margin.y - m_margin.w;
+		m_width = box.width - m_margin.y - m_margin.w;
 	}
 
 	if (m_verticalAlignment == TOP)
@@ -43,16 +43,16 @@ void IElement::CalcPosition(const Dimension& box)
 	}
 	else if (m_verticalAlignment == BOTTOM)
 	{
-		m_position.y = box.box.y + box.box.w - m_height - m_margin.z;
+		m_position.y = box.y + box.height - m_height - m_margin.z;
 	}
 	else if (m_verticalAlignment == CENTER)
 	{
-		m_position.y =box.box.y + box.box.w/2 - m_height/2;
+		m_position.y =box.y + box.height/2 - m_height/2;
 	}
 	else if (m_verticalAlignment == STRETCH)
 	{
-		m_height = box.box.w - m_margin.x - m_margin.z;
+		m_height = box.height - m_margin.x - m_margin.z;
 	}
 
-	m_box.box = vec4<unsigned int>(m_position.x, m_position.y, m_width, m_height);
+	m_box = { m_position.x, m_position.y, m_width, m_height };
 }

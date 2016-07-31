@@ -27,7 +27,7 @@ void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
 		m_position.y += m_size * 0.5f;
 		
 		nvgBeginPath(vg);
-		nvgRoundedRect(vg, m_box.box.x , m_box.box.y, m_box.box.z, m_box.box.w, m_border_radius);
+		nvgRoundedRect(vg, m_box.x , m_box.y, m_box.width, m_box.height, m_border_radius);
 		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
 		nvgFill(vg);
 

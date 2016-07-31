@@ -20,7 +20,7 @@ void View::Render(const PaintEvent& ev)
 {
 	nvgBeginFrame((NVGcontext*)ev.context, m_width, m_height,ev.ratio);
 	Dimension dim = Dimension();
-	dim.box = vec4<unsigned int>(0, 0, m_width, m_height);
+	dim = { 0, 0, m_width, m_height };
 	m_root->OnPaint(ev, dim);
 	nvgEndFrame((NVGcontext*)ev.context);
 }

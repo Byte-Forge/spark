@@ -1,20 +1,19 @@
-#include <spark/grid.hpp>
+#include <spark/stackpanel.hpp>
 #include <nanovg.h>
-#include <iostream>
 
 using namespace spark;
 
-Grid::Grid() : IContainer()
+StackPanel::StackPanel() : m_orientation(VERTICAL), IContainer()
 {
 
 }
 
-void Grid::OnInitialize()
+void StackPanel::OnInitialize()
 {
 
 }
 
-void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
+void StackPanel::OnPaint(const PaintEvent& ev, const Dimension& dim)
 {
 	NVGcontext* vg = static_cast<NVGcontext*>(ev.context);
 
@@ -27,11 +26,13 @@ void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
 		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
 		nvgFill(vg);
 
+		//calc the box dimension of a child
+		Dimension child_box;
 		PaintChildren(ev, m_box);
 	}
 }
 
-void Grid::Update(Mouse mouse)
+void StackPanel::Update(Mouse mouse)
 {
 	for (const auto& child : m_children)
 	{
@@ -39,12 +40,10 @@ void Grid::Update(Mouse mouse)
 	}
 }
 
-void Grid::PaintChildren(const PaintEvent& ev, const Dimension& dim)
+void StackPanel::PaintChildren(const PaintEvent& ev, const Dimension& dim)
 {
 	for (const auto& child : m_children)
 	{
-		//Calculate dimensions from margin and padding
-		
 		child->OnPaint(ev, dim);
 	}
 }

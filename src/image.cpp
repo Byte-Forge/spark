@@ -28,22 +28,28 @@ void IImage::OnPaint(const PaintEvent& ev, const Dimension& box)
 		if (m_image == -1)
 		{
 			m_image = nvgCreateImage(vg, m_file.c_str(), 0); 
-			int x;
+			int width, height;
 			if (m_width == 0)
-				nvgImageSize(vg, m_image, &m_width, &x);
+			{
+				nvgImageSize(vg, m_image, &width, &height);
+				m_width = width;
+			}
 			if (m_height == 0)
-				nvgImageSize(vg, m_image, &x, &m_height);
+			{
+				nvgImageSize(vg, m_image, &width, &height);
+				m_height = height;
+			}
 		}
 
 		CalcPosition(box);
 
 		nvgBeginPath(vg);
-		nvgRect(vg, m_box.box.x, m_box.box.y, m_box.box.z, m_box.box.w);
+		nvgRect(vg, m_box.x, m_box.y, m_box.width, m_box.height);
 		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
 		nvgFill(vg);
 
 		float alpha = 1.0f;
-		NVGpaint imgPaint = nvgImagePattern(vg, m_box.box.x, m_box.box.y, m_box.box.z, m_box.box.w, 0.0f, m_image, alpha);
+		NVGpaint imgPaint = nvgImagePattern(vg, m_box.x, m_box.y, m_box.width, m_box.height, 0.0f, m_image, alpha);
 		nvgFillPaint(vg, imgPaint);
 		nvgFill(vg);
 	}
