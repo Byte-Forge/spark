@@ -15,6 +15,13 @@ void IElement::CalcPosition(const Dimension& box)
 {
 	m_position = vec2<int>(box.x + m_margin.w, box.y + m_margin.x);
 
+	if (m_width == 0)
+	{
+		m_width = box.width;
+	}
+	if (m_height == 0)
+		m_height = box.height;
+
 	if ((m_width + m_margin.y + m_margin.w) > box.width)
 		m_width = box.width - m_margin.y - m_margin.w;
 	if ((m_height + m_margin.x + m_margin.z) > box.height)

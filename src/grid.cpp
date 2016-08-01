@@ -11,7 +11,8 @@ Grid::Grid() : IContainer()
 
 void Grid::OnInitialize()
 {
-
+	for (auto child : m_children)
+		child->OnInitialize();
 }
 
 void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)

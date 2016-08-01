@@ -2,6 +2,7 @@
 #include <spark/button.hpp>
 #include <spark/label.hpp>
 #include <spark/grid.hpp>
+#include <spark/stackpanel.hpp>
 #include <pugixml.hpp>
 #include <iostream>
 #include <algorithm>
@@ -95,6 +96,20 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 			}
 		}
 
+		///////////////////////////////// STACKPANEL ////////////////////////////////////////
+		else if (name == "orientation" && type == "stackpanel")
+		{
+			if (value == "vertical")
+				std::dynamic_pointer_cast<StackPanel> (element)->SetOrientation(VERTICAL);
+			else if (value == "horizontal")
+				std::dynamic_pointer_cast<StackPanel> (element)->SetOrientation(HORIZONTAL);
+			else
+			{
+				std::cout << "WARNING! " << value << " is not valid for stackpanel orientation: (vertical, horizontal)" << std::endl;
+				return false;
+			}
+		}
+
 		///////////////////////////////// LABEL /////////////////////////////////////////////
 		else if (name == "fontSize" && type == "label")
 		{
@@ -131,13 +146,19 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 
 std::shared_ptr<IContainer> ParseContainer(std::shared_ptr<Core> core, pugi::xml_node_iterator container_node)
 {
-	auto container = std::make_shared<Grid>();
+	std::string container_type = container_node->name();
+	std::shared_ptr<IContainer> container;
+	if (container_type == "grid")
+		container = std::make_shared<Grid>();
+	else if (container_type == "stackpanel")
+		container = std::make_shared<StackPanel>();
+
 	if (!ParseAttributes(core, container_node, container))
 		return nullptr;
 	for (pugi::xml_node_iterator element_node = container_node->begin(); element_node != container_node->end(); ++element_node)
 	{
 		std::string element_type = element_node->name();
-		if (element_type == "grid")
+		if (element_type == "grid" || element_type == "stackpanel")
 		{
 			container->AddChildren(ParseContainer(core, element_node));
 		}
