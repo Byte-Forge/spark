@@ -9,9 +9,9 @@ KeyboardCode Keyboard::m_key_pressed;
 
 void Mouse::ToReleased()
 {
-	for (auto &it = m_mouseInputs.begin(); it != m_mouseInputs.end(); it++)
+	for (auto input : m_mouseInputs)
 	{
-		if (it->second == JUST_RELEASED)
-			it->second = RELEASED;
+		if (input.second == JUST_RELEASED)
+			input.second = RELEASED;
 	}
 }
