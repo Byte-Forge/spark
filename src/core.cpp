@@ -27,6 +27,9 @@ Core::Core(const bool initGL)
 	#else
 	m_private->nvg_context = nvgCreateGL2(NVG_ANTIALIAS | NVG_STENCIL_STROKES);
 	#endif
+
+	std::string func_name = "get_fps"; 
+	AddFunction(func_name, [](std::shared_ptr<spark::IElement> e) {  });
 }
 
 Core::~Core()
@@ -72,4 +75,33 @@ std::function<void(std::shared_ptr<spark::IElement>)> Core::GetFunction(std::str
 		return [](std::shared_ptr<spark::IElement> e) { std::cout << "WARNING!: no function defined for this element" << std::endl; };
 	}
 	return m_functions[name];
+}
+
+std::shared_ptr<IElement> Core::GetNamedElement(std::string &name)
+{
+	std::cout << "test!" << std::endl;
+	const auto& it = m_namedElements.find(name);
+	if (it == m_namedElements.end())
+	{
+		std::cout << "WARNING!: no element with name " << name << " found! " << std::endl;
+		return nullptr;
+	}
+	else
+	{
+		std::cout << "test" << std::endl;
+		return m_namedElements[name];
+	}
+}
+
+std::shared_ptr<IElement> Core::GetNamedElement(std::string name)
+{
+	const auto& it = m_namedElements.find(name);
+	if (it == m_namedElements.end())
+	{
+		std::cout << "WARNING!: no element with name " << name << " found! " << std::endl;
+	}
+	else
+	{
+		return m_namedElements[name];
+	}
 }

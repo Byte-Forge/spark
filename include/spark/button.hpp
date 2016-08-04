@@ -2,6 +2,7 @@
 #include <string>
 #include "element.hpp"
 #include "image.hpp"
+#include "label.hpp"
 
 
 namespace spark
@@ -16,8 +17,10 @@ namespace spark
 		void Update(Mouse mouse);
 
 		void SetImage(const std::string& imgFile);
+		void SetLabel(const std::string& text);
 
 	private:
 		std::shared_ptr<IImage> m_image;
+		std::shared_ptr<ILabel> m_label;
 	};
 }

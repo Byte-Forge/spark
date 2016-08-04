@@ -27,26 +27,17 @@ namespace spark
 		//Add a font from memory. Name is the name that will be used later to use that font
 		bool AddFont(const std::string& name, const uint8_t* memory, const int size);
 
-		void AddFunction(std::string &name, std::function<void(std::shared_ptr<spark::IElement>)> func) { m_functions[name] = func; }
+		void AddFunction(std::string name, std::function<void(std::shared_ptr<spark::IElement>)> func) { m_functions[name] = func; }
 		std::function<void(std::shared_ptr<spark::IElement>)> GetFunction(std::string &name);
+
+		void AddNamedElement(std::string &name, std::shared_ptr<IElement> e) { m_namedElements[name] = e; }
+		std::shared_ptr<IElement> GetNamedElement(std::string &name);
+		std::shared_ptr<IElement> GetNamedElement(std::string name);
 
     private:
 		std::map<std::string, std::function<void(std::shared_ptr<spark::IElement>)>> m_functions;
+		std::map<std::string, std::shared_ptr<IElement>> m_namedElements;
         std::vector<std::shared_ptr<View>> m_views;
 		std::unique_ptr<priv> m_private;
-
-		////ui stuff
-		std::shared_ptr<ILabel> m_fps;
-		std::shared_ptr<ILabel> m_renderedTris;
-		std::shared_ptr<IButton> m_decrease_brush_button;
-		std::shared_ptr<IButton> m_increase_brush_button;
-		std::shared_ptr<IButton> m_decrease_brush_height_button;
-		std::shared_ptr<IButton> m_increase_brush_height_button;
-
-		std::shared_ptr<IButton> m_terrain_mode_button;
-		std::shared_ptr<IButton> m_texture_mode_button;
-		std::shared_ptr<IButton> m_entity_mode_button;
-
-		std::shared_ptr<IImage> m_image;
     };
 };

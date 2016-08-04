@@ -13,39 +13,40 @@ StackPanel::StackPanel() : IContainer()
 
 void StackPanel::OnInitialize()
 {
+	if (m_children.size() == 0)
+		return;
+
+	m_childWidth = m_width / m_children.size();
+	m_childHeight = m_height / m_children.size();
 	if (m_orientation == HORIZONTAL)
 	{
 		int id = 0;
-		int width = m_width / m_children.size();
-		for (auto child : m_children)
+		for (const auto &child : m_children)
 		{
 			child->SetVerticalAlignment(STRETCH);
-			child->SetWidth(width);
-			child->GetMargin();
-			child->SetMargin(child->GetMargin() + vec4<unsigned int>(0, width * id, 0, 0));
+			child->SetWidth(m_childWidth);
+			child->SetMargin(child->GetMargin() + vec4<unsigned int>(0, m_childWidth * id, 0, 0));
 			child->OnInitialize();
 			id++;
 		}
 	}
 	else //default VERTICAL
 	{
-		for (auto child : m_children)
+		int id = 0;
+		for (const auto &child : m_children)
 		{
-			int id = 0;
-			int height = m_height / m_children.size();
-			for (auto child : m_children)
-			{
-				child->SetHorizontalAlignment(STRETCH);
-				child->SetHeight(height);
-				child->OnInitialize();
-				id++;
-			}
+			child->SetHorizontalAlignment(STRETCH);
+			child->SetHeight(m_childHeight);
+			child->SetMargin(child->GetMargin() + vec4<unsigned int>(0, 0, m_childHeight * id, 0));
+			child->OnInitialize();
+			id++;
 		}
 	}
 }
 
 void StackPanel::OnPaint(const PaintEvent& ev, const Dimension& dim)
 {
+	// TODO: render the child in the order they are added to the panel
 	NVGcontext* vg = static_cast<NVGcontext*>(ev.context);
 
 	CalcPosition(dim);
@@ -54,10 +55,16 @@ void StackPanel::OnPaint(const PaintEvent& ev, const Dimension& dim)
 	{
 		nvgBeginPath(vg);
 		nvgRect(vg, m_box.x, m_box.y, m_box.width, m_box.height);
-		nvgFillColor(vg, nvgRGBA(255, m_bg_color.y, m_bg_color.z, 255));
+		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
 		nvgFill(vg);
 
-		PaintChildren(ev, m_box);
+		if (m_image != nullptr)
+		{
+			m_image->OnPaint(ev, m_box);
+		}
+
+		if (m_children.size() > 0)
+			PaintChildren(ev, m_box);
 	}
 }
 
@@ -76,15 +83,13 @@ void StackPanel::PaintChildren(const PaintEvent& ev, const Dimension& dim)
 	{
 		if (m_orientation == HORIZONTAL)
 		{
-			int width = m_width / m_children.size();
-			Dimension d = { m_box.x + id * width, m_box.y, m_box.width, m_box.height };
+			Dimension d = { m_box.x + id * m_childWidth, m_box.y, m_box.width, m_box.height };
 			child->OnPaint(ev, d);
 			id++;
 		}
 		else //default VERTICAL
 		{
-			int height = m_height / m_children.size();
-			Dimension d = { m_box.x, m_box.y + id * height, m_box.width, m_box.height };
+			Dimension d = { m_box.x, m_box.y + id * m_childHeight, m_box.width, m_box.height };
 			child->OnPaint(ev, d);
 			id++;
 		}

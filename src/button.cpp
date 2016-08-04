@@ -11,10 +11,7 @@ IButton::IButton() : IElement()
 
 void IButton::OnInitialize()
 {
-	//make sure the border radius is not too big
-	int min = (m_width > m_height) ? m_height : m_width;
-	if (m_border_radius > min)
-		m_border_radius = min;
+
 }
 
 void IButton::OnPaint(const PaintEvent& ev, const Dimension& box)
@@ -33,6 +30,10 @@ void IButton::OnPaint(const PaintEvent& ev, const Dimension& box)
 		if (m_image != nullptr)
 		{
 			m_image->OnPaint(ev, m_box);
+		}
+		if (m_label != nullptr)
+		{
+			m_label->OnPaint(ev, m_box);
 		}
 
 		nvgStrokeColor(vg, nvgRGBA(m_border_color.x, m_border_color.y, m_border_color.z, m_border_color.w));
@@ -98,4 +99,17 @@ void IButton::SetImage(const std::string& imgFile)
 {
 	m_image = std::make_shared<IImage>();
 	m_image->SetImage(imgFile);
+	m_image->SetHorizontalAlignment(CENTER);
+	m_image->SetVerticalAlignment(CENTER);
+}
+
+void IButton::SetLabel(const std::string& text)
+{
+	m_label = std::make_shared<ILabel>();
+	m_label->SetText(text);
+	m_label->SetFontSize(26);
+	m_label->SetFontColor(spark::vec4<unsigned int>(150, 150, 200, 200));
+	m_label->SetFont("ui/fonts\\ringbearer.TTF");
+	m_label->SetHorizontalAlignment(CENTER);
+	m_label->SetVerticalAlignment(CENTER);
 }

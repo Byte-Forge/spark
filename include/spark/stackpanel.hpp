@@ -1,5 +1,6 @@
 #pragma once
-#include <vector>
+#include <iostream>
+#include <unordered_set>
 #include <spark/container.hpp>
 
 namespace spark
@@ -11,7 +12,7 @@ namespace spark
 	};
 
 	class StackPanel : public IContainer
-	{
+	{ 
 	public:
 		StackPanel();
 
@@ -26,6 +27,8 @@ namespace spark
 
 	private:
 		int m_childWidth;
+		int m_childHeight;
 		Orientation m_orientation;
+
 	};
 }

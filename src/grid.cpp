@@ -28,6 +28,11 @@ void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
 		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
 		nvgFill(vg);
 
+		if (m_image != nullptr)
+		{
+			m_image->OnPaint(ev, m_box);
+		}
+
 		PaintChildren(ev, m_box);
 	}
 }

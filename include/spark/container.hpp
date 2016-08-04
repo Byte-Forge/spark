@@ -1,5 +1,6 @@
 #pragma once
 #include "element.hpp"
+#include "image.hpp"
 #include "vector.hpp"
 
 namespace spark
@@ -19,8 +20,11 @@ namespace spark
 			return m_children;
 		}
 
+		void SetImage(const std::string& imgFile);
+
 	protected:
+		std::shared_ptr<IImage> m_image;
 		virtual void PaintChildren(const PaintEvent& ev, const Dimension& dim) = 0;
-		std::set<std::shared_ptr<IElement>> m_children;
+		std::set<std::shared_ptr<IElement>> m_children; //do sth to order these for stackpanel etc
 	};
 }

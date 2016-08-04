@@ -31,7 +31,8 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 
 		if (name == "name")
 		{
-			//not implemented yet, used for setVisible function etc
+			element->SetName(value);
+			core->AddNamedElement(value, element);
 		}
 		else if (name == "visible")
 		{
@@ -62,6 +63,10 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		else if (name == "height")
 		{
 			element->SetHeight(attrib->as_int());
+		}
+		else if (name == "borderRadius")
+		{
+			element->SetBorderRadius(std::stoi(value));
 		}
 		else if (name == "verticalAlignment")
 		{
@@ -94,6 +99,12 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 				std::cout << "WARNING! " << value << " is not valid for horizontal alignment: (left, right, center, stretch)" << std::endl;
 				return false;
 			}
+		}
+
+		///////////////////////////////// CONTAINER ////////////////////////////////////////
+		else if (name == "image" && (type == "grid" || type == "stackpanel"))
+		{
+			std::dynamic_pointer_cast<IContainer> (element)->SetImage(value);
 		}
 
 		///////////////////////////////// STACKPANEL ////////////////////////////////////////
@@ -130,9 +141,9 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		{
 			std::dynamic_pointer_cast<IButton> (element)->SetImage(value);
 		}
-		else if (name == "borderRadius" && type == "button")
+		else if (name == "text" && type == "button")
 		{
-			std::dynamic_pointer_cast<IButton> (element)->SetBorderRadius(std::stoi(value));
+			std::dynamic_pointer_cast<IButton> (element)->SetLabel(value);
 		}
 
 		///////////////////////////////// IMAGE /////////////////////////////////////////////

@@ -2,6 +2,7 @@
 #include <memory>
 #include <set>
 #include <map>
+#include <string>
 #include <functional>
 #include "vector.hpp"
 #include "input.hpp"
@@ -83,7 +84,11 @@ namespace spark
 
 		void CalcPosition(const Dimension& box);
  
+		void SetName(const std::string &name) { m_name = name; }
+		std::string GetName() { return m_name; }
+
 	protected:
+		std::string m_name;
 		std::function<void(std::shared_ptr<IElement>)> m_function;
 
 		vec2<int> m_position;
