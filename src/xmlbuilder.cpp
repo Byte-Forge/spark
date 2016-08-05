@@ -11,6 +11,9 @@
 
 using namespace spark;
 
+std::shared_ptr<Grid> ParseGrid(std::shared_ptr<Core> core, pugi::xml_node_iterator grid_node);
+std::shared_ptr<StackPanel> ParseStackPanel(std::shared_ptr<Core> core, pugi::xml_node_iterator stackpanel_node);
+
 XMLBuilder::XMLBuilder(std::shared_ptr<Core> &core) : m_core(core)
 {
 
@@ -101,12 +104,6 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 			}
 		}
 
-		///////////////////////////////// CONTAINER ////////////////////////////////////////
-		else if (name == "image" && (type == "grid" || type == "stackpanel"))
-		{
-			std::dynamic_pointer_cast<IContainer> (element)->SetImage(value);
-		}
-
 		///////////////////////////////// STACKPANEL ////////////////////////////////////////
 		else if (name == "orientation" && type == "stackpanel")
 		{
@@ -122,32 +119,26 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		}
 
 		///////////////////////////////// LABEL /////////////////////////////////////////////
-		else if (name == "fontSize" && type == "label")
+		else if (name == "text" && (type == "label" || type == "button.label"))
+		{
+			std::dynamic_pointer_cast<ILabel> (element)->SetText(value);
+		}
+		else if (name == "fontSize" && (type == "label" || type == "button.label"))
 		{
 			std::dynamic_pointer_cast<ILabel> (element)->SetFontSize(std::stof(value));
 		}
-		else if (name == "font" && type == "label")
+		else if (name == "font" && (type == "label" || type == "button.label"))
 		{
 			std::dynamic_pointer_cast<ILabel> (element)->SetFont(value);
 		}
-		else if (name == "fontColor" && type == "label")
+		else if (name == "fontColor" && (type == "label" || type == "button.label"))
 		{
 			std::vector<std::string> vals = split(value, ',');
 			std::dynamic_pointer_cast<ILabel> (element)->SetFontColor(vec4<unsigned int>(std::stoi(vals[0]), std::stoi(vals[1]), std::stoi(vals[2]), std::stoi(vals[3])));
 		}
 
-		///////////////////////////////// BUTTON /////////////////////////////////////////////
-		else if (name == "image" && type == "button")
-		{
-			std::dynamic_pointer_cast<IButton> (element)->SetImage(value);
-		}
-		else if (name == "text" && type == "button")
-		{
-			std::dynamic_pointer_cast<IButton> (element)->SetLabel(value);
-		}
-
 		///////////////////////////////// IMAGE /////////////////////////////////////////////
-		else if (name == "image" && type == "image")
+		else if (name == "file" && (type == "image" || type == "grid.image" || type == "stackpanel.image" || type == "button.image"))
 		{
 			std::dynamic_pointer_cast<IImage> (element)->SetImage(value);
 		}
@@ -155,48 +146,118 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 	return true;
 }
 
-std::shared_ptr<IContainer> ParseContainer(std::shared_ptr<Core> core, pugi::xml_node_iterator container_node)
+std::shared_ptr<IImage> ParseImage(std::shared_ptr<Core> core, pugi::xml_node_iterator image_node)
 {
-	std::string container_type = container_node->name();
-	std::shared_ptr<IContainer> container;
-	if (container_type == "grid")
-		container = std::make_shared<Grid>();
-	else if (container_type == "stackpanel")
-		container = std::make_shared<StackPanel>();
+	std::shared_ptr<IImage> image = std::make_shared<IImage>();
 
-	if (!ParseAttributes(core, container_node, container))
+	if (!ParseAttributes(core, image_node, image))
 		return nullptr;
-	for (pugi::xml_node_iterator element_node = container_node->begin(); element_node != container_node->end(); ++element_node)
+	return image;
+}
+
+std::shared_ptr<ILabel> ParseLabel(std::shared_ptr<Core> core, pugi::xml_node_iterator label_node)
+{
+	std::shared_ptr<ILabel> label = std::make_shared<ILabel>();
+
+	if (!ParseAttributes(core, label_node, label))
+		return nullptr;
+	return label;
+}
+
+std::shared_ptr<IButton> ParseButton(std::shared_ptr<Core> core, pugi::xml_node_iterator button_node)
+{
+	std::shared_ptr<IButton> button = std::make_shared<IButton>();
+
+	if (!ParseAttributes(core, button_node, button))
+		return nullptr;
+	for (pugi::xml_node_iterator element_node = button_node->begin(); element_node != button_node->end(); ++element_node)
 	{
 		std::string element_type = element_node->name();
-		if (element_type == "grid" || element_type == "stackpanel")
+		if (element_type == "button.label")
 		{
-			container->AddChildren(ParseContainer(core, element_node));
+			button->SetLabel(ParseLabel(core, element_node));
 		}
-		else if (element_type == "label")
+		else if (element_type == "button.image")
 		{
-			auto element = std::make_shared<ILabel>();
-			if (!ParseAttributes(core, element_node, element))
-				return nullptr;
-			element->SetText(element_node->child_value());
-			container->AddChildren(element);
+			button->SetImage(ParseImage(core, element_node));
+		}
+	}
+	return button;
+}
+
+std::shared_ptr<StackPanel> ParseStackPanel(std::shared_ptr<Core> core, pugi::xml_node_iterator stackpanel_node)
+{
+	std::shared_ptr<StackPanel> stackpanel = std::make_shared<StackPanel>();
+
+	if (!ParseAttributes(core, stackpanel_node, stackpanel))
+		return nullptr;
+	for (pugi::xml_node_iterator element_node = stackpanel_node->begin(); element_node != stackpanel_node->end(); ++element_node)
+	{
+		std::string element_type = element_node->name();
+		if (element_type == "stackpanel.image")
+		{
+			stackpanel->SetImage(ParseImage(core, element_node));
+		}
+		else if (element_type == "grid")
+		{
+			stackpanel->AddChildren(ParseGrid(core, element_node));
+		}
+		else if (element_type == "stackpanel")
+		{
+			stackpanel->AddChildren(ParseStackPanel(core, element_node));
 		}
 		else if (element_type == "button")
 		{
-			auto element = std::make_shared<IButton>();
-			if (!ParseAttributes(core, element_node, element))
-				return nullptr;
-			container->AddChildren(element);
+			stackpanel->AddChildren(ParseButton(core, element_node));
+		}
+		else if (element_type == "label")
+		{
+			stackpanel->AddChildren(ParseLabel(core, element_node));
 		}
 		else if (element_type == "image")
 		{
-			auto element = std::make_shared<IImage>();
-			if (!ParseAttributes(core, element_node, element))
-				return nullptr;
-			container->AddChildren(element);
+			stackpanel->AddChildren(ParseImage(core, element_node));
 		}
 	}
-	return container;
+	return stackpanel;
+}
+
+
+std::shared_ptr<Grid> ParseGrid(std::shared_ptr<Core> core, pugi::xml_node_iterator grid_node)
+{
+	std::shared_ptr<Grid> grid = std::make_shared<Grid>();
+
+	if (!ParseAttributes(core, grid_node, grid))
+		return nullptr;
+	for (pugi::xml_node_iterator element_node = grid_node->begin(); element_node != grid_node->end(); ++element_node)
+	{
+		std::string element_type = element_node->name();
+		if (element_type == "grid.image")
+		{
+			grid->SetImage(ParseImage(core, element_node));
+		}
+		else if (element_type == "grid")
+		{
+			grid->AddChildren(ParseGrid(core, element_node));
+		}
+		else if (element_type == "stackpanel")
+		{
+			grid->AddChildren(ParseStackPanel(core, element_node));
+		}
+		else if (element_type == "button")
+		{
+			grid->AddChildren(ParseButton(core, element_node));
+		}
+		else if (element_type == "label")
+		{
+			grid->AddChildren(ParseLabel(core, element_node));
+		}
+		else if (element_type == "image")
+		{
+			grid->AddChildren(ParseImage(core, element_node));
+		}
+	}
+	return grid;
 }
 
 std::shared_ptr<View> XMLBuilder::LoadView(const unsigned int width, const unsigned int height, const std::string &file)
@@ -219,14 +280,15 @@ std::shared_ptr<View> XMLBuilder::LoadView(const unsigned int width, const unsig
 	{
 		view = m_core->CreateView(width, height);
 		auto container = std::make_shared<Grid>();
-		for (pugi::xml_node_iterator child_container_node = container_node->begin(); child_container_node != container_node->end(); ++child_container_node)
+		std::string container_type = container_node->name();
+		if (container_type == "grid")
 		{
-			auto child_container = ParseContainer(m_core, child_container_node);
-			if (child_container == nullptr)
-				return nullptr;
-			container->AddChildren(child_container);
+			view->SetRoot(ParseGrid(m_core, container_node));
 		}
-		view->SetRoot(container);
+		else if (container_type == "stackpanel")
+		{
+			view->SetRoot(ParseStackPanel(m_core, container_node));
+		}
 	}
 	return view;
 }

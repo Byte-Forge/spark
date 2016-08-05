@@ -97,21 +97,16 @@ void IButton::Update(Mouse mouse)
 	}
 }
 
-void IButton::SetImage(const std::string& imgFile)
+void IButton::SetImage(std::shared_ptr<IImage> image)
 {
-	m_image = std::make_shared<IImage>();
-	m_image->SetImage(imgFile);
+	m_image = image;
 	m_image->SetHorizontalAlignment(CENTER);
 	m_image->SetVerticalAlignment(CENTER);
 }
 
-void IButton::SetLabel(const std::string& text)
+void IButton::SetLabel(std::shared_ptr<ILabel> label)
 {
-	m_label = std::make_shared<ILabel>();
-	m_label->SetText(text);
-	m_label->SetFontSize(16);
-	m_label->SetFontColor(spark::vec4<unsigned int>(150, 150, 200, 200));
-	m_label->SetFont("ui/fonts\\ringbearer.TTF");
+	m_label = label;
 	m_label->SetHorizontalAlignment(CENTER);
 	m_label->SetVerticalAlignment(CENTER);
 }

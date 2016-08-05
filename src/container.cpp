@@ -9,10 +9,9 @@ IContainer::IContainer() : IElement()
 	m_bg_color = vec4<unsigned int>(0, 0, 0, 0);
 }
 
-void IContainer::SetImage(const std::string& imgFile)
+void IContainer::SetImage(std::shared_ptr<IImage> image)
 {
-	m_image = std::make_shared<IImage>();
-	m_image->SetImage(imgFile);
-	m_image->SetHorizontalAlignment(STRETCH);
-	m_image->SetVerticalAlignment(STRETCH);
+	m_image = image;
+	m_image->SetHorizontalAlignment(CENTER);
+	m_image->SetVerticalAlignment(CENTER);
 }

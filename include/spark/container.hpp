@@ -21,7 +21,7 @@ namespace spark
 			return m_children;
 		}
 
-		void SetImage(const std::string& imgFile);
+		void SetImage(std::shared_ptr<IImage> image);
 
 	protected:
 		std::shared_ptr<IImage> m_image;

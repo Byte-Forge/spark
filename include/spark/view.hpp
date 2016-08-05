@@ -23,6 +23,7 @@ namespace spark
 	private:
 		std::shared_ptr<IContainer> m_root;
 		unsigned int m_width, m_height;
+		Dimension m_dim;
 
 		Mouse m_mouse;
 		Keyboard m_keyboard;

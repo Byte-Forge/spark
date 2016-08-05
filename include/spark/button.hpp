@@ -16,8 +16,8 @@ namespace spark
         void OnInitialize();
 		void Update(Mouse mouse);
 
-		void SetImage(const std::string& imgFile);
-		void SetLabel(const std::string& text);
+		void SetImage(std::shared_ptr<IImage> image);
+		void SetLabel(std::shared_ptr<ILabel> label);
 
 	private:
 		std::shared_ptr<IImage> m_image;
