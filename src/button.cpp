@@ -52,7 +52,9 @@ void IButton::Update(Mouse mouse)
 			&& mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
 		{
 			if (m_border_radius == 0)
+			{
 				m_function(shared_from_this());
+			}
 
 			//test for the 4 rounded corners
 			else
@@ -107,7 +109,7 @@ void IButton::SetLabel(const std::string& text)
 {
 	m_label = std::make_shared<ILabel>();
 	m_label->SetText(text);
-	m_label->SetFontSize(26);
+	m_label->SetFontSize(16);
 	m_label->SetFontColor(spark::vec4<unsigned int>(150, 150, 200, 200));
 	m_label->SetFont("ui/fonts\\ringbearer.TTF");
 	m_label->SetHorizontalAlignment(CENTER);

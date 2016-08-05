@@ -2,6 +2,7 @@
 #include "element.hpp"
 #include "image.hpp"
 #include "vector.hpp"
+#include <list>
 
 namespace spark
 {
@@ -12,10 +13,10 @@ namespace spark
 
 		void AddChildren(std::shared_ptr<IElement> child)
 		{
-			m_children.insert(child);
+			m_children.push_back(child);
 		}
 
-		inline std::set<std::shared_ptr<IElement>> GetChildren()
+		inline std::list<std::shared_ptr<IElement>> GetChildren()
 		{
 			return m_children;
 		}
@@ -25,6 +26,6 @@ namespace spark
 	protected:
 		std::shared_ptr<IImage> m_image;
 		virtual void PaintChildren(const PaintEvent& ev, const Dimension& dim) = 0;
-		std::set<std::shared_ptr<IElement>> m_children; //do sth to order these for stackpanel etc
+		std::list<std::shared_ptr<IElement>> m_children; 
 	};
 }
