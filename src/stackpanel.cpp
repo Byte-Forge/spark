@@ -16,8 +16,9 @@ void StackPanel::OnInitialize()
 	if (m_children.size() == 0)
 		return;
 
-	m_childWidth = m_width / m_children.size();
-	m_childHeight = m_height / m_children.size();
+	m_childWidth = (int) (m_width / m_children.size());
+	m_childHeight = (int) (m_height / m_children.size());
+
 	if (m_orientation == HORIZONTAL)
 	{
 		int id = 0;

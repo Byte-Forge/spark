@@ -19,8 +19,8 @@ namespace spark
 		
 		void SetFontSize(float size) { m_size = size; }
 		float GetFontSize() { return m_size; }
-		
-		int GetLength() { return m_text.length(); }
+
+		unsigned long long GetLength() { return m_text.length(); }
 		
 		void SetFont(const std::string& font_name) { m_font = font_name; }
 		const std::string& GetFont() { return m_font;}
