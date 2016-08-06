@@ -23,6 +23,7 @@ add_library(${LIB_NAME} util.hpp
                         xmlbuilder.cpp
                         stackpanel.cpp
                         textbox.cpp
+                        checkbox.cpp
                         flextGL.c
                         ../deps/nanovg/src/nanovg.c
                         ../deps/pugixml/src/pugixml.cpp)

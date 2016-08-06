@@ -3,6 +3,7 @@
 #include <spark/label.hpp>
 #include <spark/grid.hpp>
 #include <spark/textbox.hpp>
+#include <spark/checkbox.hpp>
 #include <spark/stackpanel.hpp>
 #include <pugixml.hpp>
 #include <iostream>
@@ -200,6 +201,15 @@ std::shared_ptr<ILabel> ParseLabel(std::shared_ptr<Core> core, pugi::xml_node_it
 	return label;
 }
 
+std::shared_ptr<Checkbox> ParseCheckbox(std::shared_ptr<Core> core, pugi::xml_node_iterator checkbox_node)
+{
+	std::shared_ptr<Checkbox> checkbox = std::make_shared<Checkbox>();
+
+	if (!ParseAttributes(core, checkbox_node, checkbox))
+		return nullptr;
+	return checkbox;
+}
+
 std::shared_ptr<Textbox> ParseTextbox(std::shared_ptr<Core> core, pugi::xml_node_iterator textbox_node)
 {
 	std::shared_ptr<Textbox> textbox = std::make_shared<Textbox>();
@@ -275,6 +285,10 @@ std::shared_ptr<StackPanel> ParseStackPanel(std::shared_ptr<Core> core, pugi::xm
 		{
 			stackpanel->AddChildren(ParseTextbox(core, element_node));
 		}
+		else if (element_type == "checkbox")
+		{
+			stackpanel->AddChildren(ParseCheckbox(core, element_node));
+		}
 	}
 	return stackpanel;
 }
@@ -316,6 +330,10 @@ std::shared_ptr<Grid> ParseGrid(std::shared_ptr<Core> core, pugi::xml_node_itera
 		else if (element_type == "textbox")
 		{
 			grid->AddChildren(ParseTextbox(core, element_node));
+		}
+		else if (element_type == "checkbox")
+		{
+			grid->AddChildren(ParseCheckbox(core, element_node));
 		}
 	}
 	return grid;

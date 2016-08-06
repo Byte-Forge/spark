@@ -96,6 +96,8 @@ namespace spark
 		void SetColumnSpan(int span) { m_columnSpan = span; }
 		int GetColumnSpan() { return m_columnSpan; }
 
+		bool MouseOver(vec2<int> mouse_pos);
+
 	protected:
 		std::string m_name;
 		std::function<void(std::shared_ptr<IElement>)> m_function;

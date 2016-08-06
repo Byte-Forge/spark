@@ -58,7 +58,7 @@ void Grid::PaintChildren(const PaintEvent& ev, const Dimension& dim)
 {
 	for (const auto& child : m_children)
 	{
-		Dimension d = { m_box.x + child->GetGridColumn() * m_columnWidth, m_box.y + child->GetGridRow() * m_rowHeight, m_columnWidth * child->GetColumnSpan(), m_rowHeight * child->GetRowSpan() };
+		Dimension d = { m_box.x + child->GetGridColumn() * m_columnWidth, m_box.y + child->GetGridRow() * m_rowHeight, static_cast<unsigned int>(m_columnWidth * child->GetColumnSpan()), static_cast<unsigned int>(m_rowHeight * child->GetRowSpan()) };
 		child->OnPaint(ev, d);
 	}
 }

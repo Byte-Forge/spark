@@ -64,3 +64,58 @@ void IElement::CalcPosition(const Dimension& box)
 
 	m_box = { m_position.x, m_position.y, m_width, m_height };
 }
+
+bool IElement::MouseOver(vec2<int> mouse_pos)
+{
+	if (mouse_pos.x >= m_box.x && mouse_pos.x <= (m_box.x + m_box.width)
+		&& mouse_pos.y >= m_box.y && mouse_pos.y <= (m_box.y + m_box.height))
+	{
+		if (m_border_radius == 0)
+		{
+			return true;
+		}
+
+		//test for the 4 rounded corners
+		else
+		{
+			vec2<int> upperLeft = vec2<int>(m_box.x + m_border_radius, m_box.y + m_border_radius);
+			vec2<int> upperRight = vec2<int>(m_box.x + m_box.width - m_border_radius, m_box.y + m_border_radius);
+			vec2<int> lowerLeft = vec2<int>(m_box.x + m_border_radius, m_box.y + m_box.height - m_border_radius);
+			vec2<int> lowerRight = vec2<int>(m_box.x + m_box.width - m_border_radius, m_box.y + m_box.height - m_border_radius);
+
+			if (mouse_pos.x < upperLeft.x && mouse_pos.y < upperLeft.y)
+			{
+				if (mouse_pos.distance(upperLeft) <= m_border_radius)
+				{
+					return true;
+				}
+			}
+			else if (mouse_pos.x > upperRight.x && mouse_pos.y < upperRight.y)
+			{
+				if (mouse_pos.distance(upperRight) <= m_border_radius)
+				{
+					return true;
+				}
+			}
+			else if (mouse_pos.x < lowerLeft.x && mouse_pos.y > lowerLeft.y)
+			{
+				if (mouse_pos.distance(lowerLeft) <= m_border_radius)
+				{
+					return true;
+				}
+			}
+			else if (mouse_pos.x > lowerRight.x && mouse_pos.y > lowerRight.y)
+			{
+				if (mouse_pos.distance(lowerRight) <= m_border_radius)
+				{
+					return true;
+				}
+			}
+			else
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}

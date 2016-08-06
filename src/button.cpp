@@ -46,58 +46,9 @@ void IButton::Update(Mouse mouse)
 {
 	if (m_visible)
 	{
-		vec2<int> mouse_pos = mouse.GetMousePosition();
-		if (mouse_pos.x >= m_box.x && mouse_pos.x <= (m_box.x + m_box.width)
-			&& mouse_pos.y >= m_box.y && mouse_pos.y <= (m_box.y + m_box.height)
-			&& mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
+		if (MouseOver(mouse.GetMousePosition()) && mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
 		{
-			//sometimes very weird values for the box???
-			/*std::cout << "click" << std::endl;
-			std::cout << m_box.x << ", " << m_box.y << ", " << m_box.width << ", " << m_box.height << std::endl;
-			std::cout << mouse_pos.x << ", " << mouse_pos.y << std::endl;*/
-
-			if (m_border_radius == 0)
-			{
-				m_function(shared_from_this());
-			}
-
-			//test for the 4 rounded corners
-			else
-			{
-				vec2<int> upperLeft = vec2<int>(m_box.x + m_border_radius, m_box.y + m_border_radius);
-				vec2<int> upperRight = vec2<int>(m_box.x + m_box.width - m_border_radius, m_box.y + m_border_radius);
-				vec2<int> lowerLeft = vec2<int>(m_box.x + m_border_radius, m_box.y + m_box.height - m_border_radius);
-				vec2<int> lowerRight = vec2<int>(m_box.x + m_box.width - m_border_radius, m_box.y + m_box.height - m_border_radius);
-
-				if (mouse_pos.x < upperLeft.x && mouse_pos.y < upperLeft.y)
-				{
-					if (mouse_pos.distance(upperLeft) <= m_border_radius)
-					{
-						m_function(shared_from_this());
-					}
-				}
-				else if (mouse_pos.x > upperRight.x && mouse_pos.y < upperRight.y)
-				{
-					if (mouse_pos.distance(upperRight) <= m_border_radius)
-					{
-						m_function(shared_from_this());
-					}
-				}
-				else if (mouse_pos.x < lowerLeft.x && mouse_pos.y > lowerLeft.y)
-				{
-					if (mouse_pos.distance(lowerLeft) <= m_border_radius)
-					{
-						m_function(shared_from_this());
-					}
-				}
-				else if (mouse_pos.x > lowerRight.x && mouse_pos.y > lowerRight.y)
-				{
-					if (mouse_pos.distance(lowerRight) <= m_border_radius)
-					{
-						m_function(shared_from_this());
-					}
-				}
-			}
+			m_function(shared_from_this());
 		}
 	}
 }

@@ -19,7 +19,6 @@ namespace spark
 		void SetLabel(std::shared_ptr<ILabel> label);
 
 	private:
-		std::string m_text;
 		std::shared_ptr<ILabel> m_label;
 	};
 }

@@ -1,34 +1,35 @@
-#include <spark/textbox.hpp>
+#include <spark/checkbox.hpp>
 #include <nanovg.h>
 #include <iostream>
 
 using namespace spark;
 
-Textbox::Textbox() : IElement()
+Checkbox::Checkbox() : IElement()
 {
 	m_bg_color = vec4<unsigned int>(0, 0, 0, 100);
-	m_border_radius = 5;
+	m_border_radius = 12;
 	m_border_color = vec4<unsigned int>(0, 0, 0, 255);
 	m_border_size = 2;
 }
 
-Textbox::~Textbox()
+Checkbox::~Checkbox()
 {
 
 }
 
-void Textbox::OnInitialize()
+void Checkbox::OnInitialize()
 {
 
 }
 
-void Textbox::OnPaint(const PaintEvent& ev, const Dimension& box)
+void Checkbox::OnPaint(const PaintEvent& ev, const Dimension& box)
 {
 	if (m_visible)
 	{
 		NVGcontext* vg = static_cast<NVGcontext*>(ev.context);
 
 		CalcPosition(box);
+		//TODO: make square
 
 		nvgBeginPath(vg);
 		nvgRoundedRect(vg, m_box.x, m_box.y, m_box.width, m_box.height, m_border_radius);
@@ -38,22 +39,22 @@ void Textbox::OnPaint(const PaintEvent& ev, const Dimension& box)
 		nvgStrokeColor(vg, nvgRGBA(m_border_color.x, m_border_color.y, m_border_color.z, m_border_color.w));
 		nvgStrokeWidth(vg, m_border_size);
 		nvgStroke(vg);
-
-		if (m_label != nullptr)
-		{
-			m_label->OnPaint(ev, m_box);
-		}
 	}
 }
 
-void Textbox::Update(Mouse mouse) 
+void Checkbox::Update(Mouse mouse)
 {
-
-}
-
-void Textbox::SetLabel(std::shared_ptr<ILabel> label)
-{
-	m_label = label;
-	m_label->SetHorizontalAlignment(CENTER);
-	m_label->SetVerticalAlignment(CENTER);
+	if (m_visible)
+	{
+		if (MouseOver(mouse.GetMousePosition()))
+		{
+			m_bg_color = vec4<unsigned int>(0, 0, 0, 50);
+			m_border_color = vec4<unsigned int>(0, 0, 255, 255);
+		}
+		else
+		{
+			m_bg_color = vec4<unsigned int>(0, 0, 0, 100);
+			m_border_color = vec4<unsigned int>(0, 0, 0, 255);
+		}
+	}
 }
