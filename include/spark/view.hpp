@@ -18,6 +18,8 @@ namespace spark
 		void SetMousePosition(int x, int y) { m_mouse.SetMousePosition(x, y); }
 		vec2<int> GetMousePosition() { return m_mouse.GetMousePosition(); }
 
+		void RestoreJustPressed() { m_mouse.ToReleased(); };
+
 		inline void SetMouseState(const int key, int action, const int mods) { m_mouse.SetMouseState(key, action, mods); }
 
 	private:

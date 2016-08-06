@@ -2,6 +2,7 @@
 #include <spark/button.hpp>
 #include <spark/label.hpp>
 #include <spark/grid.hpp>
+#include <spark/textbox.hpp>
 #include <spark/stackpanel.hpp>
 #include <pugixml.hpp>
 #include <iostream>
@@ -71,6 +72,31 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		{
 			element->SetBorderRadius(std::stoi(value));
 		}
+		else if (name == "borderSize")
+		{
+			element->SetBorderSize(std::stoi(value));
+		}
+		else if (name == "borderColor")
+		{
+			std::vector<std::string> vals = split(value, ',');
+			element->SetBorderColor(vec4<unsigned int>(std::stoi(vals[0]), std::stoi(vals[1]), std::stoi(vals[2]), std::stoi(vals[3])));
+		}
+		else if (name == "grid.row")
+		{
+			element->SetGridRow(std::stoi(value));
+		}
+		else if (name == "grid.column")
+		{
+			element->SetGridColumn(std::stoi(value));
+		}
+		else if (name == "grid.rowSpan")
+		{
+			element->SetRowSpan(std::stoi(value));
+		}
+		else if (name == "grid.columnSpan")
+		{
+			element->SetColumnSpan(std::stoi(value));
+		}
 		else if (name == "verticalAlignment")
 		{
 			if (value == "top")
@@ -104,6 +130,16 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 			}
 		}
 
+		///////////////////////////////// GRID ////////////////////////////////////////
+		else if (name == "rows" && type == "grid")
+		{
+			std::dynamic_pointer_cast<Grid> (element)->SetNumRows(std::stoi(value));
+		}
+		else if (name == "columns" && type == "grid")
+		{
+			std::dynamic_pointer_cast<Grid> (element)->SetNumColumns(std::stoi(value));
+		}
+
 		///////////////////////////////// STACKPANEL ////////////////////////////////////////
 		else if (name == "orientation" && type == "stackpanel")
 		{
@@ -119,19 +155,19 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		}
 
 		///////////////////////////////// LABEL /////////////////////////////////////////////
-		else if (name == "text" && (type == "label" || type == "button.label"))
+		else if (name == "text" && (type == "label" || type == "button.label" || type == "textbox.label"))
 		{
 			std::dynamic_pointer_cast<ILabel> (element)->SetText(value);
 		}
-		else if (name == "fontSize" && (type == "label" || type == "button.label"))
+		else if (name == "fontSize" && (type == "label" || type == "button.label" || type == "textbox.label"))
 		{
 			std::dynamic_pointer_cast<ILabel> (element)->SetFontSize(std::stof(value));
 		}
-		else if (name == "font" && (type == "label" || type == "button.label"))
+		else if (name == "font" && (type == "label" || type == "button.label" || type == "textbox.label"))
 		{
 			std::dynamic_pointer_cast<ILabel> (element)->SetFont(value);
 		}
-		else if (name == "fontColor" && (type == "label" || type == "button.label"))
+		else if (name == "fontColor" && (type == "label" || type == "button.label" || type == "textbox.label"))
 		{
 			std::vector<std::string> vals = split(value, ',');
 			std::dynamic_pointer_cast<ILabel> (element)->SetFontColor(vec4<unsigned int>(std::stoi(vals[0]), std::stoi(vals[1]), std::stoi(vals[2]), std::stoi(vals[3])));
@@ -162,6 +198,23 @@ std::shared_ptr<ILabel> ParseLabel(std::shared_ptr<Core> core, pugi::xml_node_it
 	if (!ParseAttributes(core, label_node, label))
 		return nullptr;
 	return label;
+}
+
+std::shared_ptr<Textbox> ParseTextbox(std::shared_ptr<Core> core, pugi::xml_node_iterator textbox_node)
+{
+	std::shared_ptr<Textbox> textbox = std::make_shared<Textbox>();
+
+	if (!ParseAttributes(core, textbox_node, textbox))
+		return nullptr;
+	for (pugi::xml_node_iterator element_node = textbox_node->begin(); element_node != textbox_node->end(); ++element_node)
+	{
+		std::string element_type = element_node->name();
+		if (element_type == "textbox.label")
+		{
+			textbox->SetLabel(ParseLabel(core, element_node));
+		}
+	}
+	return textbox;
 }
 
 std::shared_ptr<IButton> ParseButton(std::shared_ptr<Core> core, pugi::xml_node_iterator button_node)
@@ -218,6 +271,10 @@ std::shared_ptr<StackPanel> ParseStackPanel(std::shared_ptr<Core> core, pugi::xm
 		{
 			stackpanel->AddChildren(ParseImage(core, element_node));
 		}
+		else if (element_type == "textbox")
+		{
+			stackpanel->AddChildren(ParseTextbox(core, element_node));
+		}
 	}
 	return stackpanel;
 }
@@ -255,6 +312,10 @@ std::shared_ptr<Grid> ParseGrid(std::shared_ptr<Core> core, pugi::xml_node_itera
 		else if (element_type == "image")
 		{
 			grid->AddChildren(ParseImage(core, element_node));
+		}
+		else if (element_type == "textbox")
+		{
+			grid->AddChildren(ParseTextbox(core, element_node));
 		}
 	}
 	return grid;

@@ -51,6 +51,11 @@ void IButton::Update(Mouse mouse)
 			&& mouse_pos.y >= m_box.y && mouse_pos.y <= (m_box.y + m_box.height)
 			&& mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
 		{
+			//sometimes very weird values for the box???
+			/*std::cout << "click" << std::endl;
+			std::cout << m_box.x << ", " << m_box.y << ", " << m_box.width << ", " << m_box.height << std::endl;
+			std::cout << mouse_pos.x << ", " << mouse_pos.y << std::endl;*/
+
 			if (m_border_radius == 0)
 			{
 				m_function(shared_from_this());

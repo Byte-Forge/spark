@@ -36,9 +36,13 @@ void StackPanel::OnPaint(const PaintEvent& ev, const Dimension& dim)
 	if (m_visible)
 	{
 		nvgBeginPath(vg);
-		nvgRect(vg, m_box.x, m_box.y, m_box.width, m_box.height);
+		nvgRoundedRect(vg, m_box.x, m_box.y, m_box.width, m_box.height, m_border_radius);
 		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
 		nvgFill(vg);
+
+		nvgStrokeColor(vg, nvgRGBA(m_border_color.x, m_border_color.y, m_border_color.z, m_border_color.w));
+		nvgStrokeWidth(vg, m_border_size);
+		nvgStroke(vg);
 
 		if (m_image != nullptr)
 		{

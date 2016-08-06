@@ -1,5 +1,6 @@
 #pragma once
 #include "container.hpp"
+#include <vector>
 
 namespace spark
 {
@@ -12,7 +13,16 @@ namespace spark
 		void OnInitialize();
 		void Update(Mouse mouse);
 
+		void SetNumRows(int rows) { m_rows = rows; }
+		void SetNumColumns(int cols) { m_columns = cols; }
+
 	private:
 		void PaintChildren(const PaintEvent& ev, const Dimension& dim);
+
+	private:
+		int m_rows;
+		int m_columns;
+		int m_rowHeight;
+		int m_columnWidth;
 	};
 }

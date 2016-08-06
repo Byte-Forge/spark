@@ -12,6 +12,6 @@ IContainer::IContainer() : IElement()
 void IContainer::SetImage(std::shared_ptr<IImage> image)
 {
 	m_image = image;
-	m_image->SetHorizontalAlignment(CENTER);
-	m_image->SetVerticalAlignment(CENTER);
+	m_image->SetHorizontalAlignment(STRETCH);
+	m_image->SetVerticalAlignment(STRETCH);
 }

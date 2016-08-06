@@ -87,6 +87,15 @@ namespace spark
 		void SetName(const std::string &name) { m_name = name; }
 		std::string GetName() { return m_name; }
 
+		void SetGridRow(int row) { m_gridRow = row; }
+		int GetGridRow() { return m_gridRow; }
+		void SetGridColumn(int column) { m_gridColumn = column; }
+		int GetGridColumn() { return m_gridColumn; }
+		void SetRowSpan(int span) { m_rowSpan = span; }
+		int GetRowSpan() { return m_rowSpan; }
+		void SetColumnSpan(int span) { m_columnSpan = span; }
+		int GetColumnSpan() { return m_columnSpan; }
+
 	protected:
 		std::string m_name;
 		std::function<void(std::shared_ptr<IElement>)> m_function;
@@ -107,6 +116,11 @@ namespace spark
 		Dimension m_box;
 		vec4<unsigned int> m_border_color;
 		vec4<unsigned int> m_bg_color;
+
+		int m_gridRow;
+		int m_gridColumn;
+		int m_rowSpan;
+		int m_columnSpan;
 		
 		bool m_visible;
     };

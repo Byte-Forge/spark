@@ -4,7 +4,7 @@
 
 using namespace spark;
 
-Grid::Grid() : IContainer()
+Grid::Grid() : IContainer(), m_rows(1), m_columns(1)
 {
 
 }
@@ -12,7 +12,9 @@ Grid::Grid() : IContainer()
 void Grid::OnInitialize()
 {
 	for (auto child : m_children)
+	{
 		child->OnInitialize();
+	}
 }
 
 void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
@@ -21,12 +23,19 @@ void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
 
 	CalcPosition(dim);
 
+	m_rowHeight = m_height / m_rows;
+	m_columnWidth = m_width / m_columns;
+
 	if (m_visible)
 	{
 		nvgBeginPath(vg);
-		nvgRect(vg, m_box.x, m_box.y, m_box.width, m_box.height);
+		nvgRoundedRect(vg, m_box.x, m_box.y, m_box.width, m_box.height, m_border_radius);
 		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
 		nvgFill(vg);
+
+		nvgStrokeColor(vg, nvgRGBA(m_border_color.x, m_border_color.y, m_border_color.z, m_border_color.w));
+		nvgStrokeWidth(vg, m_border_size);
+		nvgStroke(vg);
 
 		if (m_image != nullptr)
 		{
@@ -49,8 +58,7 @@ void Grid::PaintChildren(const PaintEvent& ev, const Dimension& dim)
 {
 	for (const auto& child : m_children)
 	{
-		//Calculate dimensions from margin and padding
-		
-		child->OnPaint(ev, dim);
+		Dimension d = { m_box.x + child->GetGridColumn() * m_columnWidth, m_box.y + child->GetGridRow() * m_rowHeight, m_columnWidth * child->GetColumnSpan(), m_rowHeight * child->GetRowSpan() };
+		child->OnPaint(ev, d);
 	}
 }

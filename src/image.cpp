@@ -29,16 +29,16 @@ void IImage::OnPaint(const PaintEvent& ev, const Dimension& box)
 		{
 			m_image = nvgCreateImage(vg, m_file.c_str(), 0); 
 			int width, height;
-			if (m_width == 0)
-			{
-				nvgImageSize(vg, m_image, &width, &height);
-				m_width = width;
-			}
-			if (m_height == 0)
-			{
-				nvgImageSize(vg, m_image, &width, &height);
-				m_height = height;
-			}
+			//if (m_width == 0)
+			//{
+			//	nvgImageSize(vg, m_image, &width, &height);
+			//	m_width = width;
+			//}
+			//if (m_height == 0)
+			//{
+			//	nvgImageSize(vg, m_image, &width, &height);
+			//	m_height = height;
+			//}
 		}
 
 		CalcPosition(box);
