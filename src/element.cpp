@@ -4,10 +4,11 @@
 using namespace spark;
 
 IElement::IElement() : m_margin(0), m_padding(0), m_index(0), m_width(0), m_height(0),
-m_horizontalAlignment(LEFT), m_verticalAlignment(TOP),
+m_horizontalAlignment(LEFT), m_verticalAlignment(TOP), m_hovered(false),
 m_border_size(0), m_border_color(0, 0, 0, 255), m_border_radius(0), m_visible(true),
 m_gridRow(0), m_gridColumn(0), m_rowSpan(1), m_columnSpan(1),
-m_bg_color(255, 255, 255, 255), m_function([](std::shared_ptr<IElement> e) { })
+m_bg_color(255, 255, 255, 255), m_mouseLeftDown([](std::shared_ptr<IElement> e) { }),
+m_mouseOver([](std::shared_ptr<IElement> e) {}), m_update([](std::shared_ptr<IElement> e) {})
 {
 
 }
@@ -65,14 +66,16 @@ void IElement::CalcPosition(const Dimension& box)
 	m_box = { m_position.x, m_position.y, m_width, m_height };
 }
 
-bool IElement::MouseOver(vec2<int> mouse_pos)
+void IElement::MouseOver(Mouse mouse)
 {
+	m_hovered = false;
+	vec2<int> mouse_pos = mouse.GetMousePosition();
 	if (mouse_pos.x >= m_box.x && mouse_pos.x <= (m_box.x + m_box.width)
 		&& mouse_pos.y >= m_box.y && mouse_pos.y <= (m_box.y + m_box.height))
 	{
 		if (m_border_radius == 0)
 		{
-			return true;
+			m_hovered = true;
 		}
 
 		//test for the 4 rounded corners
@@ -87,35 +90,34 @@ bool IElement::MouseOver(vec2<int> mouse_pos)
 			{
 				if (mouse_pos.distance(upperLeft) <= m_border_radius)
 				{
-					return true;
+					m_hovered = true;
 				}
 			}
 			else if (mouse_pos.x > upperRight.x && mouse_pos.y < upperRight.y)
 			{
 				if (mouse_pos.distance(upperRight) <= m_border_radius)
 				{
-					return true;
+					m_hovered = true;
 				}
 			}
 			else if (mouse_pos.x < lowerLeft.x && mouse_pos.y > lowerLeft.y)
 			{
 				if (mouse_pos.distance(lowerLeft) <= m_border_radius)
 				{
-					return true;
+					m_hovered = true;
 				}
 			}
 			else if (mouse_pos.x > lowerRight.x && mouse_pos.y > lowerRight.y)
 			{
 				if (mouse_pos.distance(lowerRight) <= m_border_radius)
 				{
-					return true;
+					m_hovered = true;
 				}
 			}
 			else
 			{
-				return true;
+				m_hovered = true;
 			}
 		}
 	}
-	return false;
 }

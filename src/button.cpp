@@ -6,12 +6,12 @@ using namespace spark;
 
 IButton::IButton() : IElement()
 {
-	
+
 }
 
 void IButton::OnInitialize()
 {
-
+	
 }
 
 void IButton::OnPaint(const PaintEvent& ev, const Dimension& box)
@@ -46,9 +46,11 @@ void IButton::Update(Mouse mouse)
 {
 	if (m_visible)
 	{
-		if (MouseOver(mouse.GetMousePosition()) && mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
+		MouseOver(mouse);
+		m_update(shared_from_this());
+		if (m_hovered && mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
 		{
-			m_function(shared_from_this());
+			m_mouseLeftDown(shared_from_this());
 		}
 	}
 }

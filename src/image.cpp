@@ -28,7 +28,7 @@ void IImage::OnPaint(const PaintEvent& ev, const Dimension& box)
 		if (m_image == -1)
 		{
 			m_image = nvgCreateImage(vg, m_file.c_str(), 0); 
-			int width, height;
+			/*int width, height;*/
 			//if (m_width == 0)
 			//{
 			//	nvgImageSize(vg, m_image, &width, &height);
@@ -57,7 +57,10 @@ void IImage::OnPaint(const PaintEvent& ev, const Dimension& box)
 
 void IImage::Update(Mouse mouse)
 {
-
+	if (m_visible)
+	{
+		m_update(shared_from_this());
+	}
 }
 
 void IImage::SetImage(const std::string& imgFile)

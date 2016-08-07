@@ -40,9 +40,8 @@ namespace spark
         IElement();
        
         virtual void OnPaint(const PaintEvent& ev, const Dimension& box) = 0;
-		virtual void Update(Mouse mouse) = 0;
-
 		virtual void OnInitialize() = 0;
+		virtual void Update(Mouse mouse) = 0;
         
         vec4<unsigned int> GetBackgroundColor() { return m_bg_color; }
         void SetBackgroundColor(const vec4<unsigned int> color) { m_bg_color = color; }
@@ -79,10 +78,6 @@ namespace spark
 		
 		float GetBorderRadius() { return m_border_radius; }
 		void SetBorderRadius(float border_radius) { m_border_radius = border_radius; }
-
-		void SetFunction(std::function<void(std::shared_ptr<IElement>)> func) { m_function = func; }
-
-		void CalcPosition(const Dimension& box);
  
 		void SetName(const std::string &name) { m_name = name; }
 		std::string GetName() { return m_name; }
@@ -96,11 +91,22 @@ namespace spark
 		void SetColumnSpan(int span) { m_columnSpan = span; }
 		int GetColumnSpan() { return m_columnSpan; }
 
-		bool MouseOver(vec2<int> mouse_pos);
+		void SetUpdateFunction(std::function<void(std::shared_ptr<IElement>)> func) { m_update = func; }
+		void SetMouseLeftDownFunction(std::function<void(std::shared_ptr<IElement>)> func) { m_mouseLeftDown = func; }
+		void SetMouseOverFunction(std::function<void(std::shared_ptr<IElement>)> func) { m_mouseOver = func; }
+
+	protected:
+		void MouseOver(Mouse mouse);
+		void CalcPosition(const Dimension& box);
 
 	protected:
 		std::string m_name;
-		std::function<void(std::shared_ptr<IElement>)> m_function;
+
+		Dimension m_box;
+
+		std::function<void(std::shared_ptr<IElement>)> m_update;
+		std::function<void(std::shared_ptr<IElement>)> m_mouseOver;
+		std::function<void(std::shared_ptr<IElement>)> m_mouseLeftDown;
 
 		vec2<int> m_position;
 		vec4<unsigned int> m_margin; // top, right, bottom, left
@@ -115,7 +121,6 @@ namespace spark
 		
 		float m_border_size;
 		float m_border_radius;
-		Dimension m_box;
 		vec4<unsigned int> m_border_color;
 		vec4<unsigned int> m_bg_color;
 
@@ -124,6 +129,7 @@ namespace spark
 		int m_rowSpan;
 		int m_columnSpan;
 		
+		bool m_hovered;
 		bool m_visible;
     };
 }

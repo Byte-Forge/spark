@@ -43,9 +43,13 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		{
 			element->SetVisible(attrib->as_bool());
 		}
-		else if (name == "function")
+		else if (name == "update")
 		{
-			element->SetFunction(core->GetFunction(value));
+			element->SetUpdateFunction(core->GetFunction(value));
+		}
+		else if (name == "mouseLeftDown")
+		{
+			element->SetMouseLeftDownFunction(core->GetFunction(value));
 		}
 		else if (name == "margin")
 		{
@@ -355,8 +359,14 @@ std::shared_ptr<View> XMLBuilder::LoadView(const unsigned int width, const unsig
 
 	std::shared_ptr<View> view;
 	// TODO: throw error if too many root containers defined
+	int root_count = 0;
 	for (pugi::xml_node_iterator container_node = doc.begin(); container_node != doc.end(); ++container_node)
 	{
+		if (root_count == 1)
+		{
+			std::cout << "!Error: too many root elements in file: " << file << std::endl;
+			return nullptr;
+		}
 		view = m_core->CreateView(width, height);
 		auto container = std::make_shared<Grid>();
 		std::string container_type = container_node->name();
@@ -368,6 +378,12 @@ std::shared_ptr<View> XMLBuilder::LoadView(const unsigned int width, const unsig
 		{
 			view->SetRoot(ParseStackPanel(m_core, container_node));
 		}
+		else
+		{
+			std::cout << "!Error: invalid root element " << container_type << " in file: " << file << std::endl;
+			return nullptr;
+		}
+		root_count++;
 	}
 	return view;
 }

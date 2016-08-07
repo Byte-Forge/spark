@@ -48,7 +48,11 @@ void Textbox::OnPaint(const PaintEvent& ev, const Dimension& box)
 
 void Textbox::Update(Mouse mouse) 
 {
-
+	if (m_visible)
+	{
+		MouseOver(mouse);
+		m_update(shared_from_this());
+	}
 }
 
 void Textbox::SetLabel(std::shared_ptr<ILabel> label)

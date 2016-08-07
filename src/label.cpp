@@ -46,5 +46,8 @@ void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
 
 void ILabel::Update(Mouse mouse)
 {
-	m_function(shared_from_this());
+	if (m_visible)
+	{
+		m_update(shared_from_this());
+	}
 }

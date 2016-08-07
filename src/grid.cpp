@@ -48,9 +48,13 @@ void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
 
 void Grid::Update(Mouse mouse)
 {
-	for (const auto& child : m_children)
+	if (m_visible)
 	{
-		child->Update(mouse);
+		m_update(shared_from_this());
+		for (const auto& child : m_children)
+		{
+			child->Update(mouse);
+		}
 	}
 }
 

@@ -46,15 +46,7 @@ void Checkbox::Update(Mouse mouse)
 {
 	if (m_visible)
 	{
-		if (MouseOver(mouse.GetMousePosition()))
-		{
-			m_bg_color = vec4<unsigned int>(0, 0, 0, 50);
-			m_border_color = vec4<unsigned int>(0, 0, 255, 255);
-		}
-		else
-		{
-			m_bg_color = vec4<unsigned int>(0, 0, 0, 100);
-			m_border_color = vec4<unsigned int>(0, 0, 0, 255);
-		}
+		MouseOver(mouse);
+		m_update(shared_from_this());
 	}
 }
