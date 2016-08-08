@@ -1,6 +1,7 @@
 #include <spark/core.hpp>
 #include <spark/grid.hpp>
 #include <spark/label.hpp>
+#include <spark/button.hpp>
 #include <iostream>
 #include "flextGL.h"
 #include "nanovg.h"
@@ -82,4 +83,11 @@ std::shared_ptr<IElement> Core::GetNamedElement(std::string name)
 		std::cout << "WARNING!: no element with name " << name << " found! " << std::endl;
 	}
 	return m_namedElements[name];
+}
+
+void Core::CreateButton(std::string &name)
+{
+	std::shared_ptr<IButton> button = std::make_shared<IButton>();
+	button->SetName(name);
+	AddNamedElement(name, button);
 }

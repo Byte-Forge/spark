@@ -160,28 +160,59 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		}
 
 		///////////////////////////////// LABEL /////////////////////////////////////////////
-		else if (name == "text" && (type == "label" || type == "button.label" || type == "textbox.label"))
+		else if (name == "text" && (type == "label" || type == "button.label" || type == "textbox.label" || type == "button.hover.label"))
 		{
 			std::dynamic_pointer_cast<ILabel> (element)->SetText(value);
 		}
-		else if (name == "fontSize" && (type == "label" || type == "button.label" || type == "textbox.label"))
+		else if (name == "fontSize" && (type == "label" || type == "button.label" || type == "textbox.label" || type == "button.hover.label"))
 		{
 			std::dynamic_pointer_cast<ILabel> (element)->SetFontSize(std::stof(value));
 		}
-		else if (name == "font" && (type == "label" || type == "button.label" || type == "textbox.label"))
+		else if (name == "font" && (type == "label" || type == "button.label" || type == "textbox.label" || type == "button.hover.label"))
 		{
 			std::dynamic_pointer_cast<ILabel> (element)->SetFont(value);
 		}
-		else if (name == "fontColor" && (type == "label" || type == "button.label" || type == "textbox.label"))
+		else if (name == "fontColor" && (type == "label" || type == "button.label" || type == "textbox.label" || type == "button.hover.label"))
 		{
 			std::vector<std::string> vals = split(value, ',');
 			std::dynamic_pointer_cast<ILabel> (element)->SetFontColor(vec4<unsigned int>(std::stoi(vals[0]), std::stoi(vals[1]), std::stoi(vals[2]), std::stoi(vals[3])));
 		}
 
 		///////////////////////////////// IMAGE /////////////////////////////////////////////
-		else if (name == "file" && (type == "image" || type == "grid.image" || type == "stackpanel.image" || type == "button.image"))
+		else if (name == "file" && (type == "image" || type == "grid.image" || type == "stackpanel.image" || type == "button.image" || type == "button.hover.image"))
 		{
 			std::dynamic_pointer_cast<IImage> (element)->SetImage(value);
+		}
+	}
+	return true;
+}
+
+bool ParseHoverAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element_node, std::shared_ptr<IElement> element)
+{
+	std::string type = element_node->name();
+	for (pugi::xml_attribute_iterator attrib = element_node->attributes_begin(); attrib != element_node->attributes_end(); ++attrib)
+	{
+		std::string name = attrib->name();
+		std::string value = attrib->value();
+
+		std::cout << value << std::endl;
+
+		if (name == "borderColor")
+		{
+			std::cout << value << std::endl;
+			std::vector<std::string> vals = split(value, ',');
+			element->SetHoveredBorderColor(vec4<unsigned int>(std::stoi(vals[0]), std::stoi(vals[1]), std::stoi(vals[2]), std::stoi(vals[3])));
+		}
+		else if (name == "backgroundColor")
+		{
+			std::vector<std::string> vals = split(value, ',');
+			std::cout << value << std::endl;
+			element->SetHoveredBackgroundColor(vec4<unsigned int>(std::stoi(vals[0]), std::stoi(vals[1]), std::stoi(vals[2]), std::stoi(vals[3])));
+		}
+		else
+		{
+			std::cout << "Waring!: " << name << " is not a valid argument for .hover properties!" << std::endl;
+			return false;
 		}
 	}
 	return true;
@@ -243,10 +274,31 @@ std::shared_ptr<IButton> ParseButton(std::shared_ptr<Core> core, pugi::xml_node_
 		if (element_type == "button.label")
 		{
 			button->SetLabel(ParseLabel(core, element_node));
+			button->SetHoveredLabel(ParseLabel(core, element_node));
 		}
 		else if (element_type == "button.image")
 		{
 			button->SetImage(ParseImage(core, element_node));
+			button->SetHoveredImage(ParseImage(core, element_node));
+		}
+		else if (element_type == "button.hover")
+		{
+			if (!ParseHoverAttributes(core, element_node, button))
+				return nullptr;
+			for (pugi::xml_node_iterator child_node = element_node->begin(); child_node != element_node->end(); ++child_node)
+			{
+				std::string element_type = child_node->name();
+				if (element_type == "button.hover.label")
+				{
+					if (!ParseAttributes(core, child_node, button->GetHoveredLabel()))
+						return nullptr;
+				}
+				else if (element_type == "button.hover.image")
+				{
+					if (!ParseAttributes(core, child_node, button->GetHoveredImage()))
+						return nullptr;
+				}
+			}
 		}
 	}
 	return button;

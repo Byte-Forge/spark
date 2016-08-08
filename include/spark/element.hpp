@@ -44,7 +44,7 @@ namespace spark
 		virtual void Update(Mouse mouse) = 0;
         
         vec4<unsigned int> GetBackgroundColor() { return m_bg_color; }
-        void SetBackgroundColor(const vec4<unsigned int> color) { m_bg_color = color; }
+		void SetBackgroundColor(const vec4<unsigned int> color) { m_bg_color = color; m_hovered_bg_color = color; }
 
 		vec4<unsigned int> GetMargin() { return m_margin; }
 		void SetMargin(const vec4<unsigned int>& margin) { m_margin = margin; }
@@ -74,7 +74,7 @@ namespace spark
 		void SetBorderSize(float border_size) { m_border_size = border_size; }
 
 		vec4<unsigned int> GetBorderColor() { return m_border_color; }
-		void SetBorderColor(vec4<unsigned int> border_color) { m_border_color = border_color; }
+		void SetBorderColor(vec4<unsigned int> border_color) { m_border_color = border_color; m_hovered_border_color = border_color; }
 		
 		float GetBorderRadius() { return m_border_radius; }
 		void SetBorderRadius(float border_radius) { m_border_radius = border_radius; }
@@ -91,9 +91,11 @@ namespace spark
 		void SetColumnSpan(int span) { m_columnSpan = span; }
 		int GetColumnSpan() { return m_columnSpan; }
 
+		void SetHoveredBorderColor(vec4<unsigned int> border_color) { m_hovered_border_color = border_color; }
+		void SetHoveredBackgroundColor(vec4<unsigned int> background_color) { m_hovered_bg_color = background_color; }
+
 		void SetUpdateFunction(std::function<void(std::shared_ptr<IElement>)> func) { m_update = func; }
 		void SetMouseLeftDownFunction(std::function<void(std::shared_ptr<IElement>)> func) { m_mouseLeftDown = func; }
-		void SetMouseOverFunction(std::function<void(std::shared_ptr<IElement>)> func) { m_mouseOver = func; }
 
 	protected:
 		void MouseOver(Mouse mouse);
@@ -105,7 +107,6 @@ namespace spark
 		Dimension m_box;
 
 		std::function<void(std::shared_ptr<IElement>)> m_update;
-		std::function<void(std::shared_ptr<IElement>)> m_mouseOver;
 		std::function<void(std::shared_ptr<IElement>)> m_mouseLeftDown;
 
 		vec2<int> m_position;
@@ -123,6 +124,9 @@ namespace spark
 		float m_border_radius;
 		vec4<unsigned int> m_border_color;
 		vec4<unsigned int> m_bg_color;
+
+		vec4<unsigned int> m_hovered_border_color;
+		vec4<unsigned int> m_hovered_bg_color;
 
 		int m_gridRow;
 		int m_gridColumn;
