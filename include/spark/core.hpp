@@ -31,7 +31,7 @@ namespace spark
 		std::function<void(std::shared_ptr<spark::IElement>)> GetFunction(std::string &name);
 
 		void AddNamedElement(std::string &name, std::shared_ptr<IElement> e) { m_namedElements[name] = e; }
-		std::shared_ptr<IElement> GetNamedElement(std::string name);
+		std::shared_ptr<IElement>& GetNamedElement(std::string name);
 
 		void CreateButton(std::string &name);
 

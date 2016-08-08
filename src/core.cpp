@@ -75,7 +75,7 @@ std::function<void(std::shared_ptr<spark::IElement>)> Core::GetFunction(std::str
 	return m_functions[name];
 }
 
-std::shared_ptr<IElement> Core::GetNamedElement(std::string name)
+std::shared_ptr<IElement>& Core::GetNamedElement(std::string name)
 {
 	const auto& it = m_namedElements.find(name);
 	if (it == m_namedElements.end())

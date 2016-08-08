@@ -68,7 +68,6 @@ void Checkbox::Update(Mouse mouse)
 
 		if (m_hovered && mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
 		{
-			Toggle();
 			m_mouseLeftDown(shared_from_this());
 		}
 	}

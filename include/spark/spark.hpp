@@ -10,3 +10,4 @@
 #include "button.hpp"
 #include "image.hpp"
 #include "xmlbuilder.hpp"
+#include "checkbox.hpp"

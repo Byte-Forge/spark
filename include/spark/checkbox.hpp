@@ -14,6 +14,7 @@ namespace spark
 		void Update(Mouse mouse);
 
 		bool Toggle();
+		void SetState(bool state) { m_checked = state; }
 	private:
 		bool m_checked;
 
