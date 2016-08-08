@@ -13,7 +13,11 @@ namespace spark
 		void OnInitialize();
 		void Update(Mouse mouse);
 
+		bool Toggle();
 	private:
+		bool m_checked;
 
+		vec4<unsigned int> m_checked_border_color;
+		vec4<unsigned int> m_checked_bg_color;
 	};
 }

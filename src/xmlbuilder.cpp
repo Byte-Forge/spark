@@ -160,26 +160,26 @@ bool ParseAttributes(std::shared_ptr<Core> core, pugi::xml_node_iterator element
 		}
 
 		///////////////////////////////// LABEL /////////////////////////////////////////////
-		else if (name == "text" && (type == "label" || type == "button.label" || type == "textbox.label" || type == "button.hover.label"))
+		else if (name == "text" && ends_with(type, "label"))
 		{
 			std::dynamic_pointer_cast<ILabel> (element)->SetText(value);
 		}
-		else if (name == "fontSize" && (type == "label" || type == "button.label" || type == "textbox.label" || type == "button.hover.label"))
+		else if (name == "fontSize" && ends_with(type, "label"))
 		{
 			std::dynamic_pointer_cast<ILabel> (element)->SetFontSize(std::stof(value));
 		}
-		else if (name == "font" && (type == "label" || type == "button.label" || type == "textbox.label" || type == "button.hover.label"))
+		else if (name == "font" && ends_with(type, "label"))
 		{
 			std::dynamic_pointer_cast<ILabel> (element)->SetFont(value);
 		}
-		else if (name == "fontColor" && (type == "label" || type == "button.label" || type == "textbox.label" || type == "button.hover.label"))
+		else if (name == "fontColor" && ends_with(type, "label"))
 		{
 			std::vector<std::string> vals = split(value, ',');
 			std::dynamic_pointer_cast<ILabel> (element)->SetFontColor(vec4<unsigned int>(std::stoi(vals[0]), std::stoi(vals[1]), std::stoi(vals[2]), std::stoi(vals[3])));
 		}
 
 		///////////////////////////////// IMAGE /////////////////////////////////////////////
-		else if (name == "file" && (type == "image" || type == "grid.image" || type == "stackpanel.image" || type == "button.image" || type == "button.hover.image"))
+		else if (name == "file" && ends_with(type, "image"))
 		{
 			std::dynamic_pointer_cast<IImage> (element)->SetImage(value);
 		}
