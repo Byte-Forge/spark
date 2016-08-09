@@ -7,27 +7,27 @@
 
 namespace spark
 {	
-	class IButton : public IElement
+	class Button : public IElement
 	{
 	public:
-		IButton();
+		Button();
 	
         void OnPaint(const PaintEvent& ev,const Dimension& box);
         void OnInitialize();
 		void Update(Mouse mouse);
 
-		void SetImage(std::shared_ptr<IImage> image);
-		void SetHoveredImage(std::shared_ptr<IImage> image);
-		void SetLabel(std::shared_ptr<ILabel> label);
-		void SetHoveredLabel(std::shared_ptr<ILabel> label);
+		void SetImage(std::shared_ptr<Image> image);
+		void SetHoveredImage(std::shared_ptr<Image> image);
+		void SetLabel(std::shared_ptr<Label> label);
+		void SetHoveredLabel(std::shared_ptr<Label> label);
 
-		std::shared_ptr<IImage>& GetHoveredImage() { return m_hovered_image; }
-		std::shared_ptr<ILabel>& GetHoveredLabel() { return m_hovered_label; }
+		std::shared_ptr<Image>& GetHoveredImage() { return m_hovered_image; }
+		std::shared_ptr<Label>& GetHoveredLabel() { return m_hovered_label; }
 
 	private:
-		std::shared_ptr<IImage> m_image;
-		std::shared_ptr<IImage> m_hovered_image;
-		std::shared_ptr<ILabel> m_label;
-		std::shared_ptr<ILabel> m_hovered_label;
+		std::shared_ptr<Image> m_image;
+		std::shared_ptr<Image> m_hovered_image;
+		std::shared_ptr<Label> m_label;
+		std::shared_ptr<Label> m_hovered_label;
 	};
 }

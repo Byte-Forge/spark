@@ -4,17 +4,17 @@
 
 using namespace spark;
 
-ILabel::ILabel() : m_text(""), m_size(18.f), m_font("arial-sans"), m_font_color(0,0,0,255), IElement()
+Label::Label() : m_text(""), m_size(18.f), m_font("arial-sans"), m_font_color(0,0,0,255), IElement()
 {
 	m_bg_color = vec4<unsigned int> (0,0,0,0);
 }
 
-void ILabel::OnInitialize()
+void Label::OnInitialize()
 {
 
 }
 
-void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
+void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 {
 	if(m_visible)
 	{
@@ -44,7 +44,7 @@ void ILabel::OnPaint(const PaintEvent& ev,const Dimension& box)
 	}
 }
 
-void ILabel::Update(Mouse mouse)
+void Label::Update(Mouse mouse)
 {
 	if (m_visible)
 	{

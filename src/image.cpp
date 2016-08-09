@@ -4,22 +4,22 @@
 
 using namespace spark;
 
-IImage::IImage() : IElement()
+Image::Image() : IElement()
 {
 	m_bg_color = vec4<unsigned int>(0, 0, 0, 0);
 }
 
-IImage::~IImage()
+Image::~Image()
 {
 	//delete the image
 }
 
-void IImage::OnInitialize()
+void Image::OnInitialize()
 {
 
 }
 
-void IImage::OnPaint(const PaintEvent& ev, const Dimension& box)
+void Image::OnPaint(const PaintEvent& ev, const Dimension& box)
 {
 	if(m_visible)
 	{
@@ -55,7 +55,7 @@ void IImage::OnPaint(const PaintEvent& ev, const Dimension& box)
 	}
 }
 
-void IImage::Update(Mouse mouse)
+void Image::Update(Mouse mouse)
 {
 	if (m_visible)
 	{
@@ -63,7 +63,7 @@ void IImage::Update(Mouse mouse)
 	}
 }
 
-void IImage::SetImage(const std::string& imgFile)
+void Image::SetImage(const std::string& imgFile)
 {
 	m_file = imgFile;
 }

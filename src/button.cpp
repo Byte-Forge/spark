@@ -4,17 +4,17 @@
 
 using namespace spark;
 
-IButton::IButton() : IElement()
+Button::Button() : IElement()
 {
 
 }
 
-void IButton::OnInitialize()
+void Button::OnInitialize()
 {
 	
 }
 
-void IButton::OnPaint(const PaintEvent& ev, const Dimension& box)
+void Button::OnPaint(const PaintEvent& ev, const Dimension& box)
 {
 	if(m_visible)
 	{
@@ -64,7 +64,7 @@ void IButton::OnPaint(const PaintEvent& ev, const Dimension& box)
 	}
 }
 
-void IButton::Update(Mouse mouse)
+void Button::Update(Mouse mouse)
 {
 	if (m_visible)
 	{
@@ -77,28 +77,28 @@ void IButton::Update(Mouse mouse)
 	}
 }
 
-void IButton::SetImage(std::shared_ptr<IImage> image)
+void Button::SetImage(std::shared_ptr<Image> image)
 {
 	m_image = image;
 	m_image->SetHorizontalAlignment(CENTER);
 	m_image->SetVerticalAlignment(CENTER);
 }
 
-void IButton::SetHoveredImage(std::shared_ptr<IImage> image)
+void Button::SetHoveredImage(std::shared_ptr<Image> image)
 {
 	m_hovered_image = image;
 	m_hovered_image->SetHorizontalAlignment(CENTER);
 	m_hovered_image->SetVerticalAlignment(CENTER);
 }
 
-void IButton::SetLabel(std::shared_ptr<ILabel> label)
+void Button::SetLabel(std::shared_ptr<Label> label)
 {
 	m_label = label;
 	m_label->SetHorizontalAlignment(CENTER);
 	m_label->SetVerticalAlignment(CENTER);
 }
 
-void IButton::SetHoveredLabel(std::shared_ptr<ILabel> label)
+void Button::SetHoveredLabel(std::shared_ptr<Label> label)
 {
 	m_hovered_label = label;
 	m_hovered_label->SetHorizontalAlignment(CENTER);

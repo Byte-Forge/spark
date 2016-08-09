@@ -5,11 +5,11 @@
 
 namespace spark
 {	
-	class IImage : public IElement
+	class Image : public IElement
 	{
 	public:
-		IImage();
-		~IImage();
+		Image();
+		~Image();
 	
         void OnPaint(const PaintEvent& ev, const Dimension& box);
         void OnInitialize();

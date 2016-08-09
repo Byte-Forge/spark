@@ -11,7 +11,7 @@ namespace spark
 	public:
 		IContainer();
 
-		void AddChildren(std::shared_ptr<IElement> child)
+		void AddChild(std::shared_ptr<IElement> child)
 		{
 			m_children.push_back(child);
 		}
@@ -21,10 +21,10 @@ namespace spark
 			return m_children;
 		}
 
-		void SetImage(std::shared_ptr<IImage> image);
+		void SetImage(std::shared_ptr<Image> image);
 
 	protected:
-		std::shared_ptr<IImage> m_image;
+		std::shared_ptr<Image> m_image;
 		virtual void PaintChildren(const PaintEvent& ev, const Dimension& dim) = 0;
 		std::list<std::shared_ptr<IElement>> m_children; 
 	};

@@ -30,8 +30,11 @@ void StackPanel::OnPaint(const PaintEvent& ev, const Dimension& dim)
 
 	CalcPosition(dim);
 
-	m_childWidth = (int)(m_width / m_children.size());
-	m_childHeight = (int)(m_height / m_children.size());
+	if (m_children.size() > 0)
+	{
+		m_childWidth = (int)(m_width / m_children.size());
+		m_childHeight = (int)(m_height / m_children.size());
+	}
 
 	if (m_visible)
 	{

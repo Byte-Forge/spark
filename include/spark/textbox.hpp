@@ -16,9 +16,9 @@ namespace spark
 		void OnInitialize();
 		void Update(Mouse mouse);
 
-		void SetLabel(std::shared_ptr<ILabel> label);
+		void SetLabel(std::shared_ptr<Label> label);
 
 	private:
-		std::shared_ptr<ILabel> m_label;
+		std::shared_ptr<Label> m_label;
 	};
 }

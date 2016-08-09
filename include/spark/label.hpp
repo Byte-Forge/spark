@@ -5,10 +5,10 @@
 
 namespace spark
 {	
-	class ILabel : public IElement
+	class Label : public IElement
 	{
 	public:
-		ILabel();
+		Label();
 	
         void OnPaint(const PaintEvent& ev,const Dimension& box);
         void OnInitialize();

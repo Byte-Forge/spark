@@ -55,7 +55,7 @@ void Textbox::Update(Mouse mouse)
 	}
 }
 
-void Textbox::SetLabel(std::shared_ptr<ILabel> label)
+void Textbox::SetLabel(std::shared_ptr<Label> label)
 {
 	m_label = label;
 	m_label->SetHorizontalAlignment(CENTER);
