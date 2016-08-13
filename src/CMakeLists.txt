@@ -25,6 +25,19 @@ add_library(${LIB_NAME} util.hpp
                         textbox.cpp
                         checkbox.cpp
                         flextGL.c
+						../include/spark/button.hpp
+						../include/spark/core.hpp
+						../include/spark/element.hpp
+						../include/spark/container.hpp
+						../include/spark/view.hpp
+						../include/spark/grid.hpp
+						../include/spark/image.hpp
+						../include/spark/input.hpp
+						../include/spark/label.hpp
+						../include/spark/xmlbuilder.hpp
+						../include/spark/stackpanel.hpp
+						../include/spark/textbox.hpp
+						../include/spark/checkbox.hpp
                         ../deps/nanovg/src/nanovg.c
                         ../deps/pugixml/src/pugixml.cpp)
 

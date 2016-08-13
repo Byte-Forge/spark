@@ -33,6 +33,8 @@ namespace spark
 		void AddNamedElement(std::string &name, std::shared_ptr<IElement> e) { m_namedElements[name] = e; }
 		std::shared_ptr<IElement>& GetNamedElement(std::string name);
 
+		std::vector<std::string> GetVisibleNamedElements();
+
     private:
 		std::map<std::string, std::function<void(std::shared_ptr<spark::IElement>)>> m_functions;
 		std::map<std::string, std::shared_ptr<IElement>> m_namedElements;

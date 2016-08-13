@@ -84,3 +84,17 @@ std::shared_ptr<IElement>& Core::GetNamedElement(std::string name)
 	}
 	return m_namedElements[name];
 }
+
+std::vector<std::string> Core::GetVisibleNamedElements()
+{
+	std::vector<std::string> elements;
+	for (const auto &elem : m_namedElements)
+	{
+		if (elem.second->IsVisible())
+		{
+			std::cout << elem.second->GetName() << std::endl;
+			elements.push_back(elem.second->GetName());
+		}
+	}
+	return elements;
+}
