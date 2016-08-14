@@ -4,7 +4,7 @@ project(spark)
 option(SPARK_USE_GL3 "Use opengl 3" ON)
 add_subdirectory(src)
 
-option(SPARK_BUILD_TEST "Build test project" ON)
+option(SPARK_BUILD_TEST "Build test project" OFF)
 
 if(SPARK_BUILD_TEST)
     set(GLFW_BUILD_EXAMPLES CACHE BOOL OFF)
