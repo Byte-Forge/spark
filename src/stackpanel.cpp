@@ -77,7 +77,7 @@ void StackPanel::Update(Mouse mouse, Keyboard keyboard)
 		m_update(shared_from_this());
 		for (const auto& child : m_children)
 		{
-			child->Update(mouse);
+			child->Update(mouse, keyboard);
 		}
 	}
 }

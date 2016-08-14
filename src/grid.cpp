@@ -61,10 +61,12 @@ void Grid::Update(Mouse mouse, Keyboard keyboard)
 {
 	if (m_visible)
 	{
-		m_update(shared_from_this());
+		if (keyboard.KeyJustReleased(KeyboardCode::KEY_K))
+			std::cout << "test" << std::endl;
+ 		m_update(shared_from_this());
 		for (const auto& child : m_children)
 		{
-			child->Update(mouse);
+			child->Update(mouse, keyboard);
 		}
 	}
 }
