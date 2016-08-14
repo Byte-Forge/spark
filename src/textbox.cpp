@@ -68,6 +68,4 @@ void Textbox::Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view)
 void Textbox::SetLabel(std::shared_ptr<Label> label)
 {
 	m_label = label;
-	m_label->SetHorizontalAlignment(CENTER);
-	m_label->SetVerticalAlignment(CENTER);
 }
