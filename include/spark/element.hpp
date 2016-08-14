@@ -9,6 +9,8 @@
 
 namespace spark
 {
+	class View;
+	
 	enum Alignment
 	{
 		LEFT,
@@ -41,7 +43,7 @@ namespace spark
        
         virtual void OnPaint(const PaintEvent& ev, const Dimension& box) = 0;
 		virtual void OnInitialize() = 0;
-		virtual void Update(Mouse mouse, Keyboard keyboard) = 0;
+		virtual void Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view) = 0;
 
 		virtual void SetVisible(const bool visible) = 0;
         

@@ -1,10 +1,10 @@
 #pragma once
-#include "container.hpp"
 #include "input.hpp"
+#include "container.hpp"
 
 namespace spark
 {
-    class View
+    class View : public std::enable_shared_from_this<View>
     {
 	public:
 		View(const unsigned int width, const unsigned int height);
@@ -22,12 +22,12 @@ namespace spark
 
 		inline void SetMouseState(const int key, int action, const int mods) { m_mouse.SetMouseState(key, action, mods); }
 		inline void SetKeyState(const int key, int action, const int mods) { m_keyboard.SetKeyState(key, action, mods); }
-
+		inline void SetActiveTb(std::shared_ptr<IElement> tb) {m_activeTb = tb; }
 	private:
 		std::shared_ptr<IContainer> m_root;
 		unsigned int m_width, m_height;
 		Dimension m_dim;
-
+		std::shared_ptr<IElement> m_activeTb;
 		Mouse m_mouse;
 		Keyboard m_keyboard;
     };
