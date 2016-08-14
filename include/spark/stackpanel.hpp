@@ -18,7 +18,9 @@ namespace spark
 
 		void OnPaint(const PaintEvent& ev, const Dimension& dim);
 		void OnInitialize();
-		void Update(Mouse mouse);
+		void Update(Mouse mouse, Keyboard keyboard);
+
+		void SetVisible(const bool visible);
 
 		void SetOrientation(Orientation o) { m_orientation = o; }
 

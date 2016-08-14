@@ -17,6 +17,11 @@ Textbox::~Textbox()
 
 }
 
+void Textbox::SetVisible(const bool visible)
+{
+	m_visible = visible;
+}
+
 void Textbox::OnInitialize()
 {
 
@@ -46,7 +51,7 @@ void Textbox::OnPaint(const PaintEvent& ev, const Dimension& box)
 	}
 }
 
-void Textbox::Update(Mouse mouse) 
+void Textbox::Update(Mouse mouse, Keyboard keyboard)
 {
 	if (m_visible)
 	{

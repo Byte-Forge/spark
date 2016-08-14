@@ -14,6 +14,15 @@ void Button::OnInitialize()
 	
 }
 
+void Button::SetVisible(const bool visible) 
+{ 
+	m_visible = visible; 
+	if (m_label != nullptr)
+		m_label->SetVisible(visible);
+	if (m_image != nullptr)
+		m_image->SetVisible(visible);
+}
+
 void Button::OnPaint(const PaintEvent& ev, const Dimension& box)
 {
 	if(m_visible)
@@ -64,7 +73,7 @@ void Button::OnPaint(const PaintEvent& ev, const Dimension& box)
 	}
 }
 
-void Button::Update(Mouse mouse)
+void Button::Update(Mouse mouse, Keyboard keyboard)
 {
 	if (m_visible)
 	{

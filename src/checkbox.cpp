@@ -20,6 +20,11 @@ Checkbox::~Checkbox()
 
 }
 
+void Checkbox::SetVisible(const bool visible)
+{
+	m_visible = visible;
+}
+
 void Checkbox::OnInitialize()
 {
 
@@ -59,7 +64,7 @@ void Checkbox::OnPaint(const PaintEvent& ev, const Dimension& box)
 	}
 }
 
-void Checkbox::Update(Mouse mouse)
+void Checkbox::Update(Mouse mouse, Keyboard keyboard)
 {
 	if (m_visible)
 	{

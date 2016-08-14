@@ -1,4 +1,5 @@
 #include <spark/container.hpp>
+#include <iostream>
 
 using namespace spark;
 

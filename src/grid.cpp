@@ -17,6 +17,17 @@ void Grid::OnInitialize()
 	}
 }
 
+void Grid::SetVisible(const bool visible)
+{
+	m_visible = visible;
+	if (m_image != nullptr)
+		m_image->SetVisible(visible);
+	for (const auto& child : m_children)
+	{
+		child->SetVisible(visible);
+	}
+}
+
 void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
 {
 	NVGcontext* vg = static_cast<NVGcontext*>(ev.context);
@@ -46,14 +57,16 @@ void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
 	}
 }
 
-void Grid::Update(Mouse mouse)
+void Grid::Update(Mouse mouse, Keyboard keyboard)
 {
 	if (m_visible)
 	{
-		m_update(shared_from_this());
+		if (keyboard.KeyJustReleased(KeyboardCode::KEY_K))
+			std::cout << "test" << std::endl;
+ 		m_update(shared_from_this());
 		for (const auto& child : m_children)
 		{
-			child->Update(mouse);
+			child->Update(mouse, keyboard);
 		}
 	}
 }

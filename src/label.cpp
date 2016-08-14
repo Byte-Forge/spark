@@ -14,6 +14,11 @@ void Label::OnInitialize()
 
 }
 
+void Label::SetVisible(const bool visible)
+{
+	m_visible = visible;
+}
+
 void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 {
 	if(m_visible)
@@ -44,7 +49,7 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 	}
 }
 
-void Label::Update(Mouse mouse)
+void Label::Update(Mouse mouse, Keyboard keyboard)
 {
 	if (m_visible)
 	{

@@ -12,7 +12,9 @@ namespace spark
 	
         void OnPaint(const PaintEvent& ev,const Dimension& box);
         void OnInitialize();
-		void Update(Mouse mouse);
+		void Update(Mouse mouse, Keyboard keyboard);
+
+		void SetVisible(const bool visible);
         
 		void SetText(const std::string& text) { m_text = text; }
 		const std::string GetText() { return m_text; }

@@ -19,6 +19,11 @@ void Image::OnInitialize()
 
 }
 
+void Image::SetVisible(const bool visible)
+{
+	m_visible = visible;
+}
+
 void Image::OnPaint(const PaintEvent& ev, const Dimension& box)
 {
 	if(m_visible)
@@ -55,7 +60,7 @@ void Image::OnPaint(const PaintEvent& ev, const Dimension& box)
 	}
 }
 
-void Image::Update(Mouse mouse)
+void Image::Update(Mouse mouse, Keyboard keyboard)
 {
 	if (m_visible)
 	{
