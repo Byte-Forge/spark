@@ -92,7 +92,6 @@ std::vector<std::string> Core::GetVisibleNamedElements()
 	{
 		if (elem.second->IsVisible())
 		{
-			std::cout << elem.second->GetName() << std::endl;
 			elements.push_back(elem.second->GetName());
 		}
 	}

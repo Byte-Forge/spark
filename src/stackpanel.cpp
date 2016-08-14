@@ -24,6 +24,19 @@ void StackPanel::OnInitialize()
 	}
 }
 
+
+void StackPanel::SetVisible(const bool visible)
+{
+	m_visible = visible;
+	if (m_image != nullptr)
+		m_image->SetVisible(visible);
+	for (const auto& child : m_children)
+	{
+		child->SetVisible(visible);
+	}
+}
+
+
 void StackPanel::OnPaint(const PaintEvent& ev, const Dimension& dim)
 {
 	NVGcontext* vg = static_cast<NVGcontext*>(ev.context);
@@ -57,7 +70,7 @@ void StackPanel::OnPaint(const PaintEvent& ev, const Dimension& dim)
 	}
 }
 
-void StackPanel::Update(Mouse mouse)
+void StackPanel::Update(Mouse mouse, Keyboard keyboard)
 {
 	if (m_visible)
 	{

@@ -14,7 +14,9 @@ namespace spark
 	
         void OnPaint(const PaintEvent& ev,const Dimension& box);
         void OnInitialize();
-		void Update(Mouse mouse);
+		void Update(Mouse mouse, Keyboard keyboard);
+
+		void SetVisible(const bool visible);
 
 		void SetImage(std::shared_ptr<Image> image);
 		void SetHoveredImage(std::shared_ptr<Image> image);

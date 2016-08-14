@@ -41,7 +41,9 @@ namespace spark
        
         virtual void OnPaint(const PaintEvent& ev, const Dimension& box) = 0;
 		virtual void OnInitialize() = 0;
-		virtual void Update(Mouse mouse) = 0;
+		virtual void Update(Mouse mouse, Keyboard keyboard) = 0;
+
+		virtual void SetVisible(const bool visible) = 0;
         
         vec4<unsigned int> GetBackgroundColor() { return m_bg_color; }
 		void SetBackgroundColor(const vec4<unsigned int> color) { m_bg_color = color; m_hovered_bg_color = color; }
@@ -62,7 +64,6 @@ namespace spark
 		void SetVerticalAlignment(Alignment va) { m_verticalAlignment = va; }
 		
 		bool IsVisible() { return m_visible; }
-		void SetVisible(const bool visible) { m_visible = visible; }
 		
 		void Hide() { m_visible = false; }
 		void Show() { m_visible = true; }

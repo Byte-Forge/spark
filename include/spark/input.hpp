@@ -164,10 +164,11 @@ namespace spark
 	class Keyboard 
 	{
 	public:
-		static KeyboardCode GetKeyPressed() { return  m_key_pressed; }
-		static void SetKeyPressed(KeyboardCode code) { m_key_pressed = code; }
+		static inline void SetKeyState(const int key, int action, const int mods) { action = TranslateState(action); m_keyInputs[(KeyboardCode)key] = action; }
+
+		static inline int TranslateState(int action) { return (action > 0) ? PRESSED : JUST_RELEASED; }
 
 	private:
-		static KeyboardCode m_key_pressed;
+		static std::map<KeyboardCode, int> m_keyInputs;
 	};
 }

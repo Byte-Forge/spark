@@ -4,8 +4,7 @@ using namespace spark;
 
 vec2<int> Mouse::m_position;
 std::map<MouseCode, int> Mouse::m_mouseInputs;
-
-KeyboardCode Keyboard::m_key_pressed;
+std::map<KeyboardCode, int> Keyboard::m_keyInputs;
 
 void Mouse::ToReleased()
 {

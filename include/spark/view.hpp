@@ -21,6 +21,7 @@ namespace spark
 		void RestoreJustPressed() { m_mouse.ToReleased(); };
 
 		inline void SetMouseState(const int key, int action, const int mods) { m_mouse.SetMouseState(key, action, mods); }
+		inline void SetKeyState(const int key, int action, const int mods) { m_keyboard.SetKeyState(key, action, mods); }
 
 	private:
 		std::shared_ptr<IContainer> m_root;
