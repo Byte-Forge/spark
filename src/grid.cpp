@@ -57,7 +57,7 @@ void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
 	}
 }
 
-void Grid::Update(Mouse mouse, Keyboard keyboard)
+void Grid::Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view)
 {
 	if (m_visible)
 	{
@@ -66,7 +66,7 @@ void Grid::Update(Mouse mouse, Keyboard keyboard)
  		m_update(shared_from_this());
 		for (const auto& child : m_children)
 		{
-			child->Update(mouse, keyboard);
+			child->Update(mouse, keyboard,view);
 		}
 	}
 }

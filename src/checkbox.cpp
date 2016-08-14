@@ -64,7 +64,7 @@ void Checkbox::OnPaint(const PaintEvent& ev, const Dimension& box)
 	}
 }
 
-void Checkbox::Update(Mouse mouse, Keyboard keyboard)
+void Checkbox::Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view)
 {
 	if (m_visible)
 	{

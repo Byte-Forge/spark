@@ -73,7 +73,7 @@ void Button::OnPaint(const PaintEvent& ev, const Dimension& box)
 	}
 }
 
-void Button::Update(Mouse mouse, Keyboard keyboard)
+void Button::Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view)
 {
 	if (m_visible)
 	{

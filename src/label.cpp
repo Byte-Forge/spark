@@ -49,7 +49,7 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 	}
 }
 
-void Label::Update(Mouse mouse, Keyboard keyboard)
+void Label::Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view)
 {
 	if (m_visible)
 	{

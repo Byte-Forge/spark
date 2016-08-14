@@ -25,7 +25,7 @@ void View::Render(const PaintEvent& ev)
 
 void View::Update()
 {
-	m_root->Update(m_mouse, m_keyboard);
+	m_root->Update(m_mouse, m_keyboard,shared_from_this());
 	m_mouse.ToReleased();
 }
 

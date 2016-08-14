@@ -1,6 +1,7 @@
 #include <spark/textbox.hpp>
 #include <nanovg.h>
 #include <iostream>
+#include <spark/view.hpp>
 
 using namespace spark;
 
@@ -51,12 +52,16 @@ void Textbox::OnPaint(const PaintEvent& ev, const Dimension& box)
 	}
 }
 
-void Textbox::Update(Mouse mouse, Keyboard keyboard)
+void Textbox::Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view)
 {
 	if (m_visible)
 	{
 		MouseOver(mouse);
 		m_update(shared_from_this());
+		if (m_hovered && mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
+		{
+			view->SetActiveTb(shared_from_this());
+		}
 	}
 }
 

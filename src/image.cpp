@@ -60,7 +60,7 @@ void Image::OnPaint(const PaintEvent& ev, const Dimension& box)
 	}
 }
 
-void Image::Update(Mouse mouse, Keyboard keyboard)
+void Image::Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view)
 {
 	if (m_visible)
 	{
