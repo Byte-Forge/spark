@@ -7,6 +7,7 @@
 #include "label.hpp"
 #include "button.hpp"
 #include "view.hpp"
+#include "scriptengine.hpp"
 
 namespace spark
 {
@@ -26,7 +27,7 @@ namespace spark
 		bool AddFont(const std::string& name, const std::string& path);
 		//Add a font from memory. Name is the name that will be used later to use that font
 		bool AddFont(const std::string& name, const uint8_t* memory, const int size);
-
+		void AddScriptEngine(std::shared_ptr<IScriptEngine> engine);
 		void AddFunction(std::string name, std::function<void(std::shared_ptr<spark::IElement>)> func) { m_functions[name] = func; }
 		std::function<void(std::shared_ptr<spark::IElement>)> GetFunction(std::string &name);
 
@@ -39,6 +40,7 @@ namespace spark
 		std::map<std::string, std::function<void(std::shared_ptr<spark::IElement>)>> m_functions;
 		std::map<std::string, std::shared_ptr<IElement>> m_namedElements;
         std::vector<std::shared_ptr<View>> m_views;
+		std::vector<std::shared_ptr<IScriptEngine>> m_scriptengines;
 		std::unique_ptr<priv> m_private;
     };
 };
