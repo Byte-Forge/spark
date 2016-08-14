@@ -98,3 +98,8 @@ std::vector<std::string> Core::GetVisibleNamedElements()
 	}
 	return elements;
 }
+
+void Core::AddScriptEngine(std::shared_ptr<IScriptEngine> engine)
+{
+	m_scriptengines.push_back(engine);
+}
