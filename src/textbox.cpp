@@ -95,6 +95,7 @@ void Textbox::OnKeyboard(const KeyboardCode key, int action, int mods)
 		{
 			letter = std::tolower(letter);
 		}
+		std::cout <<letter << std::endl;
 		m_label->SetText(m_label->GetText() + letter);
 	}
 }
