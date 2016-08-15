@@ -87,7 +87,7 @@ void Textbox::OnKeyboard(const KeyboardCode key, int action, int mods)
 		label->SetText(label->GetText() + m_label->GetText() + '\n');
 		m_label->SetText("");
 	}
-	else
+	else if(32<static_cast<int>(key)<256)
 	{
 		char letter = static_cast<char>(key);
 		if (!(mods & MOD_SHIFT))
