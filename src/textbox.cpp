@@ -2,7 +2,7 @@
 #include <nanovg.h>
 #include <iostream>
 #include <spark/view.hpp>
-
+#include <cctype>
 using namespace spark;
 
 Textbox::Textbox() : IElement()
@@ -72,6 +72,9 @@ void Textbox::SetLabel(std::shared_ptr<Label> label)
 
 void Textbox::OnKeyboard(const KeyboardCode key,int action,int mods)
 {
+	if(action!=PRESSED)
+		return;
+
 	char letter = static_cast<char>(key);
 	if(!(mods & MOD_SHIFT))
 	{
