@@ -25,7 +25,7 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 	{
 		NVGcontext* vg = static_cast<NVGcontext*>(ev.context);
 		
-		m_width = m_text.length() * m_size * 0.4 + m_padding.w + m_padding.y; 
+		m_width = m_text.length() * m_size * 0.45f + m_padding.w + m_padding.y; 
 		m_height = m_size + m_padding.x + m_padding.z;
 
 		CalcPosition(box);
@@ -45,7 +45,7 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 		nvgFillColor(vg, nvgRGBA(m_font_color.x, m_font_color.y, m_font_color.z, m_font_color.w));
 
 		nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
-		nvgText(vg, m_position.x, m_position.y, m_text.c_str(), NULL);
+		nvgTextBox(vg, m_position.x, m_position.y, m_box.width, m_text.c_str(), NULL);
 	}
 }
 
