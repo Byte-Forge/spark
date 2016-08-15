@@ -20,8 +20,8 @@ namespace spark
 
 		void RestoreJustPressed() { m_mouse.ToReleased(); };
 
-		inline void SetMouseState(const int key, int action, const int mods) { m_mouse.SetMouseState(key, action, mods); }
-		inline void SetKeyState(const int key, int action, const int mods) { m_keyboard.SetKeyState(key, action, mods); }
+		inline void SetMouseState(const int key, const int action, const int mods) { m_mouse.SetMouseState(key, action, mods); }
+		void SetKeyState(const int key, const int action, const int mods);
 		inline void SetActiveTb(std::shared_ptr<IElement> tb) {m_activeTb = tb; }
 
 	private:

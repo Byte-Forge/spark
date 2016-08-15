@@ -69,3 +69,14 @@ void Textbox::SetLabel(std::shared_ptr<Label> label)
 {
 	m_label = label;
 }
+
+void Textbox::OnKeyboard(const KeyboardCode key,int action,int mods)
+{
+	char letter = static_cast<char>(key);
+	if(!(mods & MOD_SHIFT))
+	{
+		letter = std::tolower(letter);
+	}
+
+	m_label->SetText(m_label->GetText()+letter);
+}

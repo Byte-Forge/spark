@@ -19,6 +19,13 @@ namespace spark
 		MOUSE_X2		= 4,
 	};
 
+	enum Mods
+	{
+		MOD_SHIFT 	= 0x01,
+		MOD_CTRL 	= 0x02,
+		MOD_ALT		= 0x04,
+	};
+
 	enum KeyboardCode {
 		KEY_SPACE = 32,
 		KEY_APOSTROPHE = 39,

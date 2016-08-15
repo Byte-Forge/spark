@@ -14,6 +14,7 @@ namespace spark
 
 		void OnPaint(const PaintEvent& ev, const Dimension& box);
 		void OnInitialize();
+		void OnKeyboard(const KeyboardCode key,int action,int mods);
 		void Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view);
 
 		void SetVisible(const bool visible);

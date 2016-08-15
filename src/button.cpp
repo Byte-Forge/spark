@@ -1,4 +1,5 @@
 #include <spark/button.hpp>
+#include <spark/view.hpp>
 #include <nanovg.h>
 #include <iostream>
 
