@@ -9,6 +9,8 @@
 
 using namespace spark;
 
+Core* Core::s_instance = nullptr;
+
 struct Core::priv
 {
 	NVGcontext * nvg_context;
@@ -16,6 +18,9 @@ struct Core::priv
 
 Core::Core(const bool initGL)
 {
+
+	s_instance = this;
+	
 	//Init GL
 	if (initGL)
 	{

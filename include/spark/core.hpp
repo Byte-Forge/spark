@@ -35,8 +35,9 @@ namespace spark
 		std::shared_ptr<IElement>& GetNamedElement(std::string name);
 
 		std::vector<std::string> GetVisibleNamedElements();
-
+		static inline const Core* GetCore() {return s_instance;}
     private:
+    	static Core* s_instance;
 		std::map<std::string, std::function<void(std::shared_ptr<spark::IElement>)>> m_functions;
 		std::map<std::string, std::shared_ptr<IElement>> m_namedElements;
         std::vector<std::shared_ptr<View>> m_views;
