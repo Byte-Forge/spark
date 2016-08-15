@@ -58,7 +58,7 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 		std::string t;
 		for (std::string line : text)
 		{
-			t += line;
+			t += line + '\n';
 		}
 
 		nvgTextBox(vg, m_position.x, m_position.y, m_box.width, t.c_str(), NULL);
