@@ -41,5 +41,6 @@ void View::SetKeyState(const int key, const int action, const int mods)
 {
 	m_keyboard.SetKeyState(key, action, mods);
 	auto tb = std::dynamic_pointer_cast<Textbox>(m_activeTb);
-	tb->OnKeyboard(static_cast<KeyboardCode>(key),action,mods);
+	if(tb!=nullptr)
+		tb->OnKeyboard(static_cast<KeyboardCode>(key),action,mods);
 }
