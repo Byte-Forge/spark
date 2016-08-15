@@ -3,6 +3,7 @@
 #include <vector>
 #include <sstream>
 #include <iostream>
+#include <algorithm>
 
 namespace spark
 {
@@ -24,16 +25,16 @@ namespace spark
 		return elems;
 	}
 
-	inline void split(std::string s, std::string delim, std::vector<std::string>& v) 
+	inline std::vector<std::string> split(std::string& s, std::string delim)
 	{
 		size_t pos = 0;
-		std::string token;
+		std::vector<std::string> token;
 		while ((pos = s.find(delim)) != std::string::npos) {
-			token = s.substr(0, pos);
-			v.push_back(token);
+			token.push_back(s.substr(0, pos));
 			s.erase(0, pos + delim.length());
 		}
-		v.push_back(s);
+		token.push_back(s);
+		return token;
 	}
 
 	inline bool ends_with(const std::string & value, const std::string & ending)

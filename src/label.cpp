@@ -33,7 +33,7 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 		CalcPosition(box);
 		m_position.y += m_size * 0.5f;
 
-		int num_rows = box.height / m_height;
+		int num_rows = (box.height / m_height) - 2;
 		std::vector<std::string> lines = split(m_text, '\n');
 
 		while (num_rows < lines.size())
@@ -63,21 +63,45 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 			pos.x = m_position.x;
 			for (auto word : words)
 			{
-				std::vector<std::string> tuple;
-				split(word, "\\c", tuple);
-				if (tuple.size() > 0)
+				std::vector<std::string> substrings = split(word, "\\c");
+				if (substrings.size() > 1)
 				{
-					for (auto c : tuple)
-						std::cout << c << std::endl;
-					//nvgTextBoxBounds(vg, pos.x, pos.y, m_box.width, tuple[1].c_str(), NULL, bounds);
-					
+					for (auto string : substrings)
+					{
+						int count = 1;
+						if (string[0] == 'r')
+						{
+							nvgFillColor(vg, nvgRGBA(255, 0, 0, 255));
+						}
+						else if (string[0] == 'g')
+						{
+							nvgFillColor(vg, nvgRGBA(0, 255, 0, 255));
+						}
+						else if (string[0] == 'b')
+						{
+							nvgFillColor(vg, nvgRGBA(0, 0, 255, 255));
+						}
+						else if (string[0] == 'y')
+						{
+							nvgFillColor(vg, nvgRGBA(255, 255, 0, 255));
+						}
+						else if (string[0] == 'o')
+						{
+							nvgFillColor(vg, nvgRGBA(255, 140, 0, 255));
+						}
+
+						string.erase(0, count);
+						nvgTextBoxBounds(vg, pos.x, pos.y, m_box.width, string.c_str(), NULL, bounds);
+						nvgTextBox(vg, bounds[0], bounds[1], m_box.width, string.c_str(), NULL);
+						pos.x += bounds[2] - bounds[0] + 3;
+					}
 				}
 				else
 				{
-					nvgTextBoxBounds(vg, pos.x, pos.y, m_box.width, word.c_str(), NULL, bounds);
+					nvgTextBoxBounds(vg, pos.x, pos.y, m_box.width, substrings[0].c_str(), NULL, bounds);
 					nvgFillColor(vg, nvgRGBA(m_font_color.x, m_font_color.y, m_font_color.z, m_font_color.w));
-					nvgTextBox(vg, bounds[0], bounds[1], m_box.width, word.c_str(), NULL);
-					pos.x += bounds[2] - bounds[0] + 1;
+					nvgTextBox(vg, bounds[0], bounds[1], m_box.width, substrings[0].c_str(), NULL);
+					pos.x += bounds[2] - bounds[0] + 3;
 				}
 			}
 			pos.y += m_height;
