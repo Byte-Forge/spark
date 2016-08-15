@@ -1,5 +1,7 @@
 #include <spark/label.hpp>
 #include <nanovg.h>
+#include <vector>
+#include "util.hpp"
 #include <iostream>
 
 using namespace spark;
@@ -44,7 +46,11 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 		nvgFontFace(vg, m_font.c_str());
 		nvgFillColor(vg, nvgRGBA(m_font_color.x, m_font_color.y, m_font_color.z, m_font_color.w));
 
+		std::vector<std::string> t = split(m_text, '\n');
+		std::cout << t.size() << std::endl;
+
 		nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
+		
 		nvgTextBox(vg, m_position.x, m_position.y, m_box.width, m_text.c_str(), NULL);
 	}
 }
