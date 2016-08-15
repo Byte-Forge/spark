@@ -82,7 +82,8 @@ void Textbox::OnKeyboard(const KeyboardCode key, int action, int mods)
 	}
 	else if (key == KEY_ENTER)
 	{
-		auto &label = std::dynamic_pointer_cast<Label>(Core::GetCore()->GetNamedElement("consoleLabel"));
+		auto label = std::dynamic_pointer_cast<Label>(Core::GetCore()->GetNamedElement("consoleLabel"));
+		Core::GetCore()->GetScriptEngines().front()->ExecuteString(m_label->GetText());
 		label->SetText(label->GetText() + m_label->GetText() + '\n');
 		m_label->SetText("");
 	}
