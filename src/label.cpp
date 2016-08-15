@@ -33,6 +33,13 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 		CalcPosition(box);
 		m_position.y += m_size * 0.5f;
 
+		int num_rows = box.height / m_height;
+		std::vector<std::string> text = split(m_text, '\n');
+		while (num_rows < text.size())
+		{
+			text.erase(text.begin());
+		}
+
 		nvgBeginPath(vg);
 		nvgRoundedRect(vg, m_box.x , m_box.y, m_box.width, m_box.height, m_border_radius);
 		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
@@ -46,11 +53,15 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 		nvgFontFace(vg, m_font.c_str());
 		nvgFillColor(vg, nvgRGBA(m_font_color.x, m_font_color.y, m_font_color.z, m_font_color.w));
 
-		std::vector<std::string> t = split(m_text, '\n');
-
 		nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
 		
-		nvgTextBox(vg, m_position.x, m_position.y, m_box.width, m_text.c_str(), NULL);
+		std::string t;
+		for (std::string line : text)
+		{
+			t += line;
+		}
+
+		nvgTextBox(vg, m_position.x, m_position.y, m_box.width, t.c_str(), NULL);
 	}
 }
 
