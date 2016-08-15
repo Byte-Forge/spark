@@ -3,6 +3,7 @@
 #include <vector>
 #include "util.hpp"
 #include <iostream>
+#include <sstream>
 
 using namespace spark;
 
@@ -64,10 +65,19 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 			for (auto word : words)
 			{
 				std::vector<std::string> substrings = split(word, "\\c");
+
+				nvgTextBoxBounds(vg, pos.x, pos.y, m_box.width, substrings[0].c_str(), NULL, bounds);
+				nvgFillColor(vg, nvgRGBA(m_font_color.x, m_font_color.y, m_font_color.z, m_font_color.w));
+				nvgTextBox(vg, bounds[0], bounds[1], m_box.width, substrings[0].c_str(), NULL);
+				pos.x += bounds[2] - bounds[0] + 3;
+
 				if (substrings.size() > 1)
 				{
-					for (auto string : substrings)
+					for (std::string string : substrings)
 					{
+						if (string == substrings.front())
+							continue;
+
 						int count = 1;
 						if (string[0] == 'r')
 						{
@@ -89,19 +99,21 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 						{
 							nvgFillColor(vg, nvgRGBA(255, 140, 0, 255));
 						}
+						else 
+						{
+							std::string red = std::string() + string[0] + string[1];
+							std::string green = std::string() + string[2] + string[3];
+							std::string blue = std::string() + string[4] + string[5];
+							std::string alpha = std::string() + string[6] + string[7];
+							nvgFillColor(vg, nvgRGBA(std::stoul(red, nullptr, 16), std::stoul(green, nullptr, 16), std::stoul(blue, nullptr, 16), std::stoul(alpha, nullptr, 16)));
+							count = 8;
+						}
 
 						string.erase(0, count);
 						nvgTextBoxBounds(vg, pos.x, pos.y, m_box.width, string.c_str(), NULL, bounds);
 						nvgTextBox(vg, bounds[0], bounds[1], m_box.width, string.c_str(), NULL);
 						pos.x += bounds[2] - bounds[0] + 3;
 					}
-				}
-				else
-				{
-					nvgTextBoxBounds(vg, pos.x, pos.y, m_box.width, substrings[0].c_str(), NULL, bounds);
-					nvgFillColor(vg, nvgRGBA(m_font_color.x, m_font_color.y, m_font_color.z, m_font_color.w));
-					nvgTextBox(vg, bounds[0], bounds[1], m_box.width, substrings[0].c_str(), NULL);
-					pos.x += bounds[2] - bounds[0] + 3;
 				}
 			}
 			pos.y += m_height;
