@@ -23,6 +23,7 @@ namespace spark
 		inline void SetMouseState(const int key, const int action, const int mods) { m_mouse.SetMouseState(key, action, mods); }
 		void SetKeyState(const int key, const int action, const int mods);
 		inline void SetActiveTb(std::shared_ptr<IElement> tb) {m_activeTb = tb; }
+
 	private:
 		std::shared_ptr<IContainer> m_root;
 		unsigned int m_width, m_height;

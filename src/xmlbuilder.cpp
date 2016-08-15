@@ -256,6 +256,7 @@ std::shared_ptr<Textbox> XMLBuilder::ParseTextbox(pugi::xml_node_iterator textbo
 		std::string element_type = element_node->name();
 		if (element_type == "textbox.label")
 		{
+			std::cout << "test" << std::endl;
 			textbox->SetLabel(ParseLabel(element_node));
 		}
 	}
