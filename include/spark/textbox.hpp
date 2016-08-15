@@ -20,7 +20,7 @@ namespace spark
 		void SetVisible(const bool visible);
 
 		void SetLabel(std::shared_ptr<Label> label);
-
+		inline std::shared_ptr<Label> GetLabel(){return m_label;}
 	private:
 		std::shared_ptr<Label> m_label;
 	};
