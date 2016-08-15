@@ -17,7 +17,7 @@ namespace spark
 		void SetVisible(const bool visible);
         
 		void SetText(const std::string& text) { m_text = text; }
-		const std::string GetText() { return m_text; }
+		std::string& GetText() { return m_text; }
 		
 		void SetFontSize(float size) { m_size = size; }
 		float GetFontSize() { return m_size; }
