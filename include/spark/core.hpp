@@ -32,10 +32,11 @@ namespace spark
 		std::function<void(std::shared_ptr<spark::IElement>)> GetFunction(std::string &name);
 
 		void AddNamedElement(std::string &name, std::shared_ptr<IElement> e) { m_namedElements[name] = e; }
-		std::shared_ptr<IElement>& GetNamedElement(std::string name);
+		std::shared_ptr<IElement> GetNamedElement(const std::string& name);
 
 		std::vector<std::string> GetVisibleNamedElements();
 		static inline Core* GetCore() {return s_instance;}
+		inline std::vector<std::shared_ptr<IScriptEngine>> GetScriptEngines() { return m_scriptengines;}
     private:
     	static Core* s_instance;
 		std::map<std::string, std::function<void(std::shared_ptr<spark::IElement>)>> m_functions;

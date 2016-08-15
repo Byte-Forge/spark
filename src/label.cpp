@@ -47,7 +47,6 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 		nvgFillColor(vg, nvgRGBA(m_font_color.x, m_font_color.y, m_font_color.z, m_font_color.w));
 
 		std::vector<std::string> t = split(m_text, '\n');
-		std::cout << t.size() << std::endl;
 
 		nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
 		
