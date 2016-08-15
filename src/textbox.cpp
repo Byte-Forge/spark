@@ -78,7 +78,7 @@ void Textbox::OnKeyboard(const KeyboardCode key, int action, int mods)
 		return;
 	if (key == KEY_BACKSPACE)
 	{
-		if(m_label->GetText().size()>1)
+		if(m_label->GetText().size()>=1)
 			m_label->GetText().pop_back();
 	}
 	else if (key == KEY_ENTER)
