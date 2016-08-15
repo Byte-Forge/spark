@@ -69,6 +69,7 @@ namespace spark
 		
 		void Hide() { m_visible = false; }
 		void Show() { m_visible = true; }
+		void Toggle() { m_visible = !m_visible; }
 		
 		int GetZIndex() { return m_index; }
 		void SetZIndex(int index) { m_index = index; }

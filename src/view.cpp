@@ -19,9 +19,11 @@ void View::SetRoot(std::shared_ptr<IContainer> root)
 
 void View::Render(const PaintEvent& ev)
 {
+	nvgSave((NVGcontext*)ev.context);
 	nvgBeginFrame((NVGcontext*)ev.context, m_width, m_height,ev.ratio);
 	m_root->OnPaint(ev, m_dim);
 	nvgEndFrame((NVGcontext*)ev.context);
+	nvgRestore((NVGcontext*)ev.context);
 }
 
 void View::Update()
