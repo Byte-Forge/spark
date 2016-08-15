@@ -34,10 +34,11 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 		m_position.y += m_size * 0.5f;
 
 		int num_rows = box.height / m_height;
-		std::vector<std::string> text = split(m_text, '\n');
-		while (num_rows < text.size())
+		std::vector<std::string> lines = split(m_text, '\n');
+
+		while (num_rows < lines.size())
 		{
-			text.erase(text.begin());
+			lines.erase(lines.begin());
 		}
 
 		nvgBeginPath(vg);
@@ -48,20 +49,39 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 		nvgStrokeColor(vg, nvgRGBA(m_border_color.x, m_border_color.y, m_border_color.z, m_border_color.w));
 		nvgStrokeWidth(vg, m_border_size);
 		nvgStroke(vg);
-		
-		nvgFontSize(vg, m_size);
-		nvgFontFace(vg, m_font.c_str());
-		nvgFillColor(vg, nvgRGBA(m_font_color.x, m_font_color.y, m_font_color.z, m_font_color.w));
 
 		nvgTextAlign(vg, NVG_ALIGN_LEFT | NVG_ALIGN_MIDDLE);
 		
-		std::string t;
-		for (std::string line : text)
-		{
-			t += line + '\n';
-		}
+		nvgFontSize(vg, m_size);
+		nvgFontFace(vg, m_font.c_str());
 
-		nvgTextBox(vg, m_position.x, m_position.y, m_box.width, t.c_str(), NULL);
+		vec2<int> pos = vec2<int>(m_position.x, m_position.y);
+		for (auto line : lines)
+		{
+			float bounds[4];
+			std::vector<std::string> words = split(line, ' ');
+			pos.x = m_position.x;
+			for (auto word : words)
+			{
+				std::vector<std::string> tuple;
+				split(word, "\\c", tuple);
+				if (tuple.size() > 0)
+				{
+					for (auto c : tuple)
+						std::cout << c << std::endl;
+					//nvgTextBoxBounds(vg, pos.x, pos.y, m_box.width, tuple[1].c_str(), NULL, bounds);
+					
+				}
+				else
+				{
+					nvgTextBoxBounds(vg, pos.x, pos.y, m_box.width, word.c_str(), NULL, bounds);
+					nvgFillColor(vg, nvgRGBA(m_font_color.x, m_font_color.y, m_font_color.z, m_font_color.w));
+					nvgTextBox(vg, bounds[0], bounds[1], m_box.width, word.c_str(), NULL);
+					pos.x += bounds[2] - bounds[0] + 1;
+				}
+			}
+			pos.y += m_height;
+		}
 	}
 }
 

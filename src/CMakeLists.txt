@@ -39,6 +39,7 @@ add_library(${LIB_NAME} util.hpp
 			../include/spark/stackpanel.hpp
 			../include/spark/textbox.hpp
 			../include/spark/checkbox.hpp
+			../include/spark/vector.hpp
 			../deps/nanovg/src/nanovg.c
 			../deps/pugixml/src/pugixml.cpp)
 
