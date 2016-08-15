@@ -74,7 +74,6 @@ void Textbox::SetLabel(std::shared_ptr<Label> label)
 
 void Textbox::OnKeyboard(const KeyboardCode key, int action, int mods)
 {
-	std::cout << key << ",  " << mods << std::endl;
 	if (action != PRESSED)
 		return;
 	if (key == KEY_BACKSPACE)
@@ -88,14 +87,10 @@ void Textbox::OnKeyboard(const KeyboardCode key, int action, int mods)
 		label->SetText(label->GetText() + '\n' + m_label->GetText());
 		m_label->SetText("");
 	}
-	else if(32 < static_cast<int>(key) && static_cast<int>(key) < 256)
+	else if(32 <= static_cast<int>(key) && static_cast<int>(key) < 256)
 	{
 		char letter = static_cast<char>(key);
-		if (!(mods & MOD_SHIFT))
-		{
-			letter = std::tolower(letter);
-		}
-		std::cout <<letter << std::endl;
+
 		m_label->SetText(m_label->GetText() + letter);
 	}
 }

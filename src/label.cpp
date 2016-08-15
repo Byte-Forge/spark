@@ -27,7 +27,7 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 	{
 		NVGcontext* vg = static_cast<NVGcontext*>(ev.context);
 		
-		m_width = m_text.length() * m_size * 0.45f + m_padding.w + m_padding.y; 
+		m_width = m_text.length() * m_size * 0.5f + m_padding.w + m_padding.y; 
 		m_height = m_size + m_padding.x + m_padding.z;
 
 		CalcPosition(box);
