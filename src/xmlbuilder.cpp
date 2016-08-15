@@ -43,10 +43,6 @@ bool XMLBuilder::ParseAttributes(pugi::xml_node_iterator element_node, std::shar
 			element->SetName(value);
 			m_core->AddNamedElement(value, element);
 		}
-		else if (name == "visible")
-		{
-			element->SetVisible(attrib->as_bool());
-		}
 		else if (name == "update")
 		{
 			element->SetUpdateFunction(m_core->GetFunction(value));
@@ -413,8 +409,8 @@ std::shared_ptr<View> XMLBuilder::LoadView(const unsigned int width, const unsig
 	pugi::xml_node style_node = doc.child("style");
 	ParseStyle(style_node);
 
-	pugi::xml_node container_node = doc.child("grid");
 	view = m_core->CreateView(width, height);
+	pugi::xml_node container_node = doc.child("grid");
 	view->SetRoot(ParseContainer(container_node));
 
 	return view;

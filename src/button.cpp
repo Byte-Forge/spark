@@ -22,6 +22,10 @@ void Button::SetVisible(const bool visible)
 		m_label->SetVisible(visible);
 	if (m_image != nullptr)
 		m_image->SetVisible(visible);
+	if (m_hovered_label != nullptr)
+		m_hovered_label->SetVisible(visible);
+	if (m_hovered_image != nullptr)
+		m_hovered_image->SetVisible(visible);
 }
 
 void Button::OnPaint(const PaintEvent& ev, const Dimension& box)
