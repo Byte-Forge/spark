@@ -43,13 +43,13 @@ bool XMLBuilder::ParseAttributes(pugi::xml_node_iterator element_node, std::shar
 			element->SetName(value);
 			m_core->AddNamedElement(value, element);
 		}
+		else if (name == "onclick")
+		{
+			element->SetOnclickFunction(value);
+		}
 		else if (name == "update")
 		{
-			element->SetUpdateFunction(m_core->GetFunction(value));
-		}
-		else if (name == "mouseLeftDown")
-		{
-			element->SetMouseLeftDownFunction(m_core->GetFunction(value));
+			element->SetUpdateFunction(value);
 		}
 		else if (name == "margin")
 		{

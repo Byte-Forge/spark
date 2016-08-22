@@ -28,8 +28,6 @@ namespace spark
 		void PaintChildren(const PaintEvent& ev, const Dimension& dim);
 
 	private:
-		int m_childWidth;
-		int m_childHeight;
 		Orientation m_orientation;
 
 	};

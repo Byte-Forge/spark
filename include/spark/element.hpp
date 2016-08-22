@@ -98,8 +98,8 @@ namespace spark
 		void SetHoveredBorderColor(vec4<unsigned int> border_color) { m_hovered_border_color = border_color; }
 		void SetHoveredBackgroundColor(vec4<unsigned int> background_color) { m_hovered_bg_color = background_color; }
 
-		void SetUpdateFunction(std::function<void(std::shared_ptr<IElement>)> func) { m_update = func; }
-		void SetMouseLeftDownFunction(std::function<void(std::shared_ptr<IElement>)> func) { m_mouseLeftDown = func; }
+		void SetUpdateFunction(const std::string& func) { m_update = func; }
+		void SetOnclickFunction(const std::string& func) { m_onclick = func; }
 
 	protected:
 		void MouseOver(Mouse mouse);
@@ -110,8 +110,8 @@ namespace spark
 
 		Dimension m_box;
 
-		std::function<void(std::shared_ptr<IElement>)> m_update;
-		std::function<void(std::shared_ptr<IElement>)> m_mouseLeftDown;
+		std::string m_onclick;
+		std::string m_update;
 
 		vec2<int> m_position;
 		vec4<unsigned int> m_margin; // top, right, bottom, left

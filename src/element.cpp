@@ -7,8 +7,8 @@ IElement::IElement() : m_margin(0), m_padding(0), m_index(0), m_width(0), m_heig
 m_horizontalAlignment(LEFT), m_verticalAlignment(TOP), m_hovered(false),
 m_border_size(0), m_border_color(0, 0, 0, 255), m_border_radius(0), m_visible(false),
 m_gridRow(0), m_gridColumn(0), m_rowSpan(1), m_columnSpan(1), m_name("unnamed"),
-m_bg_color(255, 255, 255, 255), m_mouseLeftDown([](std::shared_ptr<IElement> e) { }),
-m_update([](std::shared_ptr<IElement> e) {}), m_hovered_bg_color(m_bg_color), m_hovered_border_color(m_border_color)
+m_bg_color(255, 255, 255, 255),
+m_onclick(""), m_update(""), m_hovered_bg_color(m_bg_color), m_hovered_border_color(m_border_color)
 {
 
 }

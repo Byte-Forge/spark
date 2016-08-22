@@ -3,9 +3,11 @@
 #include <spark/label.hpp>
 #include <spark/button.hpp>
 #include <iostream>
+#include "util.hpp"
 #include "flextGL.h"
 #include "nanovg.h"
 #include "nanovg_gl.h"
+
 
 using namespace spark;
 
@@ -33,6 +35,8 @@ Core::Core(const bool initGL)
 	#else
 	m_private->nvg_context = nvgCreateGL2(NVG_ANTIALIAS | NVG_STENCIL_STROKES);
 	#endif
+
+	AddFunction("hide", [](std::shared_ptr<spark::IElement> e) { e->Hide(); });
 }
 
 Core::~Core()
@@ -86,6 +90,7 @@ std::shared_ptr<IElement> Core::GetNamedElement(const std::string& name)
 	if (it == m_namedElements.end())
 	{
 		std::cout << "WARNING!: no element with name " << name << " found! " << std::endl;
+		return nullptr;
 	}
 	return m_namedElements[name];
 }
@@ -106,4 +111,27 @@ std::vector<std::string> Core::GetVisibleNamedElements()
 void Core::AddScriptEngine(std::shared_ptr<IScriptEngine> engine)
 {
 	m_scriptengines.push_back(engine);
+}
+
+
+void Core::ExecuteFunction(std::shared_ptr<IElement> e, const std::string &funcText)
+{
+	std::vector<std::string> functions = split(funcText, ' ');
+	for (std::string function : functions)
+	{
+		function = function.erase(function.size() - 1, 1); //remove ')'
+		std::vector<std::string> tokens = split(function, '(');
+		std::string func_name = tokens[0];
+		std::function<void(std::shared_ptr<spark::IElement>)> func = Core::GetCore()->GetFunction(func_name);
+		if (tokens.size() > 1) //function parameters
+		{
+			std::vector<std::string> params = split(tokens[1], ',');
+			std::shared_ptr<IElement> pe = Core::GetCore()->GetNamedElement(params[0]);
+			func(pe);
+		}
+		else
+		{
+			func(e);
+		}
+	}
 }

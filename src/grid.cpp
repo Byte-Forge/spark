@@ -1,4 +1,5 @@
 #include <spark/grid.hpp>
+#include <spark/core.hpp>
 #include <nanovg.h>
 #include <iostream>
 
@@ -6,7 +7,7 @@ using namespace spark;
 
 Grid::Grid() : IContainer(), m_rows(1), m_columns(1)
 {
-
+	m_vertical_scroll = true;
 }
 
 void Grid::OnInitialize()
@@ -53,7 +54,9 @@ void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
 			m_image->OnPaint(ev, m_box);
 		}
 
+		nvgScissor(vg, m_box.x, m_box.y, m_box.width, m_box.height);
 		PaintChildren(ev, m_box);
+		//nvgResetScissor(vg);
 	}
 }
 
@@ -61,10 +64,20 @@ void Grid::Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view)
 {
 	if (m_visible)
 	{
- 		m_update(shared_from_this());
+		if (m_child_max_width * m_children.size() > m_width)
+			m_horizontal_scroll = true;
+		if (m_child_max_height * m_children.size() > m_height)
+			m_vertical_scroll = true;
+
+		MouseOver(mouse);
+		Core::GetCore()->ExecuteFunction(shared_from_this(), m_update);
 		for (const auto& child : m_children)
 		{
 			child->Update(mouse, keyboard,view);
+		}
+		if (m_hovered && mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
+		{
+			Core::GetCore()->ExecuteFunction(shared_from_this(), m_onclick);
 		}
 	}
 }

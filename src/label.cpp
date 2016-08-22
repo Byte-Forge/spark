@@ -1,4 +1,5 @@
 #include <spark/label.hpp>
+#include <spark/core.hpp>
 #include <nanovg.h>
 #include <vector>
 #include "util.hpp"
@@ -125,6 +126,6 @@ void Label::Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view)
 {
 	if (m_visible)
 	{
-		m_update(shared_from_this());
+		Core::GetCore()->ExecuteFunction(shared_from_this(), m_update);
 	}
 }

@@ -1,5 +1,6 @@
 #include <spark/button.hpp>
 #include <spark/view.hpp>
+#include <spark/core.hpp>
 #include <nanovg.h>
 #include <iostream>
 
@@ -83,10 +84,10 @@ void Button::Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view)
 	if (m_visible)
 	{
 		MouseOver(mouse);
-		m_update(shared_from_this());
+		Core::GetCore()->ExecuteFunction(shared_from_this(), m_update);
 		if (m_hovered && mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
 		{
-			m_mouseLeftDown(shared_from_this());
+			Core::GetCore()->ExecuteFunction(shared_from_this(), m_onclick);
 		}
 	}
 }

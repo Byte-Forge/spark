@@ -37,6 +37,9 @@ namespace spark
 		std::vector<std::string> GetVisibleNamedElements();
 		static inline Core* GetCore() {return s_instance;}
 		inline std::vector<std::shared_ptr<IScriptEngine>> GetScriptEngines() { return m_scriptengines;}
+
+		static void ExecuteFunction(std::shared_ptr<IElement> e, const std::string &funcText);
+
     private:
     	static Core* s_instance;
 		std::map<std::string, std::function<void(std::shared_ptr<spark::IElement>)>> m_functions;

@@ -1,4 +1,5 @@
 #include <spark/textbox.hpp>
+#include <spark/core.hpp>
 #include <nanovg.h>
 #include <iostream>
 #include <spark/view.hpp>
@@ -13,6 +14,7 @@ Textbox::Textbox() : IElement()
 	m_border_radius = 5;
 	m_border_color = vec4<unsigned int>(0, 0, 0, 255);
 	m_border_size = 2;
+	m_label = std::shared_ptr<Label>();
 }
 
 Textbox::~Textbox()
@@ -59,7 +61,7 @@ void Textbox::Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view)
 	if (m_visible)
 	{
 		MouseOver(mouse);
-		m_update(shared_from_this());
+		Core::GetCore()->ExecuteFunction(shared_from_this(), m_update);
 		if (m_hovered && mouse.ButtonJustReleased(MouseCode::MOUSE_LEFT))
 		{
 			view->SetActiveTb(shared_from_this());

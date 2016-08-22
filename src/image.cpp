@@ -1,4 +1,5 @@
 #include <spark/image.hpp>
+#include <spark/core.hpp>
 #include <nanovg.h>
 #include <iostream>
 
@@ -64,7 +65,7 @@ void Image::Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view)
 {
 	if (m_visible)
 	{
-		m_update(shared_from_this());
+		Core::GetCore()->ExecuteFunction(shared_from_this(), m_update);
 	}
 }
 
