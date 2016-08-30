@@ -1,10 +1,4 @@
 #include <spark/xmlbuilder.hpp>
-#include <spark/button.hpp>
-#include <spark/label.hpp>
-#include <spark/grid.hpp>
-#include <spark/textbox.hpp>
-#include <spark/checkbox.hpp>
-#include <spark/stackpanel.hpp>
 #include <pugixml.hpp>
 #include <iostream>
 #include <algorithm>
@@ -23,6 +17,7 @@ XMLBuilder::XMLBuilder(std::shared_ptr<Core> &core) : m_core(core)
 	m_textbox = std::make_shared<Textbox>();
 	m_checkbox = std::make_shared<Checkbox>();
 	m_stackpanel = std::make_shared<StackPanel>();
+	m_slider = std::make_shared<Slider>(HORIZONTAL);
 }
 
 XMLBuilder::~XMLBuilder()
@@ -157,6 +152,20 @@ bool XMLBuilder::ParseAttributes(pugi::xml_node_iterator element_node, std::shar
 				std::cout << "WARNING! " << value << " is not valid for stackpanel orientation: (vertical, horizontal)" << std::endl;
 				return false;
 			}
+		}
+
+		///////////////////////////////// SLIDER /////////////////////////////////////////////
+		else if (name == "value" && ends_with(type, "slider"))
+		{
+			std::dynamic_pointer_cast<Slider> (element)->SetValue(std::stof(value));
+		}
+		else if (name == "minValue" && ends_with(type, "slider"))
+		{
+			std::dynamic_pointer_cast<Slider> (element)->SetMinValue(std::stof(value));
+		}
+		else if (name == "maxValue" && ends_with(type, "slider"))
+		{
+			std::dynamic_pointer_cast<Slider> (element)->SetMaxValue(std::stof(value));
 		}
 
 		///////////////////////////////// LABEL /////////////////////////////////////////////
@@ -299,6 +308,14 @@ std::shared_ptr<Button> XMLBuilder::ParseButton(pugi::xml_node_iterator button_n
 	return button;
 }
 
+std::shared_ptr<Slider> XMLBuilder::ParseSlider(pugi::xml_node_iterator checkbox_node)
+{
+	std::shared_ptr<Slider> slider = std::make_shared<Slider>(*m_slider);
+
+	if (!ParseAttributes(checkbox_node, slider))
+		std::cout << "Warning! : problems parsing the slider attributes." << std::endl;
+	return slider;
+}
 
 std::shared_ptr<IContainer> XMLBuilder::ParseContainer(pugi::xml_node_iterator container_node)
 {
@@ -350,6 +367,10 @@ std::shared_ptr<IContainer> XMLBuilder::ParseContainer(pugi::xml_node_iterator c
 		{
 			container->AddChild(ParseCheckbox(element_node));
 		}
+		else if (element_type == "slider")
+		{
+			container->AddChild(ParseSlider(element_node));
+		}
 	}
 	return container;
 }
@@ -386,6 +407,10 @@ void XMLBuilder::ParseStyle(pugi::xml_node_iterator style_node)
 		else if (element_type == "checkbox")
 		{
 			m_checkbox = ParseCheckbox(element_node);
+		}
+		else if (element_type == "slider")
+		{
+			m_slider = ParseSlider(element_node);
 		}
 	}
 }

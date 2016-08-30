@@ -37,6 +37,8 @@ Core::Core(const bool initGL)
 	#endif
 
 	AddFunction("hide", [](std::shared_ptr<spark::IElement> e) { e->Hide(); });
+	AddFunction("toggle", [](std::shared_ptr<spark::IElement> e) { e->Toggle(); });
+	AddFunction("show", [](std::shared_ptr<spark::IElement> e) { e->Show(); });
 }
 
 Core::~Core()

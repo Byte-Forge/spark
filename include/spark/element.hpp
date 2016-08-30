@@ -9,6 +9,12 @@
 
 namespace spark
 {
+	enum Orientation
+	{
+		VERTICAL,
+		HORIZONTAL,
+	};
+
 	class View;
 	
 	enum Alignment

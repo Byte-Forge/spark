@@ -15,12 +15,13 @@ namespace spark
 		void Update();
 		void Resize(const unsigned int width, const unsigned int height);
 
-		void SetMousePosition(int x, int y) { m_mouse.SetMousePosition(x, y); }
+		inline void SetMousePosition(int x, int y) { m_mouse.SetMousePosition(x, y); }
 		vec2<int> GetMousePosition() { return m_mouse.GetMousePosition(); }
 
 		void RestoreJustPressed() { m_mouse.ToReleased(); };
 
 		inline void SetMouseState(const int key, const int action, const int mods) { m_mouse.SetMouseState(key, action, mods); }
+		inline void SetMouseWheelDelta(int x, int y) { m_mouse.SetMouseWheelDelta(x, y); }
 		void SetKeyState(const int key, const int action, const int mods);
 		inline void SetActiveTb(std::shared_ptr<IElement> tb) {m_activeTb = tb; }
 

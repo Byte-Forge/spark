@@ -5,12 +5,6 @@
 
 namespace spark
 {
-	enum Orientation
-	{
-		VERTICAL,
-		HORIZONTAL,
-	};
-
 	class StackPanel : public IContainer
 	{ 
 	public:
@@ -29,6 +23,5 @@ namespace spark
 
 	private:
 		Orientation m_orientation;
-
 	};
 }

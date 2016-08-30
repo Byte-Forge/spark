@@ -43,11 +43,6 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 			lines.erase(lines.begin());
 		}
 
-		nvgBeginPath(vg);
-		nvgRoundedRect(vg, m_box.x , m_box.y, m_box.width, m_box.height, m_border_radius);
-		nvgFillColor(vg, nvgRGBA(m_bg_color.x, m_bg_color.y, m_bg_color.z, m_bg_color.w));
-		nvgFill(vg);
-
 		nvgStrokeColor(vg, nvgRGBA(m_border_color.x, m_border_color.y, m_border_color.z, m_border_color.w));
 		nvgStrokeWidth(vg, m_border_size);
 		nvgStroke(vg);
@@ -67,10 +62,10 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 			{
 				std::vector<std::string> substrings = split(word, "\\c");
 
-				nvgTextBoxBounds(vg, pos.x, pos.y, m_box.width, substrings[0].c_str(), NULL, bounds);
+				nvgTextBounds(vg, pos.x, pos.y, substrings[0].c_str(), NULL, bounds);
 				nvgFillColor(vg, nvgRGBA(m_font_color.x, m_font_color.y, m_font_color.z, m_font_color.w));
-				nvgTextBox(vg, bounds[0], bounds[1], m_box.width, substrings[0].c_str(), NULL);
-				pos.x += bounds[2] - bounds[0] + 3;
+				nvgTextBox(vg, bounds[0], bounds[1] + m_box.height / 2.0f, m_box.width, substrings[0].c_str(), NULL);
+				pos.x += bounds[2] - bounds[0];
 
 				if (substrings.size() > 1)
 				{
@@ -111,9 +106,9 @@ void Label::OnPaint(const PaintEvent& ev,const Dimension& box)
 						}
 
 						string.erase(0, count);
-						nvgTextBoxBounds(vg, pos.x, pos.y, m_box.width, string.c_str(), NULL, bounds);
-						nvgTextBox(vg, bounds[0], bounds[1], m_box.width, string.c_str(), NULL);
-						pos.x += bounds[2] - bounds[0] + 3;
+						float offset = nvgTextBounds(vg, pos.x, pos.y, string.c_str(), NULL, bounds);
+						nvgTextBox(vg, bounds[0], bounds[1] + m_box.height / 2.0f, m_box.width, string.c_str(), NULL);
+						pos.x += offset;
 					}
 				}
 			}

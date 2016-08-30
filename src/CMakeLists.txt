@@ -24,6 +24,7 @@ add_library(${LIB_NAME} util.hpp
 			stackpanel.cpp
 			textbox.cpp
 			checkbox.cpp
+			slider.cpp
 			flextGL.c
 			../include/spark/button.hpp
 			../include/spark/core.hpp
@@ -40,6 +41,7 @@ add_library(${LIB_NAME} util.hpp
 			../include/spark/textbox.hpp
 			../include/spark/checkbox.hpp
 			../include/spark/vector.hpp
+			../include/spark/slider.hpp
 			../deps/nanovg/src/nanovg.c
 			../deps/pugixml/src/pugixml.cpp)
 

@@ -154,10 +154,14 @@ namespace spark
 	{
 	public:
 		static void SetMousePosition(int x, int y) { m_position.x = x; m_position.y = y; }
+		static void SetMouseWheelDelta(int x, int y) { m_mouseWheelDelta.x = x; m_mouseWheelDelta.y = y; }
 		static vec2<int> GetMousePosition() { return m_position; }
 
 		static void ToReleased();
 	
+		static inline bool MouseScrolled() { return m_mouseWheelDelta.x != 0 || m_mouseWheelDelta.y != 0; }
+		static inline int GetMouseWheelDelta() { int delta = m_mouseWheelDelta.y; m_mouseWheelDelta.y = 0; return delta; }
+ 
 		static inline void SetMouseState(const int key, int action, const int mods) { action = TranslateState(action); m_mouseInputs[(MouseCode)key] = action; }
 		static inline int ButtonPressed(MouseCode button) { if (m_mouseInputs[button] == PRESSED) { return 1; } return 0; }
 		static inline int ButtonJustReleased(MouseCode button) { if (m_mouseInputs[button] == JUST_RELEASED) { m_mouseInputs[button] = RELEASED; return 1; } return 0; }
@@ -166,6 +170,7 @@ namespace spark
 
 	private:
 		static vec2<int> m_position;
+		static vec2<int> m_mouseWheelDelta;
 		static std::map<MouseCode, int> m_mouseInputs;
 	};
 	

@@ -6,6 +6,7 @@
 #include <spark/button.hpp>
 #include <spark/label.hpp>
 #include <spark/grid.hpp>
+#include <spark/slider.hpp>
 #include <spark/image.hpp>
 #include <spark/textbox.hpp>
 #include <spark/checkbox.hpp>
@@ -31,6 +32,7 @@ namespace spark
 		std::shared_ptr<Checkbox> ParseCheckbox(pugi::xml_node_iterator checkbox_node);
 		std::shared_ptr<Textbox> ParseTextbox(pugi::xml_node_iterator textbox_node);
 		std::shared_ptr<Button> ParseButton(pugi::xml_node_iterator button_node);
+		std::shared_ptr<Slider> ParseSlider(pugi::xml_node_iterator slider_node);
 		std::shared_ptr<IContainer> ParseContainer(pugi::xml_node_iterator container_node);
 
 		void ParseStyle(pugi::xml_node_iterator container_node);
@@ -45,6 +47,7 @@ namespace spark
 		std::shared_ptr<Image> m_image;
 		std::shared_ptr<Textbox> m_textbox;
 		std::shared_ptr<Checkbox> m_checkbox;
+		std::shared_ptr<Slider> m_slider;
 		std::shared_ptr<StackPanel> m_stackpanel;
 	};
 }

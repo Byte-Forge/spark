@@ -56,7 +56,7 @@ void Grid::OnPaint(const PaintEvent& ev, const Dimension& dim)
 
 		nvgScissor(vg, m_box.x, m_box.y, m_box.width, m_box.height);
 		PaintChildren(ev, m_box);
-		//nvgResetScissor(vg);
+		nvgResetScissor(vg);
 	}
 }
 
@@ -64,9 +64,9 @@ void Grid::Update(Mouse mouse, Keyboard keyboard,std::shared_ptr<View> view)
 {
 	if (m_visible)
 	{
-		if (m_child_max_width * m_children.size() > m_width)
+		if (m_childs_width * m_children.size() > m_width)
 			m_horizontal_scroll = true;
-		if (m_child_max_height * m_children.size() > m_height)
+		if (m_childs_height * m_children.size() > m_height)
 			m_vertical_scroll = true;
 
 		MouseOver(mouse);
